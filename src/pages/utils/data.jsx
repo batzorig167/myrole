@@ -934,6 +934,7 @@ let user = [
         class: 11,
         buleg: "b",
         phone:9911,
+        role:'student',
         email:"bat@gmail.com",
         challenge: [
             {
