@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Menu from "./Menu";
 import Task from "./Task";
-import Test from "./Test";
+import Test from "./Div";
 import Info from "./Info";
 import { useState } from "react";
+import Div from "./Div";
 
-export default function Home() {
+export default function LandingPage() {
     const [selectItem,setSelectItem] = useState(null);
     function handleBtn(){
         setSelectItem(2);
@@ -13,12 +14,8 @@ export default function Home() {
     function closeHandle(){
         setSelectItem(null)
     }
-    return <div className="bg-gray-100 max-auto-screen">
-        <div className="flex justify-between ">
-            <div className="w-[14%]">
-                <Menu/>
-            </div>
-            <div className="flex flex-col bg-[#fff] w-[82%] pr-[2%]">
+    return <div className="bg-gray-100 max-auto-screen text-black">  
+            <div className="flex flex-col bg-[#fff]">
                 <div className="flex justify-evenly gap-220 px-5 py-1">
                     <button><Link href="/"><img src="https://bcassetcdn.com/social/tqtwz2wdy6/preview.png" alt="" className="h-20 rounded-md"/></Link></button>
                     <div className="flex gap-10 px-5 flex-col justify-center">
@@ -26,9 +23,9 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="py-18 bg-emerald-50">
-                    <div className="items-center px-5 pt-8">
+                    <div className="items-center px-10 pt-8">
                         <p className="flex justify-center text-3xl pb-3 text-blue-700 capitalize">Сэтгэл судлалын сайт</p>
-                        <p className="flex justify-center text-xl italic text-center"> Энэхүү сэтгэл зүйн сайт нь хүмүүсийн сэтгэл зүйн эрүүл мэндийг дэмжих, зөвлөгөө өгөх, өөрийгөө хөгжүүлэх боломж олгох зорилготой. Энэ нь сэтгэлзүйн боловсрол түгээх, мэргэжлийн зөвлөгөө хүргэх, стресс, түгшүүрийг даван туулахад туслах платформ болно.</p>
+                        <p className="flex justify-center text-2xl italic text-center"> Энэхүү сэтгэл зүйн сайт нь хүмүүсийн сэтгэл зүйн эрүүл мэндийг дэмжих, зөвлөгөө өгөх, өөрийгөө хөгжүүлэх боломж олгох зорилготой. Энэ нь сэтгэлзүйн боловсрол түгээх, мэргэжлийн зөвлөгөө хүргэх, стресс, түгшүүрийг даван туулахад туслах платформ болно.</p>
                     </div>
                     <div className="flex justify-center px-5 pt-8">
                     <a href="#" onClick={handleBtn} className="border px-6 py-2 rounded-full text-xl rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Test өгөх</a>
@@ -67,9 +64,8 @@ export default function Home() {
                         <Task/>
                     </div>
                 </div>
-                <Test/>
+                <Div/>
                 <Info/>
             </div>
         </div>
-    </div>
 }

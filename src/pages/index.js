@@ -1,19 +1,29 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-import Home from "./components/Home";
+"use client";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { useEffect } from "react";
+import { useUser } from "./Context/UserContext";
+import { useRouter } from "next/router";
+import Home from "./diagnose";
+import Dashboard from "./components/Dashboard";
+import Dashboard1 from "./components/List";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+
 
 export default function Background() {
+      const {user,setUser} = useUser()
+      const router = useRouter()
+      console.log("context",user);
+      useEffect(() => {
+        if(user == null){
+            router.push("/homepage");
+        }
+        else {
+            router.push('/landingPage')
+        }
+        return () => {
+        };
+      }, [user]);
   return (
-    <Home/>
+    <Dashboard1/>
   );
 }

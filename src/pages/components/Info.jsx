@@ -20,7 +20,6 @@ export default function Info(){
                 <img src="https://cdn-icons-png.flaticon.com/128/15047/15047435.png" alt="" className="h-6" />
                 <a href="#"><span className="link link-underline link-underline-black text-black no-underline">BR-Coding</span></a>
             </div>
-            
         </div>
     </div>
 }

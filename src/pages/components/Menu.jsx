@@ -9,7 +9,7 @@ export default function Menu() {
                 </div>
                 <div className="flex flex-col gap-3">
                     <p className="text-sm">Main Menu</p>
-                    <a href="/Home" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Home</a>
+                    <a href="/dashboard" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Home</a>
                     <a href="/Dashboard" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Dashboard</a>
                     <a href="/Message" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Message</a>
                 </div>
