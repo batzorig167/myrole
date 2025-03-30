@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 export default function Home(){
     const {setUser} = useUser();
     const handleChange = (e)=>{
-        console.log(e.target.name)
-        console.log(e.target.value)
+        // console.log(e.target.name)
+        // console.log(e.target.value)
     }
     const router = useRouter();
     const submitHandle = (e)=>{
@@ -24,7 +24,7 @@ export default function Home(){
         }
         setUser(a);
         router.push("/taketest")
-        console.log("ilgeesen data",a);
+        // console.log("ilgeesen data",a);
     }
     return <div className="h-[100vh] flex justify-center items-center">
             <div className="flex justify-center">

@@ -22,8 +22,6 @@ export default function Home(){
     const [challIndex,setChallIndex] = useState(0);
     const [result , setResult] = useState([]);
     const router = useRouter();
-    console.log("tuvshin",challenge[0].tuvshin, tuvshin, challenge[0], "lol");
-    console.log("үр дүн=",result);
     function handleSubmit(props){
         setScore(score + props.score)
         // console.log(score)
@@ -43,16 +41,13 @@ export default function Home(){
         setTestShow(1);
     }
     function checkTuvshin(){
-        console.log("check")
         if(score >=0 && score <5){
             let filterRank =challenge[0].challenge.filter((data)=>data.rank ==1);
-            console.log("rank",filterRank)
             setResult("Хэвийн") 
             setTuvshin(filterRank);
         }else
         if(score>=5 && score<=6){
             let filterRank =challenge[0].challenge.filter((data)=>data.rank ==2);
-            console.log("rank",filterRank)
             setTuvshin(filterRank);
             setResult("Хөнгөн") 
         }else    
@@ -73,7 +68,7 @@ export default function Home(){
         }
     }
 
-    return <div className="flex justify-center items-center h-[100vh] ">
+    return <div className="flex justify-center items-center h-[100vh] bg-">
         <div className="flex justify-center items-center m-auto overflow-hidden bg-[#E6F2FE] max-w-3xl">
             <div className="flex flex-col items-center text-[black]">
                 <h1 className="overflow-hidden  w-full flex justify-center items-center p-[15px] text-2xl ">{"Сэдэв: "+test[testIndex].testName}</h1>
