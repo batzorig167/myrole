@@ -72,28 +72,25 @@ export default function Home(){
             setResult("Маш хүчтэй") 
         }
     }
-    return <div>
-        <div>
-            <h1>{"Onoo:"+score}</h1>
-             <h1>{"Анги:"+user.class}</h1>
-             <h1>{"Бүлэг:"+user.buleg}</h1>
-             <h1>{"Анги:"+user.firstName}</h1>
-        </div>
-        <div className="h-[70vh] flex justify-center items-center">
-            <div className="flex flex-col items-center gap-5">
-                <h1>{"Сэдэв: "+test[testIndex].testName}</h1>
-                <h1>
-                    {                            
-                        test[testIndex].question[qIndex]
-                    }
-                </h1>
-                <div className="flex flex-col gap-4">
-                    {
-                        test[testIndex].result.map((data,index)=>{
-                            return <button key={index} onClick={()=>handleSubmit(data)}>{data.result}</button>
-                        })
-                    }
-                </div>
+
+    return <div className="flex justify-center items-center h-[100vh] ">
+        <div className="flex justify-center items-center m-auto overflow-hidden bg-[#E6F2FE] max-w-3xl">
+            <div className="flex flex-col items-center text-[black]">
+                <h1 className="overflow-hidden  w-full flex justify-center items-center p-[15px] text-2xl ">{"Сэдэв: "+test[testIndex].testName}</h1>
+                    <div className="flex flex-col">
+                        <h1 className="bg-[#7FBBFA] w-full text-3xl px-[25px] font-medium text-center p-[40px]">
+                            {                            
+                                test[testIndex].question[qIndex]
+                            }
+                        </h1>
+                        <div className="flex flex-col p-[25px] bg-[#E6F2FE] gap-[15px]">
+                            {
+                                test[testIndex].result.map((data,index)=>{
+                                    return <button key={index} onClick={()=>handleSubmit(data)} className="bg-[#D3DFEA] p-[10px] rounded-[10px] text-[22px] flex hover:bg-[#CAD5E0] text-start px-[30px]">{data.result}</button>
+                                })
+                            }
+                        </div>
+                     </div>
                 </div>
             </div>
             {/* <button onClick={show}>show</button> */}
