@@ -1,5 +1,3 @@
-import userMedeelel from "../utils/userData";
-
 const { createContext, Children, useState, useContext } = require("react");
 
 const ScoreContext = createContext();

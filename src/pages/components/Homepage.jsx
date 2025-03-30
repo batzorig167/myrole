@@ -7,7 +7,7 @@ export default function Homepage() {
             <div className="flex justify-evenly gap-220 px-5 py-1">
                     <button><Link href="/"><img src="https://bcassetcdn.com/social/tqtwz2wdy6/preview.png" alt="" className="h-20 rounded-md"/></Link></button>
                     <div className="flex gap-10 px-5 flex-col justify-center">
-                        <a href="Login" className="border rounded-md px-4 h-10 flex items-center">Бүртгүүлэх</a>
+                        <a href="login" className="border rounded-md px-4 h-10 flex items-center">Бүртгүүлэх</a>
                 </div>
             </div>
             <div className=" flex flex-col gap-8 px-15 bg-emerald-50 h-full py-20">

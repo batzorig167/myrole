@@ -3,9 +3,7 @@
 import { useEffect } from "react";
 import { useUser } from "./Context/UserContext";
 import { useRouter } from "next/router";
-import Home from "./diagnose";
-import Dashboard from "./components/Dashboard";
-import Dashboard1 from "./components/List";
+import Homepage from "./components/Homepage";
 
 
 
@@ -24,6 +22,6 @@ export default function Background() {
         };
       }, [user]);
   return (
-    <Dashboard1/>
+    <Homepage/>
   );
 }

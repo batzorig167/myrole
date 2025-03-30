@@ -14,11 +14,11 @@ export default function HomeTsesniihesg() {
         <div className="py-10">
             <div className="flex flex-col gap-4">
                 <h2 className="text-left text-pretty w-lg text-xl">Энэхүү сайт нь стресс, сэтгэл гутрал, түгшүүр, өөртөө итгэх итгэл гэсэн дөрвөн цогц дэд сэдвээс бүрдсэн сайт юм.Сайтын үр дагавар нь өөртөө итгэх итгэлийг нэмэгдүүлэх, стресс, түгшүүрээс хол байх, сэтгэл гутралыг эмчлэх, өөрийн буруу зүйлээ ойлгуулахад чиглэнэ.</h2>
-                <a href="#" className="rounded-full text-center text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-500" onClick={handleBtn}>Test өгөх</a>
+                <button className="rounded-full text-center text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-500" onClick={handleBtn}>Test өгөх</button>
             {/* <a href="#" className="rounded-full text-center text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-500" onClick={handleBtn}>Test өгөх</a> */}
             </div>
         </div>
-        {/* {
+        {
             selectItem && (
                 <div className="fixed top-0 left-0 w-[100vw] h-[100vh] ">
                     <div className="w-[100vw] h-[100vh] relative flex justify-center items-center">
@@ -36,16 +36,16 @@ export default function HomeTsesniihesg() {
                                 </button>
                             </div>
                             <div className="flex flex-col gap-5 justify-center pt-15 text-white">
-                                <a href="/Setgelgutral" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:text-black  hover:bg-stone-50">Сэтгэл гутрал</a>
-                                <a href="/Tugshuur" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:text-black hover:bg-stone-50">Түгшүүр</a>
-                                <a href="/Stress" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:text-black hover:bg-stone-50">Стресс</a>
-                                <a href="/Itgel" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:text-black hover:bg-stone-50">Өөртөө итгэх итгэл</a>
+                                <a href="/taketest" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2  hover:text-black  hover:bg-stone-50">Сэтгэл гутрал</a>
+                                <a href="/Tugshuur" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Түгшүүр</a>
+                                <a href="/Stress" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2  hover:text-black hover:bg-stone-50">Стресс</a>
+                                <a href="/Itgel" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2  hover:text-black hover:bg-stone-50">Өөртөө итгэх итгэл</a>
                             </div>
                             <button onClick={closeHandle} className="text-right pt-13 pr-5 text-white">Хаах</button>
                         </div>
                     </div>
                 </div>
             )
-        } */}
+        }
     </div>
 }

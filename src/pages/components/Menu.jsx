@@ -10,14 +10,14 @@ export default function Menu() {
                 <div className="flex flex-col gap-3">
                     <p className="text-sm">Main Menu</p>
                     <a href="/dashboard" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Home</a>
-                    <a href="/Dashboard" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Dashboard</a>
-                    <a href="/Message" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Message</a>
+                    <a href="/list" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Dashboard</a>
+                    <a href="/message" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Message</a>
                 </div>
                 <div className="flex flex-col gap-3">
                     <h1 className="text-sm">General</h1>
-                    <a href="/" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Report</a>
-                    <a href="/" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Support</a>
-                    <a href="/" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">My Account</a>
+                    <a href="#" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Report</a>
+                    <a href="#" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">Support</a>
+                    <a href="#" className="flex pl-5 text-[#9197B3] hover:bg-[#5932EA] rounded-md hover:text-[#fff]">My Account</a>
                 </div>
                 
         </div>

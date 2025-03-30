@@ -22,14 +22,18 @@ export default function Login(){
             setUser(data);
             router.push('/dashboard')
         }
+        else {
+            setUser(data);
+            router.push('/landingPage')
+        }
         console.log("Ilgeesen utga",data);
     }
-    return <div className="h-[100vh] w-full m-auto-screen bg-center bg-cover flex justify-center items-center bg-[black]]"> 
-            <form onSubmit = {handleSubmit} className=" rounded-xl flex flex-col border gap-5 px-12 py-12 w-100 bg-[white] text-[black]">
+    return <div className="h-[100vh] w-full m-auto-screen bg-center bg-cover flex justify-center items-center bg-[#333]"> 
+            <form onSubmit = {handleSubmit} className=" rounded-xl flex flex-col border gap-5 px-12 py-12 w-100 bg-white">
                 <h1 className="flex justify-center text-4xl font-semibold">Нэвтрэх</h1>
                 <input type="text" name="username" id="" placeholder="Нэвтрэх нэрээ оруулна уу" className="border border-gray-500 py-2 rounded-[5px] text-center delay-150 duration-300 ease-in-out hover:scale-102 hover:border hover:border-[black]"onChange={handleChange} />
                 <input type="password" name="password" id="" placeholder="Нууц үгээ оруулна уу" className="border border-gray-500 py-2 rounded-[5px] text-center delay-150 duration-300 ease-in-out hover:scale-102 hover:border hover:border-[black]" onChange={handleChange}/>
-                <input type="submit" value="Нэвтрэх" />
+                <input type="submit" value="Нэвтрэх" className="border rounded-md py-1"/>
             </form>
     </div>
 }
