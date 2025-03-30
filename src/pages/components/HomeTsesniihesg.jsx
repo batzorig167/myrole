@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export default function Div() {
+export default function HomeTsesniihesg() {
     const [selectItem,setSelectItem] = useState(null);
     function handleBtn(){
         setSelectItem(2);
