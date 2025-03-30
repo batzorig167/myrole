@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Menu from "./Menu";
 import Task from "./Task";
-import Test from "./Div";
+import Test from "./HomeTsesniihesg";
 import Info from "./Info";
 import { useState } from "react";
-import Div from "./Div";
+import Div from "./HomeTsesniihesg";
 
 export default function Dashboard() {
     const [selectItem,setSelectItem] = useState(null);

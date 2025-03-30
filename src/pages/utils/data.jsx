@@ -128,10 +128,8 @@ export const test = [
                 score:1
             }
         ],
-    },
-    
+    },   
 ]
-
 export const challenge = [
     {
         category: "Сэтгэл гутрал",

@@ -18,12 +18,12 @@ export default function Homepage() {
                 <div className="flex flex-col gap-10">
                     <h1 className="flex justify-center text-3xl">Өгч болох тестүүд</h1>
                     <div className="flex justify-center justify-evenly">
-                        <a href="/taketest" className="border w-100 py-2 rounded-xl text-xl text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Сэтгэл гутрал</a>
-                        <a href="/taketest" className="border w-100 py-2 rounded-xl text-xl text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Стресс</a>
+                        <a href="/SignUp" className="border w-100 py-2 rounded-xl text-xl text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Сэтгэл гутрал</a>
+                        <a href="/SignUp" className="border w-100 py-2 rounded-xl text-xl text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Стресс</a>
                     </div>
                     <div className="flex justify-center justify-evenly">
-                        <a href="/taketest" className="border w-100 py-2 rounded-xl text-xl text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Өөртөө итгэх итгэл</a>
-                        <a href="/taketest" className="border w-100 py-2 rounded-xl text-xl text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Түгшүүр</a>
+                        <a href="/SignUp" className="border w-100 py-2 rounded-xl text-xl text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Өөртөө итгэх итгэл</a>
+                        <a href="/SignUp" className="border w-100 py-2 rounded-xl text-xl text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Түгшүүр</a>
                     </div>
                 </div>
             </div>

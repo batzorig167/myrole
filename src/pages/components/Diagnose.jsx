@@ -1,4 +1,4 @@
-export default function Diagnos({props}){
+export default function Diagnose({props}){
     return <div>
         
     </div>
