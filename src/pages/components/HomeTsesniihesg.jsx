@@ -9,14 +9,16 @@ export default function HomeTsesniihesg() {
     function closeHandle(){
         setSelectItem(null)
     }
-    return <div className="flex gap-20 justify-evenly">
-        <img src="https://thumbs.dreamstime.com/b/friendly-male-doctor-cartoon-character-floral-plant-decoration-346249083.jpg" alt="" className="h-80"/>
-        <div className="py-10">
-            <div className="flex flex-col gap-4">
-                <h2 className="text-left text-pretty w-lg text-xl">Энэхүү сайт нь стресс, сэтгэл гутрал, түгшүүр, өөртөө итгэх итгэл гэсэн дөрвөн цогц дэд сэдвээс бүрдсэн сайт юм.Сайтын үр дагавар нь өөртөө итгэх итгэлийг нэмэгдүүлэх, стресс, түгшүүрээс хол байх, сэтгэл гутралыг эмчлэх, өөрийн буруу зүйлээ ойлгуулахад чиглэнэ.</h2>
-                <button className="rounded-full text-center text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-500" onClick={handleBtn}>Test өгөх</button>
-            {/* <a href="#" className="rounded-full text-center text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-500" onClick={handleBtn}>Test өгөх</a> */}
-            </div>
+    return <div className="flex flex-col pb-5 gap-2">
+        <div className="flex gap-5">
+            <img src="https://thumbs.dreamstime.com/b/friendly-male-doctor-cartoon-character-floral-plant-decoration-346249083.jpg" alt="" className="h-60 pt-8"/>
+                <div className="flex flex-col gap-4 pt-5 ">
+                    <h2 className=" text-base h-60">Энэхүү сайт нь стресс, сэтгэл гутрал, түгшүүр, өөртөө итгэх итгэл гэсэн дөрвөн цогц дэд сэдвээс бүрдсэн сайт юм.Сайтын үр дагавар нь өөртөө итгэх итгэлийг нэмэгдүүлэх, стресс, түгшүүрээс хол байх, сэтгэл гутралыг эмчлэх, өөрийн буруу зүйлээ ойлгуулахад чиглэнэ.</h2>
+                {/* <a href="#" className="rounded-full text-center text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-500" onClick={handleBtn}>Test өгөх</a> */}
+                </div>
+        </div>
+        <div className="flex justify-center">
+            <button className="rounded-full text-center text-xl h-12 w-100 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-700" onClick={handleBtn}>Test өгөх</button>
         </div>
         {
             selectItem && (
