@@ -41,7 +41,7 @@ export default function Challenge({props})
                 <div className="fixed top-0 left-0 w-[100vw] h-[100vh] ">
                     <div className="w-[100vw] h-[100vh] relative flex justify-center items-center">
                         <button onClick={closeHandle} className="w-[100vw]  h-[100vh] absolute-50 top-0 left-0" >
-                            lol
+                            Дэлгэрэнгүй
                         </button>
                         <div className="bg-gray-400 py-2 px-5 rounded-xl absolute z-[1] flex flex-col w-180 ">
                             <div className="flex flex-col justify-evenly gap-3">
