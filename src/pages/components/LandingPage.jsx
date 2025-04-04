@@ -30,7 +30,7 @@ export default function LandingPage() {
                             <ul className="menu menu-sm dropdown-content bg-white text-black rounded-box z-1 mt-3 w-52 p-2 text-base">
 
                                 <li>
-                                    <a className="justify-between text-white">Profile</a>
+                                    <a className="justify-between">Profile</a>
                                 </li>
                                     <li><a>Settings</a></li>
                                     <li><a href="/homepage">Гарах</a></li>
