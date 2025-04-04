@@ -26,7 +26,7 @@ export default function LandingPage() {
                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXqcFovc4Hi6OPmb0s6MyRS_xXzT7BECHsd-uYXAFi1mxnEHgeTv8W8L9k1RAoMb9X3bk&usqp=CAU" />
                                 </div>
                             </div>
-                            <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-base">
+                            <ul className="menu menu-sm dropdown-content bg-white text-black rounded-box z-1 mt-3 w-52 p-2 shadow text-base">
                                 <li>
                                     <a className="justify-between">Profile</a>
                                 </li>
@@ -36,13 +36,15 @@ export default function LandingPage() {
                          </div>
                     </div>
                 </div>
-                <div className="py-18 bg-emerald-50">
+                <div className="py-15 bg-[#e3f6f5]">
                     <div className="items-center px-10 pt-8">
-                        <p className="flex justify-center text-3xl pb-3 text-blue-700 capitalize">Сэтгэл судлалын сайт</p>
-                        <p className="flex justify-center text-2xl italic text-center"> Энэхүү сэтгэл зүйн сайт нь хүмүүсийн сэтгэл зүйн эрүүл мэндийг дэмжих, зөвлөгөө өгөх, өөрийгөө хөгжүүлэх боломж олгох зорилготой. Энэ нь сэтгэлзүйн боловсрол түгээх, мэргэжлийн зөвлөгөө хүргэх, стресс, түгшүүрийг даван туулахад туслах платформ болно.</p>
+                        <div className="px-2 py-4 rounded-[18px] bg-white">
+                            <p className="flex justify-center text-3xl pb-3 text-blue-700">Сэтгэл судлалын сайт</p>
+                            <p className="flex justify-center text-2xl italic text-center"> Энэхүү сэтгэл зүйн сайт нь хүмүүсийн сэтгэл зүйн эрүүл мэндийг дэмжих, зөвлөгөө өгөх, өөрийгөө хөгжүүлэх боломж олгох зорилготой. Энэ нь сэтгэлзүйн боловсрол түгээх, мэргэжлийн зөвлөгөө хүргэх, стресс, түгшүүрийг даван туулахад туслах платформ болно.</p>
+                        </div>
                     </div>
                     <div className="flex justify-center px-5 pt-8">
-                    <button onClick={handleBtn} className="border px-6 py-2 rounded-full text-xl rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Test өгөх</button>
+                    <button onClick={handleBtn} className="border px-6 py-2 rounded-full text-xl rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500 w-80">Test өгөх</button>
                         {/* <a href="#" onClick={handleBtn} className="border px-6 py-2 rounded-full text-xl rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Test өгөх</a> */}
                         {
             selectItem && (
