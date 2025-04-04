@@ -26,7 +26,9 @@ export default function LandingPage() {
                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXqcFovc4Hi6OPmb0s6MyRS_xXzT7BECHsd-uYXAFi1mxnEHgeTv8W8L9k1RAoMb9X3bk&usqp=CAU" />
                                 </div>
                             </div>
+
                             <ul className="menu menu-sm dropdown-content bg-white text-black rounded-box z-1 mt-3 w-52 p-2 text-base">
+
                                 <li>
                                     <a className="justify-between text-white">Profile</a>
                                 </li>
@@ -45,6 +47,8 @@ export default function LandingPage() {
                     </div>
                     <div className="flex justify-center px-5 pt-8">
                     <button onClick={handleBtn} className="border px-6 py-2 rounded-full text-xl rounded-full text-xl h-12 w-80 text-[#fff] bg-[#f9593a] hover:bg-blue-700">Тест өгөх</button>
+
+
                         {/* <a href="#" onClick={handleBtn} className="border px-6 py-2 rounded-full text-xl rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Test өгөх</a> */}
                         {
             selectItem && (

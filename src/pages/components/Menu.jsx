@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Menu() {
     return <div>
-        <div className="flex flex-col pl-10 pr-10 gap-3 rounded-xl bg-[#fff] h-200 pt-8">
+        <div className="flex flex-col pl-10 pr-10 gap-3 rounded-xl bg-[#fff] h-200 pt-8 text-black">
                 <div>
                     <button ><img src="https://bcassetcdn.com/social/tqtwz2wdy6/preview.png" alt="" className="rounded-md h-35" /></button>
                 </div>
