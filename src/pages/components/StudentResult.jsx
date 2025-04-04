@@ -38,8 +38,8 @@ export default function StudentResult(){
         setToo(a)
     }
     return <div className="h-[100vh] flex justify-center">
-        <div className="max-w-xl flex flex-col justify-start items-center">
-            <div className=" w-full">
+        <div className="max-w-lg flex flex-col justify-start items-center">
+            <div className="">
                 <h1 className="text-[22px] text-center font-normal">Тест бөглөсөн сурагчдын мэдээлэл</h1>
             </div>
             <table className=" flex table text-center border border-[#f4f6f6] ">

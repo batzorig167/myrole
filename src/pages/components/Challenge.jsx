@@ -9,11 +9,15 @@ export default function Challenge({props})
     function closeHandle(){
         setSelectItem(null)
     }
-     return <div className="h-[100vh] flex flex-col justify-center items-center gap-2">
-        <h1 className="text-xl flex justify-center">{"Таний сэтгэл зүйн түвшин:"+result}</h1>
-        <h1 className="text-xl flex justify-center">Танд санал болгох чалленж даалгаврууд</h1>
+     return <div>
+        <div className="flex justify-center pt-20">
+            <a href="/landingPage" className="border px-10 py-4 rounded-xl">Нүүр хэсэг лүү буцах</a>
+        </div>
+        <div className="h-[80vh] flex flex-col justify-center items-center gap-2">
+            <h1 className="text-xl flex justify-center">{"Таний сэтгэл зүйн түвшин:"+result}</h1>
+            <h1 className="text-xl flex justify-center">Танд санал болгох чалленж даалгаврууд</h1>
 
-     <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5">
          {
              props.map((data,index)=>{
                  return <div key={index}>
@@ -82,5 +86,6 @@ export default function Challenge({props})
              })
          }
      </div>
+</div>
 </div>
 }

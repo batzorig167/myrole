@@ -28,7 +28,7 @@ export default function Login(){
         }
         console.log("Ilgeesen utga",data);
     }
-    return <div className="h-[100vh] w-full m-auto-screen bg-center bg-cover flex justify-center items-center bg-[#333]"> 
+    return <div className="h-[100vh] w-full m-auto-screen bg-center bg-cover flex justify-center items-center bg-[#333] text-black"> 
             <form onSubmit = {handleSubmit} className=" rounded-xl flex flex-col border gap-5 px-12 py-12 w-100 bg-white">
                 <h1 className="flex justify-center text-4xl font-semibold">Нэвтрэх</h1>
                 <input type="text" name="username" id="" placeholder="Нэвтрэх нэрээ оруулна уу" className="border border-gray-500 py-2 rounded-[5px] text-center delay-150 duration-300 ease-in-out hover:scale-102 hover:border hover:border-[black]"onChange={handleChange} />
