@@ -88,7 +88,7 @@ export default function Task() {
             <div className="flex flex-col gap-1">
                 <a href="#"><img src="https://insightfultraits.com/wp-content/uploads/2024/12/red-personality-min-768x768-png.avif" alt="" className="h-55"/></a>
                 <h1 className="flex justify-center text-xl">Стресс</h1>
-                <button className="px-4 py-1 text-black hover:text-white rounded-full bg-[#4fc4cf] hover:bg-[#f9593a]" onClick={handleBtn}>Авах</button>
+                <button className="px-4 py-1 text-white hover:text-white rounded-full bg-[#7f5af0] hover:bg-[#f9593a]" onClick={handleBtn}>Авах</button>
             </div>
         {
             selectItem && (
@@ -123,7 +123,7 @@ export default function Task() {
             <div className="flex flex-col gap-1">
                 <a href="#"><img src="https://insightfultraits.com/wp-content/uploads/2024/12/green-personality-min-png.avif" alt="" className="h-55"/></a>
                 <h1 className="flex justify-center text-xl">Өөртөө итгэх итгэл</h1>
-                <button className="px-4 py-1 text-white rounded-full bg-[#272343] hover:bg-[#f9593a]" onClick={handleBtn}>Авах</button>
+                <button className="px-4 py-1 text-white rounded-full bg-[#078080] hover:bg-[#f9593a]" onClick={handleBtn}>Авах</button>
             </div>
             {
                 selectItem && (
