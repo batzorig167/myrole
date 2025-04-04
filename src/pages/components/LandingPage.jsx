@@ -14,9 +14,9 @@ export default function LandingPage() {
     function closeHandle(){
         setSelectItem(null)
     }
-    return <div className="bg-gray-100 max-auto-screen text-black">  
+    return <div className="bg-[#e3f6f5] max-auto-screen text-black">  
             <div className="flex flex-col bg-[#fff]">
-                <div className="flex justify-evenly gap-220 px-5 py-1">
+                <div className="flex justify-center gap-70">
                     <button><Link href="#"><img src="https://bcassetcdn.com/social/tqtwz2wdy6/preview.png" alt="" className="h-20 rounded-md"/></Link></button>
                     <div className="flex gap-10 px-5 flex-col justify-center">
                         {/* <a href="login" className="border rounded-md px-4 h-10 flex items-center">Бүртгүүлэх</a> */}
@@ -26,9 +26,11 @@ export default function LandingPage() {
                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXqcFovc4Hi6OPmb0s6MyRS_xXzT7BECHsd-uYXAFi1mxnEHgeTv8W8L9k1RAoMb9X3bk&usqp=CAU" />
                                 </div>
                             </div>
-                            <ul className="menu menu-sm dropdown-content bg-white text-black rounded-box z-1 mt-3 w-52 p-2 shadow text-base">
+
+                            <ul className="menu menu-sm dropdown-content bg-white text-black rounded-box z-1 mt-3 w-52 p-2 text-base">
+
                                 <li>
-                                    <a className="justify-between">Profile</a>
+                                    <a className="justify-between text-white">Profile</a>
                                 </li>
                                     <li><a>Settings</a></li>
                                     <li><a href="/homepage">Гарах</a></li>
@@ -36,15 +38,17 @@ export default function LandingPage() {
                          </div>
                     </div>
                 </div>
-                <div className="py-15 bg-[#e3f6f5]">
-                    <div className="items-center px-10 pt-8">
-                        <div className="px-2 py-4 rounded-[18px] bg-white">
-                            <p className="flex justify-center text-3xl pb-3 text-blue-700">Сэтгэл судлалын сайт</p>
-                            <p className="flex justify-center text-2xl italic text-center"> Энэхүү сэтгэл зүйн сайт нь хүмүүсийн сэтгэл зүйн эрүүл мэндийг дэмжих, зөвлөгөө өгөх, өөрийгөө хөгжүүлэх боломж олгох зорилготой. Энэ нь сэтгэлзүйн боловсрол түгээх, мэргэжлийн зөвлөгөө хүргэх, стресс, түгшүүрийг даван туулахад туслах платформ болно.</p>
+                <div className="py-18 bg-[#eff0f3]">
+                    <div className="pl-4">
+                        <div className="items-center w-115 flex flex-col justify-center rounded-[18px] py-2 bg-[#fffffe]">
+                            <p className="flex justify-center text-3xl pb-3 text-blue-700  w-80">Сэтгэл судлалын сайт</p>
+                            <p className="flex justify-center text-2xl italic text-center w-110"> Энэхүү сэтгэл зүйн сайт нь хүмүүсийн сэтгэл зүйн эрүүл мэндийг дэмжих, зөвлөгөө өгөх, өөрийгөө хөгжүүлэх боломж олгох зорилготой. Энэ нь сэтгэлзүйн боловсрол түгээх, мэргэжлийн зөвлөгөө хүргэх, стресс, түгшүүрийг даван туулахад туслах платформ болно.</p>
                         </div>
                     </div>
                     <div className="flex justify-center px-5 pt-8">
-                    <button onClick={handleBtn} className="border px-6 py-2 rounded-full text-xl rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500 w-80">Test өгөх</button>
+                    <button onClick={handleBtn} className="border px-6 py-2 rounded-full text-xl rounded-full text-xl h-12 w-80 text-[#fff] bg-[#f9593a] hover:bg-blue-700">Тест өгөх</button>
+
+
                         {/* <a href="#" onClick={handleBtn} className="border px-6 py-2 rounded-full text-xl rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Test өгөх</a> */}
                         {
             selectItem && (
