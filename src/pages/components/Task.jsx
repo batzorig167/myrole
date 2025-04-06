@@ -10,12 +10,11 @@ export default function Task() {
         setSelectItem(null)
     }
     return <div>
-    <div className="flex w-122 flex-col gap-10">
-        <div className="flex justify-evenly">
-            <div className="flex flex-col gap-1">
-                <a href="#"><img src="https://insightfultraits.com/wp-content/uploads/2024/12/blue-personality-min-png.avif" alt="" className="h-55"/></a>
-                <h1 className="flex justify-center text-xl">Сэтгэл гутрал</h1>
-                <button className="px-4 py-1 text-white rounded-full bg-[#366F90] hover:bg-[#f9593a]" onClick={handleBtn}>Авах</button>
+    <div className="flex w-[100%] justify-around flex-wrap">
+            <div className="flex flex-col gap-1 w-[45%] items-center md:w-[20%]">
+                <button className="flex justify-center"><img src="https://insightfultraits.com/wp-content/uploads/2024/12/blue-personality-min-png.avif" alt="" className="w-[80%]"/></button>
+                <h1 className="flex justify-center text-lg md:text-xl md:h-[50px] items-center">Сэтгэл гутрал</h1>
+                <button className="px-4 py-1 text-[#fff] rounded-full bg-[#272343] w-[80%] mb-[15px] border" onClick={handleBtn}>Авах</button>
             </div>
             {
                 selectItem && (
@@ -47,11 +46,11 @@ export default function Task() {
                     </div>
                 )
             }
-            <div className="flex flex-col gap-1">
-                <a href="#"><img src="https://insightfultraits.com/wp-content/uploads/2024/12/purple-personality-min-768x768-png.avif" alt="" className="h-55"/>
-                    </a>
-                <h1 className="flex justify-center text-xl">Түгшүүр</h1>
-                <button className="px-4 py-1 text-white rounded-full bg-blue-500 hover:bg-[#f9593a]" onClick={handleBtn}>Авах</button>
+            <div className="flex flex-col gap-1 w-[45%] items-center md:w-[20%]">
+                <button className="flex justify-center"><img src="https://insightfultraits.com/wp-content/uploads/2024/12/purple-personality-min-768x768-png.avif" alt="" className="w-[80%]"/>
+                    </button>
+                <h1 className="flex justify-center text-lg md:text-xl md:h-[50px] items-center">Түгшүүр</h1>
+                <button className="px-4 py-1 text-[#fff] rounded-full bg-[#272343] w-[80%] mb-[15px] border" onClick={handleBtn}>Авах</button>
             </div>
             {
                 selectItem && (
@@ -83,12 +82,10 @@ export default function Task() {
                     </div>
                 )
             }
-        </div>
-        <div className="flex justify-evenly">
-            <div className="flex flex-col gap-1">
-                <a href="#"><img src="https://insightfultraits.com/wp-content/uploads/2024/12/red-personality-min-768x768-png.avif" alt="" className="h-55"/></a>
-                <h1 className="flex justify-center text-xl">Стресс</h1>
-                <button className="px-4 py-1 text-white hover:text-white rounded-full bg-[#7f5af0] hover:bg-[#f9593a]" onClick={handleBtn}>Авах</button>
+            <div className="flex flex-col gap-1 w-[45%] items-center md:w-[20%]">
+                <button className="flex justify-center"><img src="https://insightfultraits.com/wp-content/uploads/2024/12/red-personality-min-768x768-png.avif" alt="" className="w-[80%]"/></button>
+                <h1 className="flex justify-center text-lg md:text-xl md:h-[50px] items-center">Стресс</h1>
+                <button className="px-4 py-1 text-[#fff] rounded-full bg-[#272343] w-[80%] mb-[15px] border" onClick={handleBtn}>Авах</button>
             </div>
         {
             selectItem && (
@@ -120,10 +117,10 @@ export default function Task() {
                 </div>
             )
         }
-            <div className="flex flex-col gap-1">
-                <a href="#"><img src="https://insightfultraits.com/wp-content/uploads/2024/12/green-personality-min-png.avif" alt="" className="h-55"/></a>
-                <h1 className="flex justify-center text-xl">Өөртөө итгэх итгэл</h1>
-                <button className="px-4 py-1 text-white rounded-full bg-[#078080] hover:bg-[#f9593a]" onClick={handleBtn}>Авах</button>
+            <div className="flex flex-col gap-1 w-[45%] items-center md:w-[20%]">
+                <button className="flex justify-center"><img src="https://insightfultraits.com/wp-content/uploads/2024/12/green-personality-min-png.avif" alt="" className="w-[80%]"/></button>
+                <h1 className="flex justify-center text-lg text-center md:text-xl md:h-[50px] items-center">Өөртөө итгэх итгэл</h1>
+                <button className="px-4 py-1 text-[#fff] rounded-full bg-[#272343] w-[80%] mb-[15px] border" onClick={handleBtn}>Авах</button>
             </div>
             {
                 selectItem && (
@@ -156,6 +153,5 @@ export default function Task() {
                 )
             }
         </div>
-    </div>
 </div>
 }
