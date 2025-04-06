@@ -59,7 +59,7 @@ export default function Home(){
         if(score>=7 && score<=10){
             let filterRank =challenge[0].challenge.filter((data)=>data.rank ==3);
             setTuvshin(filterRank);
-            setResult("Дунд зэрэг") 
+            setResult("Дунд зэрэг")
         }else
         if(score>=11 && score<=13){
             let filterRank =challenge[0].challenge.filter((data)=>data.rank ==4);
@@ -69,7 +69,7 @@ export default function Home(){
         if(score>=14){
             let filterRank =challenge[0].challenge.filter((data)=>data.rank ==4);
             setTuvshin(filterRank);
-            setResult("Маш хүчтэй") 
+            setResult("Маш хүчтэй")
         }
     }
 

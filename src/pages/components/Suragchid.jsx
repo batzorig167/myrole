@@ -1,6 +1,6 @@
 export default function Suragchid() {
     return <div>
-        <div className="flex flex-col bg-[#fff]  h-300">
+        <div className="flex flex-col bg-[#fff]  h-300 text-black">
                 <div className="flex  justify-between gap-20 pt-8 px-6">
                     <h1>Сайн байна уу? Хүний нэр</h1>
                     <div className=" flex border rounded-md px-2">
@@ -8,7 +8,7 @@ export default function Suragchid() {
                         <input type="text" placeholder="Search" className="rounded-md pl-1"/>
                     </div>
                 </div>
-                <div className="flex gap-50 pt-8 bg-emerald-50 px-6">
+                <div className="flex gap-50 pt-8 bg-emerald-50 px-6 bg-[#e3f6f5]">
                     <h1>Nickname</h1>
                     <h1>Овог</h1>
                     <h1>Нэр</h1>
