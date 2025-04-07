@@ -4,40 +4,55 @@ import { useRouter } from "next/router";
 
 export default function Home(){
     const {setUser} = useUser();
+    const [formData,setFormData] = useState({
+        class: "",
+        buleg: "",
+        lastname: "",
+        firstname: "",
+    });
     const handleChange = (e)=>{
-        console.log(e.target.name)
-        console.log(e.target.value)
-    }
+        // console.log(e.target.name)
+        // console.log(e.target.value)
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
     const router = useRouter();
+    
     const submitHandle = (e)=>{
         e.preventDefault();
-        // console.log(e.target.class.value)
-        // console.log(e.target.buleg.value)
-        // console.log(e.target.lastname.value)
-        // console.log(e.target.firstname.value);
-
-        let a = {
-            class:e.target.class.value,
-            buleg:e.target.lastname.value,
-            lastName:e.target.lastname.value,
-            firstName:  e.target.firstname.value,
-        }
-        setUser(a);
-        router.push("/taketest")
-        console.log("ilgeesen data",a);
-    }
-    return <div className="h-[100vh] flex justify-center items-center bg-[#264ECA]">
-            <div className="flex justify-center">
-                <form action="" onSubmit={submitHandle} className="flex flex-col justify-evenly  border rounded-2xl px-40 h-120  bg-white">
-                    <div>
-                        <h1 className="text-center text-3xl pb-8">Анги нэрээ крилл үсгээр бөглөнө үү</h1>
+        if (!formData.class || !formData.buleg || !formData.lastname || !formData.firstname) {
+            alert("Та эхлээд бүртгүүлэх шаардлагатай!");
+          }
+        else
+          {
+                let a = {
+                    // class:e.target.class.value,
+                    // buleg:e.target.lastname.value,
+                    // lastName:e.target.lastname.value,
+                    // firstName:  e.target.firstname.value,
+                    class: formData.class,
+                    buleg: formData.buleg,
+                    lastName: formData.lastname,
+                    firstName: formData.firstname,
+                }
+                setUser(a);
+                router.push("/taketest")
+                console.log("ilgeesen data",a);
+            }
+          }
+    return <div className="h-[100vh] flex justify-center items-center bg-[#232946]">
+            <div className="flex justify-center max-w-[700px]">
+                <form action="" onSubmit={submitHandle} className="flex flex-col justify-evenly w-[90%] h-100 md:w-120 md:h-110 border rounded-2xl px-5 md:px-10 bg-white">
+                    <div className="flex flex-col gap-2">
+                        <h1 className="text-center text-xl md:text-3xl pb-3 md:pb-8">Анги нэрээ крилл үсгээр бөглөнө үү</h1>
                         <div className="flex justify-between">
                             <div className="flex gap-1">
-                                <label className="text-xl" htmlFor="class">Анги:</label>
+                                <label className=" text-lg md:text-xl" htmlFor="class">Анги:</label>
                                 {/* <input className="border rounded-md px-2 py-1" type="number" name="class" 
                                 id="class" placeholder="Ангиа сонгоно уу" onChange={handleChange}/> */}
                                 <select name="class" 
-                                id="class" onChange={handleChange} className="border rounded-md px-2 py-1 bg-white text-black">
+                                id="class" onChange={handleChange} className="border rounded-md px-1 md:px-2 md:py-1 bg-white text-black">
+                                    <option value="">-</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -53,9 +68,10 @@ export default function Home(){
                                 </select>
                             </div>
                             <div className="flex gap-1">
-                                <label htmlFor="buleg" className="text-xl">Бүлэг:</label>
+                                <label htmlFor="buleg" className="text-lg md:text-xl">Бүлэг:</label>
                                 {/* <input className="border rounded-md px-2 py-1" type="text" name="buleg" id="buleg" placeholder="Бүлэгээ сонгоно уу" onChange={handleChange}/> */}
                                 <select name="buleg" id="buleg" onChange={handleChange} className="border rounded-md px-2 py-1 bg-white text-black">
+                                    <option value="">-</option>
                                     <option value="1">А</option>
                                     <option value="2">Б</option>
                                     <option value="3">В</option>
@@ -74,7 +90,7 @@ export default function Home(){
                         </div>
                         <div className="flex flex-col gap-1">
                             <label htmlFor="firstname" className="text-xl">Нэр:</label>
-                            <input className="border rounded-md px-2 py-1" type="text" name="firstname" id="firstname"onChange={handleChange} placeholder="Нэрээ бичнэ үү" />
+                            <input className="border rounded-md px-2 py-1" type="text" name="firstname" id="firstname" onChange={handleChange} placeholder="Нэрээ бичнэ үү" />
                         </div>
                     </div>
                     <div className="flex justify-center">

@@ -69,15 +69,15 @@ export default function LandingPage() {
                         <button onClick={handleBtn} className="px-20 py-2 rounded-full text-xl text-[#272343] bg-[#ffd803] font-semibold">Тест өгөх</button>
                         {
                             selectItem && (
-                                <div className="fixed top-0 left-0 pl-10 justify-center items-center w-[100vw] h-[100vh]">
+                                <div className="fixed top-0 left-0 pl-10 justify-center items-center w-[100vw] h-[100vh] bg-opacity-50">
                                     <div className="relative flex justify-center items-center w-[100vw] h-[100vh]">
-                                            <button onClick={closeHandle} className="w-[100vw]  h-[100vh] absolute-50 top-0 left-0" >
+                                            <button onClick={closeHandle} className="w-[100vw] h-[100vh] absolute-50 top-0 left-0" >
                                                 1
                                             </button>
                                         <div className="bg-slate-600 p-3 rounded-xl absolute z-[1] flex flex-col">
                                             <div className="flex justify-between text-white gap-3">
-                                                <h1 className="text-2xl text-center pt-3 pl-10">Test өгөх боломжтой сэдвүүд</h1>
-                                                <button type="button" onClick={closeHandle} class="bg-white rounded-md px-1 h-10 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                                                <h1 className="text-2xl text-center pt-3 pl-10">Тест өгөх боломжтой сэдвүүд</h1>
+                                                <button type="button" onClick={closeHandle} class="bg-slate-600 rounded-md px-1 pt-4 h-10 inline-flex items-center justify-center text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                                                 <span class="sr-only">Close menu</span>
                                                 <svg class="h-6 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -85,7 +85,7 @@ export default function LandingPage() {
                                                 </button>
                                             </div>
                                             <div className="flex flex-col gap-5 justify-center pt-15 text-white ">
-                                                <button onClick={()=>changeTest("Сэтгэл гутрал")} href="/taketest" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black  hover:bg-stone-50">Сэтгэл гутрал</button>
+                                                <button onClick={()=>changeTest("Сэтгэл гутрал")} href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black  hover:bg-stone-50">Сэтгэл гутрал</button>
                                                 <button onClick={()=>changeTest("Түгшүүр")} href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Түгшүүр</button>
                                                 <button onClick={()=>changeTest("Стресс")} href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Стресс</button>
                                                 <button onClick={()=>changeTest("Өөртөө итгэх итгэл")} href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Өөртөө итгэх итгэл</button>
