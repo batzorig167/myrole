@@ -1,42 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import userMedeelel from "../utils/userData";
 
 export default function StudentResult(){
-    const [userData,setUserData] = useState(userMedeelel);
-    function sortScore(){
-        // alert("ok")
-        let sort = userData.sort((a,b)=>{
-            if(a.score > b.score) {
-                return 1;
-            } 
-            else {
-                return -1;
+    const [userData,setUserData] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch('/api/test-result');
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
             }
-        });
-        console.log(sort)
-        setUserData(sort)
-    }
-    function sortClass(){
-        let sort = userData.sort((a,b)=>{
-            if(a.class > b.class){
-                return 1;
-            }
-            else{
-                return - 1;
-            }
-        });
-        setUserData(sort)
-        console.log(sort)
-    }
-    const [too, setToo] = useState(0)
-    function hasah(){
-        let a = too - 1
-        setToo(a)
-    }
-    function nemeh(){
-        let a = too + 1
-        setToo(a)
-    }
+            const result = await response.json();
+            console.log(result);
+            setUserData(result)
+          } catch (error) {
+            setError(error.message); // Handle any error that occurs
+          }
+        };
+    
+        fetchData(); // Call the fetch function
+      }, []);
     return <div className="h-[100vh] flex justify-center">
         <div className="max-w-lg flex flex-col justify-start items-center">
             <div className="">
@@ -59,12 +42,12 @@ export default function StudentResult(){
                         userData.map((data,index)=>{
                             return <tr key={index} className="odd:bg-[#f4f6f6]">
                             <th>{index + 1}</th>
-                            <td className="flex items-center hidden md:block">{data.lastName}</td>
-                            <td>{data.firstName}</td>
+                            <td className="flex items-center hidden md:block">{data.lastname}</td>
+                            <td>{data.firstname}</td>
                             <td>{data.class + data.buleg}</td>
-                            <td>{data.category}</td>
+                            <td>{data.challenge.name}</td>
                             <td>{data.score}</td>
-                            <td>{data.date}</td>
+                            <td>{data.createdAt}</td>
                         </tr>
                         })
                     }

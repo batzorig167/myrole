@@ -22,7 +22,28 @@ export default function Challenge({props})
     function chooseHandle(){
         setTestUser({...testUser, tuvshin:tuvshinRank, challenge: selectItem})
         setSelectItem(null)
+        handleSubmit()
     }
+    const handleSubmit = async () => {
+      // e.preventDefault();
+      // alert(ilgeelee)
+      console.log("ilgeej bui data=",testUser)
+      const response = await fetch('/api/test-result', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(testUser),
+      });
+  
+      const data = await response.json();
+      console.log(data);
+      if (response.ok) {
+        alert('Post added successfully!');
+      } else {
+        alert('Error: ' + data.message);
+      }
+    };
      return <div className="h-[100vh] flex flex-col justify-center items-center gap-2 bg-[#e3f6f5]">
         <h1 className="md:text-xl flex justify-center text-[#272343]">{"Таны сэтгэл зүйн түвшин:"+tuvshinRank}</h1>
         <h1 className="md:text-xl flex justify-center text-[#272343]">Танд санал болгох чалленж даалгаврууд</h1>
