@@ -34,10 +34,10 @@ export default function LandingPage() {
         }
         router.push("/taketest")
     }
-    return <div className="bg-[#e3f6f5] m-auto text-black">  
-            <div className="flex flex-col bg-[#fff] max-w-[600px] m-auto md:max-w-[1000px]">
-                <div className="flex justify-between w-[100%] ">
-                    <button><Link href="#"><img src="https://bcassetcdn.com/social/tqtwz2wdy6/preview.png" alt="" className="h-20 rounded-md"/></Link></button>
+    return <div className="bg-[white] m-auto text-black">  
+            <div className="flex flex-col max-w-[600px] m-auto md:max-w-[1000px]">
+                <div className="flex justify-between w-[100%] md:rounded-b-2xl bg-[#fff] pl-[30px]"> 
+                    <button><Link href="#"><img src="https://dynamic.design.com/preview/logodraft/e2387455-d3c5-4701-bd2c-8cadb44690e1/image/large.png" alt="" className="h-20 rounded-md"/></Link></button>
                     <div className="flex gap-10 px-5 flex-col justify-center">
                         {/* <a href="login" className="border rounded-md px-4 h-10 flex items-center">Бүртгүүлэх</a> */}
                         <div className="dropdown dropdown-end">
@@ -62,7 +62,7 @@ export default function LandingPage() {
                     <div className="flex justify-center">
                         <div className="items-center flex flex-col justify-center rounded-[18px] bg-[#fffffe] w-[90%] p-[18px]">
                             <p className="flex justify-center text-3xl pb-3 text-[#272343] font-semibold md:text-4xl">Сэтгэл судлалын сайт</p>
-                            <p className="flex justify-center text-xl italic text-justify text-[#2d334a] md:text-2xl">Энэхүү сэтгэл зүйн сайт нь хүмүүсийн сэтгэл зүйн эрүүл мэндийг дэмжих, зөвлөгөө өгөх, өөрийгөө хөгжүүлэх боломж олгох зорилготой. Энэ нь сэтгэлзүйн боловсрол түгээх, мэргэжлийн зөвлөгөө хүргэх, стресс, түгшүүрийг даван туулахад туслах платформ болно.</p>
+                            <p className="flex justify-center text-lg italic text-justify text-[#2d334a] md:text-xl">Энэхүү сэтгэл зүйн сайт нь хүмүүсийн сэтгэл зүйн эрүүл мэндийг дэмжих, зөвлөгөө өгөх, өөрийгөө хөгжүүлэх боломж олгох зорилготой. Энэ нь сэтгэлзүйн боловсрол түгээх, мэргэжлийн зөвлөгөө хүргэх, стресс, түгшүүрийг даван туулахад туслах платформ болно.</p>
                         </div>
                     </div>
                     <div className="flex justify-center px-5 pt-8">
@@ -74,10 +74,12 @@ export default function LandingPage() {
                                             <button onClick={closeHandle} className="w-[100vw] h-[100vh] absolute-50 top-0 left-0" >
                                                 1
                                             </button>
-                                        <div className="bg-slate-600 p-3 rounded-xl absolute z-[1] flex flex-col">
+                                        <div className="bg-[white] p-3 rounded-xl absolute z-[1] flex flex-col">
                                             <div className="flex justify-between text-white gap-3">
+
                                                 <h1 className="text-2xl text-center pt-3 pl-10">Тест өгөх боломжтой сэдвүүд</h1>
                                                 <button type="button" onClick={closeHandle} class="bg-slate-600 rounded-md px-1 pt-4 h-10 inline-flex items-center justify-center text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+
                                                 <span class="sr-only">Close menu</span>
                                                 <svg class="h-6 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -89,8 +91,9 @@ export default function LandingPage() {
                                                 <button onClick={()=>changeTest("Түгшүүр")} href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Түгшүүр</button>
                                                 <button onClick={()=>changeTest("Стресс")} href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Стресс</button>
                                                 <button onClick={()=>changeTest("Өөртөө итгэх итгэл")} href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Өөртөө итгэх итгэл</button>
+
                                             </div>
-                                            <button onClick={closeHandle} className="text-right pt-13 pr-5 text-white">Хаах</button>
+                                            <button onClick={closeHandle} className="text-right pt-[20px] px-[10px] text-[#2d334a]">Хаах</button>
                                         </div>
                                     </div>
                                 </div>

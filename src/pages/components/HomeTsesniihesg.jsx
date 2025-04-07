@@ -37,8 +37,14 @@ export default function HomeTsesniihesg() {
                 {/* <a href="#" className="rounded-full text-center text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-500" onClick={handleBtn}>Test өгөх</a> */}
                 </div>
         </div>
-        <div className="flex justify-center">
-            <button className="rounded-full text-center text-xl h-12 w-100 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-700" onClick={handleBtn}>Test өгөх</button>
+        <div className="flex flex-col pt-5"> 
+            <div className=" flex items-center">
+                 <h2 className="text-justify text-xl">Энэхүү сайт нь стресс, сэтгэл гутрал, түгшүүр, өөртөө итгэх итгэл гэсэн дөрвөн цогц дэд сэдвээс бүрдсэн сайт юм. Сайтын үр дагавар нь өөртөө итгэх итгэлийг нэмэгдүүлэх, стресс, түгшүүрээс хол байх, сэтгэл гутралыг эмчлэх, өөрийн буруу зүйлээ ойлгуулахад чиглэнэ.</h2>
+                {/* <a href="#" className="rounded-full text-center text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-500" onClick={handleBtn}>Test өгөх</a> */}
+            </div>
+            <div className="flex justify-center md:justify-end md:mr-[60px]">
+                <button className="rounded-full text-center text-lg text-[#fff] border px-[20px] py-1 bg-[#1F98DC]" onClick={handleBtn}>Тест өгөх </button>
+            </div>
         </div>
         {
             selectItem && (

@@ -2,45 +2,42 @@ import Link from "next/link";
 import Info from "./Info";
 
 export default function Homepage() {
-    return <div className="max-auto-screen bg-white">
-        <div className="flex flex-col justify-center">
-            <div className="flex justify-between px-5 py-1">
-                    <button><Link href="/"><img src="https://bcassetcdn.com/social/tqtwz2wdy6/preview.png" alt="" className="h-20 rounded-md"/></Link></button>
+    return <div className="bg-[#e3f6f5] m-auto">
+        <div className="flex flex-col justify-center max-w-[1000px] m-auto">
+            <div className="flex justify-between bg-[white] md:rounded-b-2xl">
+                    <button><Link href="/"><img src="https://dynamic.design.com/preview/logodraft/e2387455-d3c5-4701-bd2c-8cadb44690e1/image/large.png" alt="" className="h-20 rounded-md"/></Link></button>
                     <div className="flex gap-10 px-5 flex-col justify-center">
-                        <a href="login" className="border rounded-md px-4 h-10 flex text-black items-center">Бүртгүүлэх</a>
+                        <a href="login" className="rounded-[4px] px-4 py-2 flex text-[#2d334a] bg-[white] border-[2px] border-[#2d334a]">Бүртгүүлэх</a>
                 </div>
             </div>
-            <div className=" flex flex-col gap-10 bg-[#e3f6f5] h-full py-10">
+            <div className="flex flex-col bg-[#e3f6f5] py-18 bg-[#e3f6f5] w-full">
                 <div className="px-3">
-                    <div className="items-center px-2 py-1 rounded-[18px] bg-white">
-                            <p className="flex justify-center text-3xl pb-3 text-blue-700">Сэтгэл судлалын сайт</p>
-                            <p className="flex justify-center text-xl italic text-center px-2 text-black"> Энэхүү сэтгэл зүйн сайт нь хүмүүсийн сэтгэл зүйн эрүүл мэндийг дэмжих, зөвлөгөө өгөх, өөрийгөө хөгжүүлэх боломж олгох зорилготой. Энэ нь сэтгэлзүйн боловсрол түгээх, мэргэжлийн зөвлөгөө хүргэх, стресс, түгшүүрийг даван туулахад туслах платформ болно.</p>
+                    <div className="flex justify-center">
+                        <div className="items-center flex flex-col justify-center rounded-[18px] bg-[#fffffe] w-[90%] p-[18px]">
+                            <p className="flex justify-center text-3xl pb-3 text-[#272343] font-semibold md:text-4xl">Сэтгэл судлалын сайт</p>
+                            <p className="flex justify-center text-lg italic text-justify text-[#2d334a] md:text-xl">Энэхүү сэтгэл зүйн сайт нь хүмүүсийн сэтгэл зүйн эрүүл мэндийг дэмжих, зөвлөгөө өгөх, өөрийгөө хөгжүүлэх боломж олгох зорилготой. Энэ нь сэтгэлзүйн боловсрол түгээх, мэргэжлийн зөвлөгөө хүргэх, стресс, түгшүүрийг даван туулахад туслах платформ болно.</p>
+                        </div>
                     </div>
-                    <div className="flex flex-col gap-3 pt-10 px-5">
-                        <h1 className="flex justify-center text-3xl text-black">Өгч болох тестүүд</h1>
-                            <div className="flex flex-col gap-3 items-center">
-                                <div className="flex gap-6">
-                                    <div className="flex flex-col rounded-[20px] py-5 px-2 bg-white w-45">
-                                        <img src="https://www.jobbank.gc.ca/themes-jb/images/quiz/quiz_preferences.svg" alt="" className="h-40 rounded-full"/>
-                                    <a href="/SignUp" className="border py-2 rounded-xl flex justify-center text-sm text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Сэтгэл гутрал</a>
-                                    </div>
-                                    <div className="flex flex-col rounded-[20px] py-5 px-2 bg-white w-45">
-                                        <img src="https://www.jobbank.gc.ca/themes-jb/images/quiz/quiz_abilities.svg" alt="" className="h-40 rounded-full"/>
-                                        <a href="/SignUp" className="border py-2 rounded-xl text-sm text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Стресс</a>
-                                    </div>
-                                </div>
-                                <div className="flex gap-6">
-                                    <div className="rounded-[20px] flex flex-col py-5 px-2 bg-white w-45">
-                                        <img src="https://www.jobbank.gc.ca/themes-jb/images/quiz/quiz_intelligences.svg" alt=""  className="h-40 rounded-full"/>
-                                        <a href="/SignUp" className="border py-2 px-2 rounded-xl text-sm text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Өөртөө итгэх итгэл</a>
-                                    </div>
-                                    <div className="rounded-[20px] bg-white flex flex-col py-5 px-2 w-45">
-                                        <img src="https://www.jobbank.gc.ca/themes-jb/images/quiz/quiz_workvalues.svg" alt="" className="h-40 rounded-full"/>
-                                        <a href="/SignUp" className="border py-2 rounded-xl text-sm text-center rounded-full text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] bg-[#f9593a] hover:bg-blue-500">Түгшүүр</a>
-                                    </div>
-
-                                </div>
+                    <div className="flex flex-col gap-3 pt-10">
+                        <h1 className="flex justify-center text-3xl text-[2d334a] font-semibold">Өгч болох тестүүд</h1>
+                        <div className="flex gap-3 justify-around flex-wrap md:flex-row m-auto font-medium">
+                            <div className="flex flex-col rounded-[20px] py-5 px-2 bg-white w-[45%] md:w-[25%]">
+                                <img src="https://www.jobbank.gc.ca/themes-jb/images/quiz/quiz_preferences.svg" alt="" className="h-40 rounded-full"/>
+                                <a href="/SignUp" className="py-2 rounded-xl flex justify-center text-sm text-center bg-[#ffd803]">Сэтгэл гутрал</a>
                             </div>
+                            <div className="flex flex-col rounded-[20px] py-5 px-2 bg-white w-[45%] md:w-[20%]">
+                                <img src="https://www.jobbank.gc.ca/themes-jb/images/quiz/quiz_abilities.svg" alt="" className="h-40 rounded-full"/>
+                                <a href="/SignUp" className=" bg-[#ffd803] py-2 rounded-xl text-sm text-center  bg-[#ffd803]">Стресс</a>
+                            </div>
+                            <div className="rounded-[20px] flex flex-col py-5 px-2 bg-white w-[45%] md:w-[20%]">
+                                <img src="https://www.jobbank.gc.ca/themes-jb/images/quiz/quiz_intelligences.svg" alt=""  className="h-40 rounded-full"/>
+                                <a href="/SignUp" className=" py-2 rounded-xl text-center text-sm bg-[#ffd803]">Өөртөө итгэх итгэл</a>
+                            </div>
+                            <div className="rounded-[20px] bg-white flex flex-col py-5 px-2 w-[45%] md:w-[20%]">
+                                <img src="https://www.jobbank.gc.ca/themes-jb/images/quiz/quiz_workvalues.svg" alt="" className="h-40 rounded-full"/>
+                                <a href="/SignUp" className=" py-2 rounded-xl text-center text-sm bg-[#ffd803]">Түгшүүр</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
