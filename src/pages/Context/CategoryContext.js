@@ -6,7 +6,8 @@ export const CategoryProvider = ({children})=>
 {
     const [category,setCategory] = useState(0);
     const [catIndex,setCatindex] = useState(0);
-    return <CategoryContext.Provider value={{category,setCategory,catIndex,setCatindex}}>
+    const [catChall,setCatchall] = useState(0);
+    return <CategoryContext.Provider value={{category,setCategory,catIndex,setCatindex,catChall,setCatchall}}>
         {children}
     </CategoryContext.Provider>
 }

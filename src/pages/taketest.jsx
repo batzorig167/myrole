@@ -11,7 +11,7 @@ export default function Home(){
     const {user} = useUser();
     const taketestData = test;
     // context ees tuvshin ni tuvshin props oor damjuln
-    const {tuvshin,setTuvshin} = useScore();
+    const {tuvshin,setTuvshin,setTuvshinRank} = useScore();
     // testShow ni door challengee gargaj irj bsn odo nehh herggu
     const [testShow,setTestShow]= useState(null);
     // testIndex ni test iin idex
@@ -48,48 +48,55 @@ export default function Home(){
     function checkTuvshin(){
         console.log("check")
         if(score >=0 && score <5){
-            let filterRank =challenge[0].challenge.filter((data)=>data.rank ==1);
+            let filterRank =challenge[catIndex].challenge.filter((data)=>data.rank ==1);
             console.log("rank",filterRank)
-            setResult("Хэвийн") 
+            setResult("Хэвийн")
+            setTuvshinRank("Хэвийн")
             setTuvshin(filterRank);
         }else
         if(score>=5 && score<=6){
-            let filterRank =challenge[0].challenge.filter((data)=>data.rank ==2);
+            let filterRank =challenge[catIndex].challenge.filter((data)=>data.rank ==2);
             console.log("rank",filterRank)
             setTuvshin(filterRank);
             setResult("Хөнгөн") 
+            setTuvshinRank("Хөнгөн") 
         }else    
         if(score>=7 && score<=10){
-            let filterRank =challenge[0].challenge.filter((data)=>data.rank ==3);
+            let filterRank =challenge[catIndex].challenge.filter((data)=>data.rank ==3);
             setTuvshin(filterRank);
             setResult("Дунд зэрэг")
+            setTuvshinRank("Дунд зэрэг")
         }else
         if(score>=11 && score<=13){
-            let filterRank =challenge[0].challenge.filter((data)=>data.rank ==4);
+            let filterRank =challenge[catIndex].challenge.filter((data)=>data.rank ==4);
             setTuvshin(filterRank);
             setResult("Хүчтэй") 
+            setTuvshinRank("Хүчтэй") 
         }else
         if(score>=14){
-            let filterRank =challenge[0].challenge.filter((data)=>data.rank ==4);
+            let filterRank =challenge[catIndex].challenge.filter((data)=>data.rank ==4);
             setTuvshin(filterRank);
             setResult("Маш хүчтэй")
+            setTuvshinRank("Маш хүчтэй")
         }
     }
 
-    return <div className="flex justify-center items-center h-[100vh] ">
-        <div className="flex justify-center items-center m-auto overflow-hidden bg-[#E6F2FE] max-w-3xl">
-            <div className="flex flex-col items-center text-[black]">
-                <h1 className="overflow-hidden  w-full flex justify-center items-center p-[15px] text-2xl ">{"Сэдэв: "+test[testIndex].testName}</h1>
+    return <div className="flex justify-center items-center h-[100vh] bg-[#232946]">
+        <div className="flex justify-center items-center m-auto overflow-hidden rounded-[15px] bg-[#fffffe] max-w-[700px]">
+            <div className="flex flex-col items-center">
+                <h1 className="overflow-hidden  w-full flex justify-center items-center p-[15px] text-lg md:text-2xl ">{"Сэдэв: "+test[testIndex].testName}</h1>
                     <div className="flex flex-col">
-                        <h1 className="bg-[#7FBBFA] w-full text-3xl px-[25px] font-medium text-center p-[40px]">
-                            {                            
-                                test[testIndex].question[qIndex]
-                            }
-                        </h1>
-                        <div className="flex flex-col p-[25px] bg-[#E6F2FE] gap-[15px]">
+                        <div className="px-5">
+                            <h1 className="bg-blue-700 text-stone-50 rounded-[18px] text-lg  md:text-3xl md:px-[25px] font-medium text-center p-[20px] md:p-[40px]">
+                                {                            
+                                    test[testIndex].question[qIndex]
+                                }
+                            </h1>
+                        </div>
+                        <div className="flex flex-col  p-5 md:p-[25px] bg-[##fffffe] gap-[15px]">
                             {
                                 test[testIndex].result.map((data,index)=>{
-                                    return <button key={index} onClick={()=>handleSubmit(data)} className="bg-[#D3DFEA] p-[10px] rounded-[10px] text-[22px] flex hover:bg-[#CAD5E0] text-start px-[30px]">{data.result}</button>
+                                    return <button key={index} onClick={()=>handleSubmit(data)} className="bg-gray-100 p-3 text-[18px] md:p-[10px] rounded-[10px] md:text-[22px] flex hover:bg-[#CAD5E0] text-start px-8 md:px-[30px]">{data.result}</button>
                                 })
                             }
                         </div>
