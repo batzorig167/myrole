@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 export default function Home(){
     const {setUser} = useUser();
+    const {testUser,setTestUser} = useUser();
     const [formData,setFormData] = useState({
         class: "",
         buleg: "",
@@ -36,6 +37,8 @@ export default function Home(){
                     firstName: formData.firstname,
                 }
                 setUser(a);
+                console.log(a);
+                setTestUser({...testUser, ...a})
                 router.push("/taketest")
                 console.log("ilgeesen data",a);
             }

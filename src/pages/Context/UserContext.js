@@ -9,8 +9,8 @@ export const UserProvider = ({children})=>{
         lastName:"",
         firstName: "",
     });
-    
-    return <UserContext.Provider value={{user,setUser}}>
+    const [testUser, setTestUser] = useState(null);
+    return <UserContext.Provider value={{user,setUser,testUser, setTestUser}}>
         {children}
     </UserContext.Provider>
 }

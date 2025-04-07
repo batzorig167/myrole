@@ -7,6 +7,8 @@ import { useScore } from "./Context/ScoreContext";
 import { useCategory } from "./Context/CategoryContext";
 
 export default function Home(){
+    const {testUser,setTestUser} = useUser();
+    console.log("sign up=",testUser);
     const {urdun,setUrdun} = useState();
     const {user} = useUser();
     const taketestData = test;
@@ -25,8 +27,8 @@ export default function Home(){
     const [result , setResult] = useState([]);
     const router = useRouter();
     // alert(category)
-    console.log("tuvshin",challenge[0].tuvshin, tuvshin, challenge[0], "lol");
-    console.log("үр дүн=",result);
+    // console.log("tuvshin",challenge[0].tuvshin, tuvshin, challenge[0], "lol");
+    // console.log("үр дүн=",result);
     function handleSubmit(props){
         setScore(score + props.score)
         // console.log(score)
@@ -38,6 +40,7 @@ export default function Home(){
             show()
             checkTuvshin()
             setTestShow(2)
+            setTestUser({...testUser,score:score});
             router.push("/challenge")
         }
 
@@ -46,17 +49,17 @@ export default function Home(){
         setTestShow(1);
     }
     function checkTuvshin(){
-        console.log("check")
+        // console.log("check")
         if(score >=0 && score <5){
             let filterRank =challenge[catIndex].challenge.filter((data)=>data.rank ==1);
-            console.log("rank",filterRank)
+            // console.log("rank",filterRank)
             setResult("Хэвийн")
             setTuvshinRank("Хэвийн")
             setTuvshin(filterRank);
         }else
         if(score>=5 && score<=6){
             let filterRank =challenge[catIndex].challenge.filter((data)=>data.rank ==2);
-            console.log("rank",filterRank)
+            // console.log("rank",filterRank)
             setTuvshin(filterRank);
             setResult("Хөнгөн") 
             setTuvshinRank("Хөнгөн") 
