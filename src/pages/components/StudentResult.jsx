@@ -34,6 +34,7 @@ export default function StudentResult(){
                     <th>Анги</th>
                     <th >Тест</th>
                     <th>Оноо</th>
+                    <th>Түвшин</th>
                     <th>Огноо/сар,өдөр/</th>
                 </tr>
                 </thead>
@@ -45,8 +46,9 @@ export default function StudentResult(){
                             <td className="flex items-center hidden md:block">{data.lastname}</td>
                             <td>{data.firstname}</td>
                             <td>{data.class + data.buleg}</td>
-                            <td>{data.challenge.name}</td>
+                            <td>{data.challenge == null ? "Чалленж сонгоогүй":data.challenge.name}</td>
                             <td>{data.score}</td>
+                            <td>{data.tuvshin}</td>
                             <td>{data.createdAt}</td>
                         </tr>
                         })
