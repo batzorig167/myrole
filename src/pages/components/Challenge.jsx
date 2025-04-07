@@ -85,5 +85,4 @@ export default function Challenge({props})
          }
      </div>
 </div>
-</div>
 }

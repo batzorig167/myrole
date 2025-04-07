@@ -4,6 +4,7 @@ import Challenge from "./components/Challenge";
 import { useUser } from "./Context/UserContext";
 import { useRouter } from "next/router";
 import { useScore } from "./Context/ScoreContext";
+import { useCategory } from "./Context/CategoryContext";
 
 export default function Home(){
     const {urdun,setUrdun} = useState();
@@ -14,7 +15,8 @@ export default function Home(){
     // testShow ni door challengee gargaj irj bsn odo nehh herggu
     const [testShow,setTestShow]= useState(null);
     // testIndex ni test iin idex
-    const [testIndex, setTestIndex] =useState(0);
+    const {category,catIndex} = useCategory()
+    const [testIndex, setTestIndex] =useState(catIndex);
     // ene ni asuultin index
     const [qIndex, setQindex] = useState(0);
     // context ees onoo tuvshin 2 orulj irn
@@ -22,6 +24,7 @@ export default function Home(){
     const [challIndex,setChallIndex] = useState(0);
     const [result , setResult] = useState([]);
     const router = useRouter();
+    // alert(category)
     console.log("tuvshin",challenge[0].tuvshin, tuvshin, challenge[0], "lol");
     console.log("үр дүн=",result);
     function handleSubmit(props){

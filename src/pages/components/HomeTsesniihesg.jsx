@@ -10,10 +10,10 @@ export default function HomeTsesniihesg() {
         setSelectItem(null)
     }
     return <div className="flex flex-col pb-5 gap-2">
-        <div className="flex gap-5">
+        <div className="flex md:flex-row flex-col items-center gap-5 p-5">
             <img src="https://thumbs.dreamstime.com/b/friendly-male-doctor-cartoon-character-floral-plant-decoration-346249083.jpg" alt="" className="h-60 flex md:h-80 pt-8"/>
                 <div className="flex flex-col gap-4 pt-5 ">
-                    <h2 className=" h-60 text-center text-xl  flex items-center">Энэхүү сайт нь стресс, сэтгэл гутрал, түгшүүр, өөртөө итгэх итгэл гэсэн дөрвөн цогц дэд сэдвээс бүрдсэн сайт юм.Сайтын үр дагавар нь өөртөө итгэх итгэлийг нэмэгдүүлэх, стресс, түгшүүрээс хол байх, сэтгэл гутралыг эмчлэх, өөрийн буруу зүйлээ ойлгуулахад чиглэнэ.</h2>
+                    <h2 className=" text-justify text-xl  flex items-center">Энэхүү сайт нь стресс, сэтгэл гутрал, түгшүүр, өөртөө итгэх итгэл гэсэн дөрвөн цогц дэд сэдвээс бүрдсэн сайт юм.Сайтын үр дагавар нь өөртөө итгэх итгэлийг нэмэгдүүлэх, стресс, түгшүүрээс хол байх, сэтгэл гутралыг эмчлэх, өөрийн буруу зүйлээ ойлгуулахад чиглэнэ.</h2>
                 {/* <a href="#" className="rounded-full text-center text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-500" onClick={handleBtn}>Test өгөх</a> */}
                 </div>
         </div>

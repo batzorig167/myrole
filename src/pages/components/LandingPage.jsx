@@ -5,14 +5,34 @@ import Test from "./HomeTsesniihesg";
 import Info from "./Info";
 import { useState } from "react";
 import Div from "./HomeTsesniihesg";
+import { useRouter } from "next/router";
+import { useCategory } from "../Context/CategoryContext";
 
 export default function LandingPage() {
     const [selectItem,setSelectItem] = useState(null);
+    const {setCatindex,setCategory} = useCategory();
     function handleBtn(){
         setSelectItem(2);
     }
+    const router = useRouter();
     function closeHandle(){
         setSelectItem(null)
+    }
+    let changeTest = (props)=>{
+        // alert(props)
+        if(props == "Өөртөө итгэх итгэл"){
+            setCatindex(3);
+        }       
+        if(props == "Стресс"){
+            setCatindex(2);
+        }
+        if(props == "Түгшүүр"){
+            setCatindex(1);
+        }
+        if(props == "Сэтгэл гутрал"){
+            setCatindex(0);
+        }
+        router.push("/taketest")
     }
     return <div className="bg-[#e3f6f5] m-auto text-black">  
             <div className="flex flex-col bg-[#fff] max-w-[600px] m-auto md:max-w-[1000px]">
@@ -65,10 +85,10 @@ export default function LandingPage() {
                                                 </button>
                                             </div>
                                             <div className="flex flex-col gap-5 justify-center pt-15 text-white ">
-                                                <a href="/taketest" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black  hover:bg-stone-50">Сэтгэл гутрал</a>
-                                                <a href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Түгшүүр</a>
-                                                <a href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Стресс</a>
-                                                <a href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Өөртөө итгэх итгэл</a>
+                                                <button onClick={()=>changeTest("Сэтгэл гутрал")} href="/taketest" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black  hover:bg-stone-50">Сэтгэл гутрал</button>
+                                                <button onClick={()=>changeTest("Түгшүүр")} href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Түгшүүр</button>
+                                                <button onClick={()=>changeTest("Стресс")} href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Стресс</button>
+                                                <button onClick={()=>changeTest("Өөртөө итгэх итгэл")} href="" className="border rounded-xl bg-[#D1D5DB] text-black text-center py-2 hover:text-black hover:bg-stone-50">Өөртөө итгэх итгэл</button>
                                             </div>
                                             <button onClick={closeHandle} className="text-right pt-13 pr-5 text-white">Хаах</button>
                                         </div>
