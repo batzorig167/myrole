@@ -70,7 +70,7 @@ export default function Home() {
                 name="school"
                 id="school"
                 onChange={handleChange}
-                className="border rounded-md px-1 md:px-2 md:py-1 bg-white text-black"
+                className="border border-[#333] rounded-md px-1 md:px-2 md:py-1 bg-white text-black"
               >
                 <option value="">-</option>
                 <option value="aviyas">Авьяас сургууль</option>
@@ -88,21 +88,21 @@ export default function Home() {
                   name="class"
                   id="class"
                   onChange={handleChange}
-                  className="border rounded-md px-1 md:px-2 md:py-1 bg-white text-black"
+                  className="border border-[#333] rounded-md px-1 md:px-2 md:py-1 bg-white text-black"
                 >
                   <option value="">-</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
                   <option value="12">12</option>
+                  <option value="11">11</option>
+                  <option value="10">10</option>
+                  <option value="9">9</option>
+                  <option value="8">8</option>
+                  <option value="7">7</option>
+                  <option value="6">6</option>
+                  <option value="5">5</option>
+                  <option value="4">4</option>
+                  <option value="3">3</option>
+                  <option value="2">2</option>
+                  <option value="1">1</option>
                 </select>
               </div>
               <div className="flex gap-1">
@@ -113,7 +113,7 @@ export default function Home() {
                   name="buleg"
                   id="buleg"
                   onChange={handleChange}
-                  className="border rounded-md px-2 py-1 bg-white text-black"
+                  className="border border-[#333] rounded-md px-2 py-1 bg-white text-black"
                 >
                   <option value="">-</option>
                   <option value="а">А</option>
@@ -131,7 +131,7 @@ export default function Home() {
                 Овог:
               </label>
               <input
-                className="border rounded-md px-2 py-1"
+                className="border border-[#333] rounded-md px-2 py-1"
                 type="text"
                 name="lastname"
                 id="lastname"
@@ -139,7 +139,7 @@ export default function Home() {
                 placeholder="Овогоо бичнэ үү"
               />
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex border-[#333] flex-col gap-1">
               <label htmlFor="firstname" className="text-xl">
                 Нэр:
               </label>
@@ -157,7 +157,7 @@ export default function Home() {
             <input
               type="submit"
               value="Цааш"
-              className="border rounded-md px-6 py-2 text-xl text-black bg-white"
+              className="border border-[#333] rounded-md px-6 py-2 text-xl text-black bg-white"
             />
           </div>
         </form>

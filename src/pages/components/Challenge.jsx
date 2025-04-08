@@ -157,14 +157,6 @@ export default function Challenge({ props }) {
           </div>
         </div>
       )}
-      <div className="pt-3">
-        <button
-          className="md:text-xl md:px-5 rounded-lg py-1 px-10  bg-[#ffd803]"
-          onClick={Btn}
-        >
-          Нүүр хэсэг лүү буцах
-        </button>
-      </div>
     </div>
   );
 }
