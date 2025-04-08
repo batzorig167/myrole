@@ -16,7 +16,8 @@ export default function Challenge({ props }) {
     setSelectItem(null);
   }
   function Btn() {
-    router.push("/landingPage");
+    setTestUser(null);
+    router.push("/homepage");
   }
   function chooseHandle() {
     setTestUser({ ...testUser, tuvshin: tuvshinRank, challenge: selectItem });

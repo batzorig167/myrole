@@ -105,7 +105,7 @@ export default function Home() {
           </h1>
           <div className="flex flex-col">
             <div className="px-5">
-              <h1 className="bg-blue-700 text-[#fff] rounded-[18px] text-lg  md:text-3xl md:px-[25px] font-medium text-center p-[20px] md:p-[40px]">
+              <h1 className="bg-[#1447E6] text-[#fff] rounded-[18px] text-lg  md:text-3xl md:px-[25px] font-medium text-center p-[20px] md:p-[40px]">
                 {test[testIndex].question[qIndex]}
               </h1>
             </div>
