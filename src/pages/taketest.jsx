@@ -100,7 +100,7 @@ export default function Home() {
     <div className="flex justify-center  text-[#333] items-center h-[100vh] bg-[#232946]">
       <div className="flex justify-center items-center m-auto overflow-hidden rounded-[15px] bg-[#fffffe] max-w-[700px]">
         <div className="flex flex-col items-center">
-          <h1 className="overflow-hidden  w-full flex justify-center items-center p-[15px] text-lg md:text-2xl ">
+          <h1 className="overflow-hidden w-full flex justify-center items-center p-[15px] text-lg md:text-2xl ">
             {"Сэдэв: " + test[testIndex].testName}
           </h1>
           <div className="flex flex-col">
