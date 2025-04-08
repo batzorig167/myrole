@@ -1,4 +1,5 @@
-import { useState } from "react";
+'use client';
+import { useEffect, useState } from "react";
 import { challenge, test } from "./utils/data";
 import Challenge from "./components/Challenge";
 import { useUser } from "./Context/UserContext";
@@ -8,7 +9,7 @@ import { useCategory } from "./Context/CategoryContext";
 
 export default function Home(){
     const {testUser,setTestUser} = useUser();
-    console.log("sign up=",testUser);
+    // console.log("sign up=",testUser);
     const {urdun,setUrdun} = useState();
     const {user} = useUser();
     const taketestData = test;
@@ -29,6 +30,12 @@ export default function Home(){
     // alert(category)
     // console.log("tuvshin",challenge[0].tuvshin, tuvshin, challenge[0], "lol");
     // console.log("үр дүн=",result);
+    useEffect(() => {
+        if(testUser==null){
+            router.push("/SignUp");
+        }
+      }, [testUser, router]);
+    
     function handleSubmit(props){
         setScore(score + props.score)
         // console.log(score)

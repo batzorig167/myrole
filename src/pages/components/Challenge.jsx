@@ -21,19 +21,19 @@ export default function Challenge({props})
     }
     function chooseHandle(){
         setTestUser({...testUser, tuvshin:tuvshinRank, challenge: selectItem})
-        setSelectItem(null)
         handleSubmit()
+
     }
     const handleSubmit = async () => {
       // e.preventDefault();
       // alert(ilgeelee)
-      console.log("ilgeej bui data=",testUser)
+      console.log("ilgeej bui data=",{...testUser, tuvshin:tuvshinRank, challenge: selectItem})
       const response = await fetch('/api/test-result', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(testUser),
+        body: JSON.stringify({...testUser, tuvshin:tuvshinRank, challenge: selectItem}),
       });
   
       const data = await response.json();
@@ -43,6 +43,8 @@ export default function Challenge({props})
       } else {
         alert('Error: ' + data.message);
       }
+      setSelectItem(null)
+      Btn()
     };
      return <div className="h-[100vh] flex flex-col justify-center items-center gap-2 bg-[#e3f6f5]">
         <h1 className="md:text-xl flex justify-center text-[#272343]">{"Таны сэтгэл зүйн түвшин:"+tuvshinRank}</h1>

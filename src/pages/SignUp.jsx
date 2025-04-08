@@ -75,15 +75,13 @@ export default function Home(){
                                 {/* <input className="border rounded-md px-2 py-1" type="text" name="buleg" id="buleg" placeholder="Бүлэгээ сонгоно уу" onChange={handleChange}/> */}
                                 <select name="buleg" id="buleg" onChange={handleChange} className="border rounded-md px-2 py-1 bg-white text-black">
                                     <option value="">-</option>
-                                    <option value="1">А</option>
-                                    <option value="2">Б</option>
-                                    <option value="3">В</option>
-                                    <option value="4">Г</option>
-                                    <option value="5">Д</option>
-                                    <option value="6">Е</option>
-                                    <option value="7">Ж</option>
-                                    <option value="8">1</option>
-                                    <option value="9">2</option>
+                                    <option value="а">А</option>
+                                    <option value="б">Б</option>
+                                    <option value="в">В</option>
+                                    <option value="г">Г</option>
+                                    <option value="д">Д</option>
+                                    <option value="е">Е</option>
+                                    <option value="ж">Ж</option>
                                 </select>
                             </div>
                         </div>
