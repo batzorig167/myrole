@@ -97,7 +97,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex justify-center items-center h-[100vh] bg-[#232946]">
+    <div className="flex justify-center  text-[#333] items-center h-[100vh] bg-[#232946]">
       <div className="flex justify-center items-center m-auto overflow-hidden rounded-[15px] bg-[#fffffe] max-w-[700px]">
         <div className="flex flex-col items-center">
           <h1 className="overflow-hidden  w-full flex justify-center items-center p-[15px] text-lg md:text-2xl ">
@@ -105,7 +105,7 @@ export default function Home() {
           </h1>
           <div className="flex flex-col">
             <div className="px-5">
-              <h1 className="bg-blue-700 text-stone-50 rounded-[18px] text-lg  md:text-3xl md:px-[25px] font-medium text-center p-[20px] md:p-[40px]">
+              <h1 className="bg-[rgb(29 78 216 / var(--tw-bg-opacity, 1))] text-[#fff] rounded-[18px] text-lg  md:text-3xl md:px-[25px] font-medium text-center p-[20px] md:p-[40px]">
                 {test[testIndex].question[qIndex]}
               </h1>
             </div>
@@ -115,7 +115,7 @@ export default function Home() {
                   <button
                     key={index}
                     onClick={() => handleSubmit(data)}
-                    className="bg-gray-100 p-3 text-[18px] md:p-[10px] rounded-[10px] md:text-[22px] flex hover:bg-[#CAD5E0] text-start px-8 md:px-[30px]"
+                    className="bg-gray-100 p-3 text-[18px] text-[#333] md:p-[10px] rounded-[10px] md:text-[22px] flex hover:bg-[#CAD5E0] text-start px-8 md:px-[30px]"
                   >
                     {data.result}
                   </button>
