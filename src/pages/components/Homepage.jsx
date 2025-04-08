@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Info from "./Info";
+import HomeTsesniihesg from "./HomeTsesniihesg";
 
 export default function Homepage() {
   return (
-    <div className="bg-[white] m-auto">
-      <div className="flex flex-col justify-center max-w-[1000px] bg-[#e3f6f5] m-auto">
-        <div className="flex justify-between bg-[white] md:rounded-b-2xl overflow-hidden">
+    <div className="bg-[white] min-h-[100vh]   m-auto">
+      <div className=" max-w-[1000px] min-h-[85vh] bg-[#e3f6f5]  m-auto">
+        <div className="flex justify-between bg-[white]  overflow-hidden">
           <button>
             <Link href="/">
               <img
@@ -100,6 +101,9 @@ export default function Homepage() {
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          <HomeTsesniihesg />
         </div>
       </div>
       <Info />

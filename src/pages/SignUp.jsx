@@ -75,6 +75,7 @@ export default function Home() {
                 <option value="">-</option>
                 <option value="aviyas">Авьяас сургууль</option>
                 <option value="dmts">Дэлгэрмөрөн сургууль</option>
+                <option value="galtschool">Галт сум ЕБС</option>
                 <option value="ireedui">Ирээдүй сургууль</option>
                 <option value="edts">Эрдмийн далай сургууль</option>
               </select>

@@ -115,7 +115,7 @@ export default function Home() {
                   <button
                     key={index}
                     onClick={() => handleSubmit(data)}
-                    className="bg-gray-100 p-3 text-[18px] text-[#333] md:p-[10px] rounded-[10px] md:text-[22px] flex hover:bg-[#CAD5E0] text-start px-8 md:px-[30px]"
+                    className="bg-gray-100 border p-3 text-[18px] text-[#333] md:p-[10px] rounded-[10px] md:text-[22px] flex hover:bg-[#CAD5E0] text-start px-8 md:px-[30px]"
                   >
                     {data.result}
                   </button>

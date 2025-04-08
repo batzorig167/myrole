@@ -46,8 +46,6 @@ export default function HomeTsesniihesg() {
             өөртөө итгэх итгэлийг нэмэгдүүлэх, стресс, түгшүүрээс хол байх,
             сэтгэл гутралыг эмчлэх, өөрийн буруу зүйлээ ойлгуулахад чиглэнэ.
           </h2>
-          {/* <a href="#" className="rounded-full text-center text-xl h-12 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 text-[#fff] border  py-2 rounded-full bg-[#f9593a] hover:bg-blue-500" onClick={handleBtn}>Test өгөх</a> */}
-          @@ -47,33 +43,36 @@
         </div>
       </div>
       {selectItem && (
