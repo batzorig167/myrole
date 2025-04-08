@@ -31,6 +31,7 @@ export default async function handler(req, res) {
       //   res.status(200).json(data);
       const test_result = {
         class: req.body.class,
+        school: req.body.school,
         buleg: req.body.buleg,
         lastname: req.body.lastName,
         firstname: req.body.firstName,
