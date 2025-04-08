@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "./Context/UserContext";
 import { useRouter } from "next/router";
 
@@ -19,6 +19,11 @@ export default function Home() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
   const router = useRouter();
+  useEffect(() => {
+    if (testUser != null) {
+      router.push("/taketest");
+    }
+  }, [testUser, router]);
 
   const submitHandle = (e) => {
     e.preventDefault();

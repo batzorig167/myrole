@@ -16,7 +16,7 @@ export default function Challenge({ props }) {
     setSelectItem(null);
   }
   function Btn() {
-    setTestUser(null);
+    // setTestUser(null);
     router.push("/homepage");
   }
   function chooseHandle() {

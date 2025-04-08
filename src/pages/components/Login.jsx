@@ -15,6 +15,8 @@ export default function Login(){
     const handleChange = (e)=>{
         setdata({...data, [e.target.name]:e.target.value});
     }
+
+    
     const handleSubmit = (e)=>{
         e.preventDefault();
         // alert(data.username, data.email , data.password);

@@ -4,6 +4,8 @@ export default function StudentResult() {
   const [userData, setUserData] = useState([]);
   const [allUser, setAlluser] = useState([]);
   const [search, setSearch] = useState();
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState(null); // Error state for error handling
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -16,6 +18,8 @@ export default function StudentResult() {
         setAlluser(result);
       } catch (error) {
         setError(error.message); // Handle any error that occurs
+      } finally {
+        setLoading(false); // Data has finished loading
       }
     };
 
@@ -57,6 +61,18 @@ export default function StudentResult() {
     console.log(sortedData);
     setUserData(sortedData);
   }
+  // Render loading, error, or the actual content
+  if (loading) {
+    return (
+      <div className="w-full h-[100vh] flex justify-center items-center">
+        <span className="loading loading-spinner text-primary"></span>
+      </div>
+    ); // Show loading while fetching data
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>; // Show error message if fetch fails
+  }
 
   return (
     <div className="h-[100vh] flex justify-center">
@@ -81,10 +97,10 @@ export default function StudentResult() {
           <thead>
             <tr className="flex items-center">
               <th className="w-[10px]  flex items-center justify-center">№</th>
-              <th className="flex items-center w-[120px]  hidden md:block">
+              <th className="flex items-center w-[140px]  hidden md:block">
                 <button onClick={sortOvog}>Овог</button>
               </th>
-              <th className="flex items-center w-[120px] ">
+              <th className="flex items-center w-[140px] ">
                 <button onClick={sortFirstname}>Нэр</button>
               </th>
               <th className="w-[40px]  flex items-center justify-center">
@@ -114,10 +130,10 @@ export default function StudentResult() {
                   <th className="w-[10px]  flex items-center justify-center">
                     {index + 1}
                   </th>
-                  <td className="flex items-center w-[120px]  hidden md:block">
+                  <td className="flex items-center text-left justify-start  w-[140px]  hidden md:block">
                     {data.lastname}
                   </td>
-                  <td className="flex items-center w-[120px] ">
+                  <td className="flex justify-start text-left  items-center w-[140px] ">
                     {data.firstname}
                   </td>
                   <td className="w-[40px]  flex items-center justify-center">
