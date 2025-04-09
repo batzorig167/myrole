@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { userAgent } from "next/server";
 import { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import { useRouter } from "next/router";
@@ -11,7 +9,6 @@ export default function Login() {
     password: "",
   });
   const router = useRouter();
-  // console.log(login);
 
   // Check if user is already logged in
   useEffect(() => {
@@ -19,7 +16,8 @@ export default function Login() {
       // If the user exists, redirect to dashboard
       router.push("/dashboard");
     }
-  }, [user, router]); // Dependencies: user, router
+  }, [user, router]);
+
   const handleChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
   };
@@ -38,40 +36,50 @@ export default function Login() {
     if (response.ok) {
       setUser(data.user);
       localStorage.setItem("user", JSON.stringify(data.user));
-      window.location.href = "/dashboard";
+      router.push("/dashboard"); // Use router for smooth navigation
     } else {
       alert("Error: " + data.message);
     }
   };
+
   return (
-    <div className="h-[100vh] w-full m-auto-screen bg-center bg-cover flex justify-center items-center bg-[#333] text-black">
-      <form
-        onSubmit={handleSubmit}
-        className=" rounded-xl flex flex-col border gap-5 px-12 py-12 w-100 bg-white"
-      >
-        <h1 className="flex justify-center text-4xl font-semibold">Нэвтрэх</h1>
-        <input
-          type="text"
-          name="username"
-          id=""
-          placeholder="Нэвтрэх нэрээ оруулна уу"
-          className="border border-gray-500 py-2 rounded-[5px] text-center delay-150 duration-300 ease-in-out hover:scale-102 hover:border hover:border-[black]"
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          id=""
-          placeholder="Нууц үгээ оруулна уу"
-          className="border border-gray-500 py-2 rounded-[5px] text-center delay-150 duration-300 ease-in-out hover:scale-102 hover:border hover:border-[black]"
-          onChange={handleChange}
-        />
-        <input
-          type="submit"
-          value="Нэвтрэх"
-          className="border rounded-md py-1"
-        />
-      </form>
+    <div className="h-[100vh] w-full flex justify-center items-center bg-[#f0f4f8]">
+      <div className="bg-white p-8 rounded-xl shadow-md max-w-md w-full">
+        <h1 className="text-3xl font-semibold text-center text-[#333] mb-6">
+          Нэвтрэх
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <input
+              type="text"
+              name="username"
+              placeholder="Нэвтрэх нэрээ оруулна уу"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none transition duration-300 ease-in-out"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <input
+              type="password"
+              name="password"
+              placeholder="Нууц үгээ оруулна уу"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none transition duration-300 ease-in-out"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="w-full bg-[#4CAF50] text-white py-3 rounded-lg text-lg hover:bg-[#45a049] transition duration-300 ease-in-out"
+            >
+              Нэвтрэх
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

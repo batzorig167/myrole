@@ -64,7 +64,7 @@ export default function Homepage() {
               </div>
             </div>
             <div className="flex flex-col gap-3 pt-10 w-full items-center">
-              <h1 className="flex justify-center text-3xl text-[2d334a] font-semibold">
+              <h1 className="flex justify-center text-3xl text-[#2d334a] font-semibold">
                 Өгч болох тестүүд
               </h1>
               <div className="flex md:justify-between flex-wrap md:flex-row font-medium gap-3 w-[90%]">

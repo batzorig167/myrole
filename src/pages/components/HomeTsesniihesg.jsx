@@ -41,7 +41,7 @@ export default function HomeTsesniihesg() {
       </div>
       <div className="flex flex-col pt-4 px-[20px] gap-4">
         <div className=" flex items-center">
-          <h2 className="text-justify text-xl">
+          <h2 className="text-justify text-xl text-[#333]">
             Энэхүү сайт нь стресс, сэтгэл гутрал, түгшүүр, өөртөө итгэх итгэл
             гэсэн дөрвөн цогц дэд сэдвээс бүрдсэн сайт юм. Сайтын үр дагавар нь
             өөртөө итгэх итгэлийг нэмэгдүүлэх, стресс, түгшүүрээс хол байх,
