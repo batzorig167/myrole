@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { useUser } from "../Context/UserContext";
 
 export default function StudentResult() {
+  const { user, setUser } = useUser();
   const [userData, setUserData] = useState([]);
   const [allUser, setAlluser] = useState([]);
-  const [search, setSearch] = useState();
-  const [loading, setLoading] = useState(true); // Add loading state
-  const [error, setError] = useState(null); // Error state for error handling
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -14,20 +17,24 @@ export default function StudentResult() {
           throw new Error("Network response was not ok");
         }
         const result = await response.json();
-        setUserData(result);
-        setAlluser(result);
+        const filterSchool = result.filter(
+          (data) => data.school === user.school
+        );
+        setUserData(filterSchool);
+        console.log(filterSchool);
+        setAlluser(filterSchool);
       } catch (error) {
-        setError(error.message); // Handle any error that occurs
+        setError(error.message);
       } finally {
-        setLoading(false); // Data has finished loading
+        setLoading(false);
       }
     };
 
-    fetchData(); // Call the fetch function
+    fetchData();
   }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("val", e.target.search.value);
     const filteredData = allUser.filter(
       (item) =>
         Object.values(item).some((value) =>
@@ -38,126 +45,126 @@ export default function StudentResult() {
           .toLowerCase()
           .includes(search.toLowerCase())
     );
-    console.log(filteredData);
     setUserData(filteredData);
   };
-  function sortOvog() {
-    let sortedData = [...userData].sort((a, b) => {
-      if (a.lastname > b.lastname) return 1;
-      if (a.lastname < b.lastname) return -1;
-      return 0;
-    });
 
-    console.log(sortedData);
+  const sortOvog = () => {
+    const sortedData = [...userData].sort((a, b) =>
+      a.lastname.localeCompare(b.lastname)
+    );
     setUserData(sortedData);
-  }
-  function sortFirstname() {
-    let sortedData = [...userData].sort((a, b) => {
-      if (a.firstname > b.firstname) return 1;
-      if (a.firstname < b.firstname) return -1;
-      return 0;
-    });
+  };
 
-    console.log(sortedData);
+  const sortFirstname = () => {
+    const sortedData = [...userData].sort((a, b) =>
+      a.firstname.localeCompare(b.firstname)
+    );
     setUserData(sortedData);
-  }
-  // Render loading, error, or the actual content
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+  };
+
   if (loading) {
     return (
-      <div className="w-full h-[100vh] flex justify-center items-center">
+      <div className="w-full h-screen flex justify-center items-center">
         <span className="loading loading-spinner text-primary"></span>
       </div>
-    ); // Show loading while fetching data
+    );
   }
 
   if (error) {
-    return <div>Error: {error}</div>; // Show error message if fetch fails
+    return <div className="text-red-500 text-center mt-4">Error: {error}</div>;
   }
 
   return (
-    <div className="h-[100vh] flex justify-center">
-      <div className="max-w-lg flex flex-col justify-start items-center">
-        <div className="">
-          <h1 className="text-[22px] text-center font-normal">
-            Тест бөглөсөн сурагчдын мэдээлэл
-          </h1>
+    <div className="w-full flex justify-center p-4">
+      <div className="w-full max-w-7xl bg-white rounded-2xl shadow-md p-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <h1 className="text-2xl font-semibold text-gray-800">{user?.name}</h1>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md shadow transition duration-300"
+          >
+            Гарах
+          </button>
         </div>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="search"
-              className="border"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <input type="submit" value="search" />
-          </form>
-        </div>
-        <table className=" flex table text-center  border-[#f4f6f6] ">
-          <thead>
-            <tr className="flex items-center">
-              <th className="w-[10px]  flex items-center justify-center">№</th>
-              <th className="flex items-center w-[140px]  hidden md:block">
-                <button onClick={sortOvog}>Овог</button>
-              </th>
-              <th className="flex items-center w-[140px] ">
-                <button onClick={sortFirstname}>Нэр</button>
-              </th>
-              <th className="w-[40px]  flex items-center justify-center">
-                Анги
-              </th>
-              <th className="w-[280px]  flex items-center justify-center">
-                Тест
-              </th>
-              <th className="w-[50px]  flex items-center justify-center">
-                Оноо
-              </th>
-              <th className="w-[120px]  flex items-center justify-center">
-                Түвшин
-              </th>
-              <th className="w-[150px]  flex items-center justify-center">
-                Огноо/сар,өдөр/
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {userData.map((data, index) => {
-              return (
+
+        {/* Search */}
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col sm:flex-row gap-4 mb-6"
+        >
+          <input
+            type="text"
+            name="search"
+            placeholder="Хайх..."
+            className="flex-grow border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md shadow transition duration-300"
+          >
+            Хайх
+          </button>
+        </form>
+
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm text-gray-700">
+            <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+              <tr>
+                <th className="p-2">№</th>
+                <th className="p-2 hidden md:table-cell">
+                  <button onClick={sortOvog} className="hover:underline">
+                    Овог
+                  </button>
+                </th>
+                <th className="p-2">
+                  <button onClick={sortFirstname} className="hover:underline">
+                    Нэр
+                  </button>
+                </th>
+                <th className="p-2">Анги</th>
+                <th className="p-2">Тест</th>
+                <th className="p-2">Оноо</th>
+                <th className="p-2">Түвшин</th>
+                <th className="p-2">Огноо</th>
+              </tr>
+            </thead>
+            <tbody>
+              {userData.map((data, index) => (
                 <tr
                   key={index}
-                  className="flex flex-wrap items-center odd:bg-[#f4f6f6]"
+                  className="odd:bg-gray-50 even:bg-white text-center"
                 >
-                  <th className="w-[10px]  flex items-center justify-center">
-                    {index + 1}
-                  </th>
-                  <td className="flex items-center text-left justify-start  w-[140px]  hidden md:block">
-                    {data.lastname}
+                  <td className="p-2">{index + 1}</td>
+                  <td className="p-2 hidden md:table-cell">{data.lastname}</td>
+                  <td className="p-2">{data.firstname}</td>
+                  <td className="p-2">{data.class + data.buleg}</td>
+                  <td className="p-2">
+                    {data.challenge?.name || "Чалленж сонгоогүй"}
                   </td>
-                  <td className="flex justify-start text-left  items-center w-[140px] ">
-                    {data.firstname}
-                  </td>
-                  <td className="w-[40px]  flex items-center justify-center">
-                    {data.class + data.buleg}
-                  </td>
-                  <td className="w-[280px]  flex items-center justify-center">
-                    {data.challenge == null
-                      ? "Чалленж сонгоогүй"
-                      : data.challenge.name}
-                  </td>
-                  <td className="w-[50px]  flex items-center justify-center">
-                    {data.score}
-                  </td>
-                  <td className="w-[120px]  flex items-center justify-center">
-                    {data.tuvshin}
-                  </td>
-                  <td className="w-[150px]  flex items-center justify-center">
-                    {data.createdAt}
+                  <td className="p-2">{data.score}</td>
+                  <td className="p-2">{data.tuvshin}</td>
+                  <td className="p-2">
+                    {new Date(data.createdAt).toLocaleString("mn-MN", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </td>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

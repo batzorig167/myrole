@@ -15,6 +15,7 @@ export default function HomeTsesniihesg() {
   }
   let changeTest = (props) => {
     // alert(props)
+    console.log(props);
     if (props == "Өөртөө итгэх итгэл") {
       setCatindex(3);
     }

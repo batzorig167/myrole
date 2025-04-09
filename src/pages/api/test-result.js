@@ -29,6 +29,7 @@ export default async function handler(req, res) {
       //   const data = await collection.find({}).toArray();
 
       //   res.status(200).json(data);
+      let newDate = moment().tz("Asia/Ulaanbaatar").format();
       const test_result = {
         class: req.body.class,
         school: req.body.school,
@@ -38,7 +39,8 @@ export default async function handler(req, res) {
         score: req.body.score,
         tuvshin: req.body.tuvshin,
         challenge: req.body.challenge,
-        createdAt: new Date(),
+        category: req.body.category,
+        createdAt: newDate,
       };
 
       const result = await db.collection("test_result").insertOne(test_result);

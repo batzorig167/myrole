@@ -101,16 +101,16 @@ export default function Home() {
       <div className="flex justify-center items-center m-auto overflow-hidden rounded-[15px] bg-[#fffffe] max-w-[700px]">
         <div className="flex flex-col items-center">
           <h1 className="overflow-hidden w-full flex justify-center items-center p-[15px] text-lg md:text-2xl ">
-            {"Сэдэв: " + test[testIndex].testName}
+            {"Сэдэв: " + test[catIndex].testName}
           </h1>
           <div className="flex flex-col">
             <div className="px-5">
               <h1 className="bg-[#1447E6] text-[#fff] rounded-[18px] text-lg  md:text-3xl md:px-[25px] font-medium text-center p-[20px] md:p-[40px]">
-                {test[testIndex].question[qIndex]}
+                {test[catIndex].question[qIndex]}
               </h1>
             </div>
             <div className="flex flex-col  p-5 md:p-[25px] bg-[##fffffe] gap-[15px]">
-              {test[testIndex].result.map((data, index) => {
+              {test[catIndex].result.map((data, index) => {
                 return (
                   <button
                     key={index}

@@ -48,7 +48,6 @@ export default function LandingPage() {
             </Link>
           </button>
           <div className="flex gap-10 px-5 flex-col justify-center">
-            {/* <a href="login" className="border rounded-md px-4 h-10 flex items-center">Бүртгүүлэх</a> */}
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}

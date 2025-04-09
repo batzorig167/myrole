@@ -1,8 +1,30 @@
 import Link from "next/link";
 import Info from "./Info";
 import HomeTsesniihesg from "./HomeTsesniihesg";
+import { useRouter } from "next/router";
+import { useCategory } from "../Context/CategoryContext";
 
 export default function Homepage() {
+  const { setCatindex, setCategory } = useCategory();
+
+  const router = useRouter();
+  let changeTest = (props) => {
+    // alert(props)
+    console.log(props);
+    if (props == "Өөртөө итгэх итгэл") {
+      setCatindex(3);
+    }
+    if (props == "Стресс") {
+      setCatindex(2);
+    }
+    if (props == "Түгшүүр") {
+      setCatindex(1);
+    }
+    if (props == "Сэтгэл гутрал") {
+      setCatindex(0);
+    }
+    router.push("/taketest");
+  };
   return (
     <div className="bg-[white] min-h-[100vh]   m-auto">
       <div className=" max-w-[1000px] min-h-[85vh] bg-[#e3f6f5]  m-auto">
@@ -21,7 +43,7 @@ export default function Homepage() {
               href="login"
               className="rounded-[4px] px-4 py-2 flex text-[#2d334a] bg-[white] border-[2px] border-[#2d334a]"
             >
-              Бүртгүүлэх
+              Нэвтрэх
             </a>
           </div>
         </div>
@@ -52,12 +74,13 @@ export default function Homepage() {
                     alt=""
                     className="h-40 rounded-full"
                   />
-                  <a
-                    href="/SignUp"
-                    className="py-2 rounded-xl flex justify-center text-sm text-center bg-[#ffd803]"
+                  <button
+                    onClick={() => changeTest("Сэтгэл гутрал")}
+                    href=""
+                    className="rounded-xl bg-[#bae8e8] text-[#2d334a] text-center py-2"
                   >
                     Сэтгэл гутрал
-                  </a>
+                  </button>
                 </div>
                 <div className="flex flex-col rounded-[20px] py-5 px-2 bg-white w-[48%] md:w-[20%]">
                   <img
@@ -65,12 +88,13 @@ export default function Homepage() {
                     alt=""
                     className="h-40 rounded-full"
                   />
-                  <a
-                    href="/SignUp"
-                    className=" bg-[#ffd803] py-2 rounded-xl text-sm text-center  bg-[#ffd803]"
+                  <button
+                    onClick={() => changeTest("Стресс")}
+                    href=""
+                    className="rounded-xl bg-[#bae8e8] text-[#2d334a] text-center py-2"
                   >
                     Стресс
-                  </a>
+                  </button>
                 </div>
                 <div className="rounded-[20px] flex flex-col py-5 px-2 bg-white w-[48%] md:w-[20%]">
                   <img
@@ -78,12 +102,13 @@ export default function Homepage() {
                     alt=""
                     className="h-40 rounded-full"
                   />
-                  <a
-                    href="/SignUp"
-                    className=" py-2 rounded-xl text-center text-sm bg-[#ffd803]"
+                  <button
+                    onClick={() => changeTest("Өөртөө итгэх итгэл")}
+                    href=""
+                    className="rounded-xl bg-[#bae8e8] text-[#2d334a] text-center py-2"
                   >
                     Өөртөө итгэх итгэл
-                  </a>
+                  </button>
                 </div>
                 <div className="rounded-[20px] bg-white flex flex-col py-5 px-2 w-[48%] md:w-[20%]">
                   <img
@@ -91,12 +116,13 @@ export default function Homepage() {
                     alt=""
                     className="h-40 rounded-full"
                   />
-                  <a
-                    href="/SignUp"
-                    className=" py-2 rounded-xl text-center text-sm bg-[#ffd803]"
+                  <button
+                    onClick={() => changeTest("Түгшүүр")}
+                    href=""
+                    className="rounded-xl bg-[#bae8e8] text-[#2d334a] text-center py-2"
                   >
                     Түгшүүр
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>

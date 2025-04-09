@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useScore } from "../Context/ScoreContext";
 import { useRouter } from "next/router";
 import { useUser } from "../Context/UserContext";
+import { useCategory } from "../Context/CategoryContext";
 export default function Challenge({ props }) {
   const [result, setResult] = useState([]);
+  const { catIndex } = useCategory();
   const { score, tuvshin, tuvshinRank } = useScore();
   const { testUser, setTestUser } = useUser();
   const [selectItem, setSelectItem] = useState(null);
@@ -29,6 +31,20 @@ export default function Challenge({ props }) {
   const handleSubmit = async () => {
     // e.preventDefault();
     // alert(ilgeelee)
+    let categoryName;
+    if (catIndex == 0) {
+      categoryName = "Сэтгэл гутрал";
+    }
+    if (catIndex == 1) {
+      categoryName = "Түгшүүр";
+    }
+    if (catIndex == 2) {
+      categoryName = "Стресс";
+    }
+    if (catIndex == 3) {
+      categoryName = "Өөртөө итгэх итгэл";
+    }
+
     console.log("ilgeej bui data=", {
       ...testUser,
       tuvshin: tuvshinRank,
@@ -43,6 +59,7 @@ export default function Challenge({ props }) {
         ...testUser,
         tuvshin: tuvshinRank,
         challenge: selectItem,
+        category: categoryName,
       }),
     });
 
