@@ -3,152 +3,148 @@ import { useScore } from "../Context/ScoreContext";
 import { useRouter } from "next/router";
 import { useUser } from "../Context/UserContext";
 import { useCategory } from "../Context/CategoryContext";
+
 export default function Challenge({ props }) {
-  const [result, setResult] = useState([]);
+  const [selectItem, setSelectItem] = useState(null);
   const { catIndex } = useCategory();
   const { score, tuvshin, tuvshinRank } = useScore();
   const { testUser, setTestUser } = useUser();
-  const [selectItem, setSelectItem] = useState(null);
   const router = useRouter();
-  // console.log("urdun=", testUser);
+
   function handleBtn(item) {
     setSelectItem(item);
   }
+
   function closeHandle() {
     setSelectItem(null);
   }
-  function Btn() {
-    // setTestUser(null);
+
+  function goToHomepage() {
     router.push("/homepage");
   }
+
+  async function handleSubmit() {
+    let categoryName = [
+      "Сэтгэл гутрал",
+      "Түгшүүр",
+      "Стресс",
+      "Өөртөө итгэх итгэл",
+    ][catIndex];
+
+    const postData = {
+      ...testUser,
+      tuvshin: tuvshinRank,
+      challenge: selectItem,
+      category: categoryName,
+    };
+
+    console.log("Илгээж буй дата:", postData);
+
+    try {
+      const response = await fetch("/api/test-result", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(postData),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (response.ok) {
+        alert("Амжилттай хадгаллаа!");
+        goToHomepage();
+      } else {
+        alert("Алдаа гарлаа: " + data.message);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      alert("Сүлжээний алдаа: " + error.message);
+    }
+
+    setSelectItem(null);
+  }
+
   function chooseHandle() {
     setTestUser({ ...testUser, tuvshin: tuvshinRank, challenge: selectItem });
     handleSubmit();
   }
+
   if (!props || !Array.isArray(props)) {
-    return <div>Loading...</div>; // Өгөгдөл ирэх хүртэл ачааллаж байна гэж үзүүлнэ
-  }
-  const handleSubmit = async () => {
-    // e.preventDefault();
-    // alert(ilgeelee)
-    let categoryName;
-    if (catIndex == 0) {
-      categoryName = "Сэтгэл гутрал";
-    }
-    if (catIndex == 1) {
-      categoryName = "Түгшүүр";
-    }
-    if (catIndex == 2) {
-      categoryName = "Стресс";
-    }
-    if (catIndex == 3) {
-      categoryName = "Өөртөө итгэх итгэл";
-    }
-
-    console.log("ilgeej bui data=", {
-      ...testUser,
-      tuvshin: tuvshinRank,
-      challenge: selectItem,
-    });
-    const response = await fetch("/api/test-result", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...testUser,
-        tuvshin: tuvshinRank,
-        challenge: selectItem,
-        category: categoryName,
-      }),
-    });
-
-    const data = await response.json();
-    console.log(data);
-    if (response.ok) {
-      alert("Post added successfully!");
-    } else {
-      alert("Error: " + data.message);
-    }
-    setSelectItem(null);
-    Btn();
-  };
-  return (
-    <div className="h-[100vh] flex flex-col justify-center items-center gap-2 bg-[#e3f6f5]">
-      <h1 className="md:text-xl flex justify-center text-[#272343]">
-        {"Таны сэтгэл зүйн түвшин:" + tuvshinRank}
-      </h1>
-      <h1 className="md:text-xl flex justify-center text-[#272343]">
-        Танд санал болгох чалленж даалгаврууд
-      </h1>
-      {/* <h1 className="text-xl">{"оноо:"+score}</h1> */}
-
-      <div className="flex flex-col gap-5 items-center">
-        {props.map((data, index) => {
-          return (
-            <div key={index}>
-              <button
-                className="text-center border border-[#272343] text-base px-[60px] py-[10px] w-80 md:w-130 md:text-xl rounded-full text-[#272343] bg-[#fffffe] max-w-[700px]"
-                onClick={() => handleBtn(data)}
-              >
-                {data.name}
-              </button>
-            </div>
-          );
-        })}
+    return (
+      <div className="h-screen flex items-center justify-center bg-[#e3f6f5]">
+        <div className="text-center text-[#272343] animate-pulse text-xl">
+          Ачааллаж байна...
+        </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-center gap-4 bg-gradient-to-tr from-[#e3f6f5] to-[#bae8e8] p-4">
+      <h1 className="text-2xl md:text-3xl font-semibold text-[#272343] text-center">
+        Таны сэтгэл зүйн түвшин:{" "}
+        <span className="text-[#ffd803]">{tuvshinRank}</span>
+      </h1>
+      <h2 className="text-xl md:text-2xl text-[#272343] text-center">
+        Танд санал болгох чалленж даалгаврууд
+      </h2>
+
+      <div className="flex flex-col gap-4 w-full max-w-md">
+        {props.map((data, index) => (
+          <button
+            key={index}
+            className="bg-white text-[#272343] border border-[#272343] rounded-full py-3 px-6 text-lg hover:bg-[#ffd803] hover:text-[#272343] shadow-md transition-all duration-300"
+            onClick={() => handleBtn(data)}
+          >
+            {data.name}
+          </button>
+        ))}
+      </div>
+
       {selectItem && (
-        <div className="fixed top-0 left-0 w-full h-full z-50">
-          {/* Overlay dark blur */}
-          <div
-            className="absolute top-0 left-0 w-full h-full bg-black opacity-60"
-            onClick={closeHandle}
-          />
-
-          {/* Modal */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-xl bg-white rounded-2xl shadow-2xl p-6 z-50 transition-all duration-300 animate-fade-in-down">
-            {/* Header */}
-            <div className="flex justify-between items-center mb-4 border-b pb-2">
-              <h2 className="text-2xl font-semibold text-[#272343]">
-                {selectItem.name}
-              </h2>
-              <button
-                onClick={closeHandle}
-                className="text-[#272343] hover:text-red-500 transition"
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-xl animate-fade-in-down space-y-6 relative">
+            {/* Close button */}
+            <button
+              onClick={closeHandle}
+              className="absolute top-4 right-4 text-[#272343] hover:text-red-500 transition"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
 
-            {/* Body */}
+            {/* Modal Content */}
+            <h2 className="text-2xl font-bold text-[#272343]">
+              {selectItem.name}
+            </h2>
+
             <div className="text-[#272343] space-y-3">
               <p>
                 <strong>Даалгавар:</strong> {selectItem.daalgavar}
               </p>
 
               {selectItem.example.length > 0 && (
-                <>
+                <div>
                   <p>
                     <strong>Жишээ:</strong>
                   </p>
-                  <ul className="list-disc list-inside pl-2 text-sm">
+                  <ul className="list-disc list-inside text-sm pl-4">
                     {selectItem.example.map((ex, idx) => (
-                      <li key={idx}>- {ex}</li>
+                      <li key={idx}>{ex}</li>
                     ))}
                   </ul>
-                </>
+                </div>
               )}
 
               <p>
@@ -156,17 +152,17 @@ export default function Challenge({ props }) {
               </p>
             </div>
 
-            {/* Footer */}
-            <div className="mt-6 flex justify-between">
+            {/* Footer Buttons */}
+            <div className="flex justify-end gap-4 pt-4 border-t">
               <button
                 onClick={chooseHandle}
-                className="px-4 py-2 bg-[#2ecc71] text-[#fff] rounded-lg hover:bg-[#a0d2d2] transition"
+                className="bg-[#2ecc71] text-white px-4 py-2 rounded-lg hover:bg-[#27ae60] transition"
               >
                 Сонгох
               </button>
               <button
                 onClick={closeHandle}
-                className="px-4 py-2 bg-[#bae8e8] text-[#272343] rounded-lg hover:bg-[#a0d2d2] transition"
+                className="bg-[#bae8e8] text-[#272343] px-4 py-2 rounded-lg hover:bg-[#a0d2d2] transition"
               >
                 Хаах
               </button>

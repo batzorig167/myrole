@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import moment from "moment-timezone";
 
 const uri = process.env.DB_HOST;
 
@@ -8,7 +9,7 @@ export default async function handler(req, res) {
       const client = new MongoClient(uri);
       await client.connect();
       const db = client.db("myrole"); // explicitly use the correct DB name
-      const collection = db.collection("test_result"); // your collection is "user"
+      const collection = db.collection("test_result"); // your collection is "test_result"
       const data = await collection.find({}).toArray();
 
       res.status(200).json(data);
@@ -25,11 +26,13 @@ export default async function handler(req, res) {
       const client = new MongoClient(uri);
       await client.connect();
       const db = client.db("myrole"); // explicitly use the correct DB name
-      const collection = db.collection("test_result"); // your collection is "user"
-      //   const data = await collection.find({}).toArray();
+      const collection = db.collection("test_result"); // your collection is "test_result"
 
-      //   res.status(200).json(data);
-      let newDate = moment().tz("Asia/Ulaanbaatar").format();
+      // Log the incoming body
+      console.log("Request body:", req.body);
+
+      let newDate = moment().tz("Asia/Ulaanbaatar").format(); // Fix moment import
+
       const test_result = {
         class: req.body.class,
         school: req.body.school,
@@ -40,10 +43,15 @@ export default async function handler(req, res) {
         tuvshin: req.body.tuvshin,
         challenge: req.body.challenge,
         category: req.body.category,
-        createdAt: newDate,
+        createdAt: newDate, // Use formatted date
       };
 
+      // Log the test result before saving
+      console.log("Test result data:", test_result);
+
       const result = await db.collection("test_result").insertOne(test_result);
+      console.log("Successfully inserted test result:", result);
+
       res
         .status(201)
         .json({ message: "Post successfully added", data: result });

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { userAgent } from "next/server";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import { useRouter } from "next/router";
 
@@ -11,7 +11,15 @@ export default function Login() {
     password: "",
   });
   const router = useRouter();
-  console.log(login);
+  // console.log(login);
+
+  // Check if user is already logged in
+  useEffect(() => {
+    if (user) {
+      // If the user exists, redirect to dashboard
+      router.push("/dashboard");
+    }
+  }, [user, router]); // Dependencies: user, router
   const handleChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
   };

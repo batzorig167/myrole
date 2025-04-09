@@ -131,6 +131,7 @@ export default function StudentResult() {
                 </th>
                 <th className="p-2">Анги</th>
                 <th className="p-2">Тест</th>
+                <th className="p-2">Тест даалгавар</th>
                 <th className="p-2">Оноо</th>
                 <th className="p-2">Түвшин</th>
                 <th className="p-2">Огноо</th>
@@ -146,6 +147,7 @@ export default function StudentResult() {
                   <td className="p-2 hidden md:table-cell">{data.lastname}</td>
                   <td className="p-2">{data.firstname}</td>
                   <td className="p-2">{data.class + data.buleg}</td>
+                  <td className="p-2">{data?.category || "Сэтгэл гутрал"}</td>
                   <td className="p-2">
                     {data.challenge?.name || "Чалленж сонгоогүй"}
                   </td>
