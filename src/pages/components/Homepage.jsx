@@ -18,12 +18,13 @@ export default function Homepage() {
                             <p className="flex justify-center text-lg italic text-justify text-[#2d334a] md:text-xl">Энэхүү сэтгэл зүйн сайт нь хүмүүсийн сэтгэл зүйн эрүүл мэндийг дэмжих, зөвлөгөө өгөх, өөрийгөө хөгжүүлэх боломж олгох зорилготой. Энэ нь сэтгэлзүйн боловсрол түгээх, мэргэжлийн зөвлөгөө хүргэх, стресс, түгшүүрийг даван туулахад туслах платформ болно.</p>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-3 pt-10 w-full items-center">
+                    <div className="flex flex-col gap-3 pt-10 w-full items-center text-black">
                         <h1 className="flex justify-center text-3xl text-[2d334a] font-semibold">Өгч болох тестүүд</h1>
                         <div className="flex md:justify-between flex-wrap md:flex-row font-medium gap-3 w-[90%]">
                             <div className="flex flex-col rounded-[20px] py-5 px-2 bg-white w-[48%] md:w-[20%]">
                                 <img src="https://www.jobbank.gc.ca/themes-jb/images/quiz/quiz_preferences.svg" alt="" className="h-40 rounded-full"/>
                                 <a href="/SignUp" className="py-2 rounded-xl flex justify-center text-sm text-center bg-[#ffd803]">Сэтгэл гутрал</a>
+                                {/* <button className="py-2 rounded-xl flex justify-center text-sm text-center bg-[#ffd803]" onClick={handleSubmit}>Сэтгэл гутрал</button> */}
                             </div>
                             <div className="flex flex-col rounded-[20px] py-5 px-2 bg-white w-[48%] md:w-[20%]">
                                 <img src="https://www.jobbank.gc.ca/themes-jb/images/quiz/quiz_abilities.svg" alt="" className="h-40 rounded-full"/>
