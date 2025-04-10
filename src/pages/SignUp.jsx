@@ -73,6 +73,7 @@ export default function Home() {
                 className="border border-[#333] rounded-md px-1 md:px-2 md:py-1 bg-white text-black"
               >
                 <option value="">-</option>
+                <option value="olympiad">Олимпиад</option>
                 <option value="aviyas">Авьяас сургууль</option>
                 <option value="dmts">Дэлгэрмөрөн сургууль</option>
                 <option value="galtschool">Галт сум ЕБС</option>
