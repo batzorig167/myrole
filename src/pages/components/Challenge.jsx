@@ -43,7 +43,7 @@ export default function Challenge({ props }) {
       category: categoryName,
     };
 
-    console.log("Илгээж буй дата:", postData);
+    // console.log("Илгээж буй дата:", postData);
 
     try {
       const response = await fetch("/api/test-result", {
@@ -53,7 +53,7 @@ export default function Challenge({ props }) {
       });
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       if (response.ok) {
         goToHomepage();

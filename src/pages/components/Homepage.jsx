@@ -10,7 +10,7 @@ export default function Homepage() {
   const router = useRouter();
   let changeTest = (props) => {
     // alert(props)
-    console.log(props);
+    // console.log(props);
     if (props == "Өөртөө итгэх итгэл") {
       setCatindex(3);
     }

@@ -44,10 +44,10 @@ export default function Home() {
         firstName: formData.firstname,
       };
       setUser(a);
-      console.log(a);
+      //   console.log(a);
       setTestUser({ ...testUser, ...a });
       router.push("/taketest");
-      console.log("ilgeesen data", a);
+      //   console.log("ilgeesen data", a);
     }
   };
   return (

@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       const collection = db.collection("test_result"); // your collection is "test_result"
 
       // Log the incoming body
-      console.log("Request body:", req.body);
+      // console.log("Request body:", req.body);
 
       let newDate = moment().tz("Asia/Ulaanbaatar").format(); // Fix moment import
 
@@ -47,10 +47,10 @@ export default async function handler(req, res) {
       };
 
       // Log the test result before saving
-      console.log("Test result data:", test_result);
+      // console.log("Test result data:", test_result);
 
       const result = await db.collection("test_result").insertOne(test_result);
-      console.log("Successfully inserted test result:", result);
+      // console.log("Successfully inserted test result:", result);
 
       res
         .status(201)

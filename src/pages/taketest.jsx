@@ -12,7 +12,7 @@ export default function Home() {
   // console.log("sign up=",testUser);
   const { urdun, setUrdun } = useState();
   const { user } = useUser();
-  console.log("cha=", challenge);
+  // console.log("cha=", challenge);
   const taketestData = test;
   // context ees tuvshin ni tuvshin props oor damjuln
   const { tuvshin, setTuvshin, setTuvshinRank } = useScore();

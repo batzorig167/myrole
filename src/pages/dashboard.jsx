@@ -7,7 +7,7 @@ import { useEffect } from "react";
 export default function Home() {
   const { user, setUser, loading } = useUser();
   const router = useRouter();
-  console.log("dashboard=", user);
+  //   console.log("dashboard=", user);
   useEffect(() => {
     if (!loading && user == null) {
       router.push("/homepage");
