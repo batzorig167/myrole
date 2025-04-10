@@ -46,9 +46,9 @@ export default function Login() {
   };
 
   return (
-    <div className="h-[100vh] w-full flex justify-center items-center bg-[#f0f4f8]">
-      <div className="bg-white p-8 rounded-xl shadow-md max-w-md w-full">
-        <h1 className="text-3xl font-semibold text-center text-[#333] mb-6">
+    <div className="h-[100vh] w-full flex justify-center items-center bg-[#f0f4f8] dark:bg-[#1a202c]">
+      <div className="bg-white p-8 rounded-xl shadow-md max-w-md w-full dark:bg-[#2D3748] dark:text-white">
+        <h1 className="text-3xl font-semibold text-center text-[#333] mb-6 dark:text-white">
           Нэвтрэх
         </h1>
 
@@ -58,7 +58,7 @@ export default function Login() {
               type="text"
               name="username"
               placeholder="Нэвтрэх нэрээ оруулна уу"
-              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none transition duration-300 ease-in-out"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none transition duration-300 ease-in-out dark:bg-[#2D3748] dark:border-gray-600 dark:text-white"
               onChange={handleChange}
             />
           </div>
@@ -68,7 +68,7 @@ export default function Login() {
               type="password"
               name="password"
               placeholder="Нууц үгээ оруулна уу"
-              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none transition duration-300 ease-in-out"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none transition duration-300 ease-in-out dark:bg-[#2D3748] dark:border-gray-600 dark:text-white"
               onChange={handleChange}
             />
           </div>
@@ -78,7 +78,7 @@ export default function Login() {
               type="submit"
               className={`w-full bg-[#4CAF50] text-white py-3 rounded-lg text-lg transition duration-300 ease-in-out ${
                 loading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#45a049]"
-              }`}
+              } dark:bg-[#38A169] dark:hover:bg-[#2F855A]`}
               disabled={loading}
             >
               {loading ? "Түр хүлээнэ үү..." : "Нэвтрэх"}
