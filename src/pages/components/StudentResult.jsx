@@ -316,7 +316,7 @@ export default function StudentResult() {
     <div className="w-full flex justify-center p-4">
       <div className="w-full max-w-7xl bg-white rounded-2xl shadow-md p-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+        <div className="flex  sm:flex-col justify-between items-center mb-6 gap-4">
           <h1 className="text-2xl font-semibold text-gray-800">{user?.name}</h1>
           <button
             onClick={handleLogout}
@@ -326,31 +326,23 @@ export default function StudentResult() {
           </button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
-          <div className="bg-white dark:bg-[#1F2937] shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-gray-200 dark:border-gray-700">
-            <h3 className="text-gray-600 dark:text-gray-300 text-sm mb-2">
-              Сэтгэл гутрал дундаж
-            </h3>
+          <div className="bg-white shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-[#ecf0f1]">
+            <h3 className="text-[black] text-sm mb-2">Сэтгэл гутрал дундаж</h3>
             <p className="text-2xl font-semibold text-[#FF6B6B]">{sg}</p>
           </div>
 
-          <div className="bg-white dark:bg-[#1F2937] shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-gray-200 dark:border-gray-700">
-            <h3 className="text-gray-600 dark:text-gray-300 text-sm mb-2">
-              Түгшүүр
-            </h3>
+          <div className="bg-white  shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-[#ecf0f1]">
+            <h3 className="text-[black] text-sm mb-2">Түгшүүр</h3>
             <p className="text-2xl font-semibold text-[#FFA500]">{tug}</p>
           </div>
 
-          <div className="bg-white dark:bg-[#1F2937] shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-gray-200 dark:border-gray-700">
-            <h3 className="text-gray-600 dark:text-gray-300 text-sm mb-2">
-              Стресс
-            </h3>
+          <div className="bg-white shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-[#ecf0f1]">
+            <h3 className="text-[black] text-sm mb-2">Стресс</h3>
             <p className="text-2xl font-semibold text-[#4A90E2]">{stress}</p>
           </div>
 
-          <div className="bg-white dark:bg-[#1F2937] shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-gray-200 dark:border-gray-700">
-            <h3 className="text-gray-600 dark:text-gray-300 text-sm mb-2">
-              Өөртөө итгэх итгэл
-            </h3>
+          <div className="bg-white shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-[#ecf0f1]">
+            <h3 className="text-[black] text-sm mb-2">Өөртөө итгэх итгэл</h3>
             <p className="text-2xl font-semibold text-[#34D399]">{uii}</p>
           </div>
         </div>
@@ -358,13 +350,13 @@ export default function StudentResult() {
         {/* Search */}
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col sm:flex-row gap-4 mb-6"
+          className="flex flex-row sm:flex-col gap-4 mb-6"
         >
           <input
             type="text"
             name="search"
             placeholder="Хайх..."
-            className="flex-grow border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2D3748] text-gray-700 dark:text-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-700 transition duration-300"
+            className="flex-grow border border-[#ecf0f1]  bg-white  text-[black] rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-700 transition duration-300"
             onChange={(e) => setSearch(e.target.value)}
           />
           <button
