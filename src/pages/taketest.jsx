@@ -12,7 +12,7 @@ export default function Home() {
   // console.log("sign up=",testUser);
   const { urdun, setUrdun } = useState();
   const { user } = useUser();
-
+  console.log("cha=", challenge);
   const taketestData = test;
   // context ees tuvshin ni tuvshin props oor damjuln
   const { tuvshin, setTuvshin, setTuvshinRank } = useScore();
@@ -54,6 +54,9 @@ export default function Home() {
   function show() {
     setTestShow(1);
   }
+
+  function sg() {}
+
   function checkTuvshin() {
     // console.log("check")
     if (score >= 0 && score < 5) {

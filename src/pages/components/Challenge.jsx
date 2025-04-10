@@ -10,6 +10,7 @@ export default function Challenge({ props }) {
   const { score, tuvshin, tuvshinRank } = useScore();
   const { testUser, setTestUser } = useUser();
   const router = useRouter();
+  const [loading, setLoading] = useState(false); // Loading state нэмсэн
 
   function handleBtn(item) {
     setSelectItem(item);
@@ -24,6 +25,10 @@ export default function Challenge({ props }) {
   }
 
   async function handleSubmit() {
+    if (loading) return; // Ачаалал явж байвал дахин хүсэлт илгээхгүй
+
+    setLoading(true); // Ачаалал эхэлсэн гэдгийг заах
+
     let categoryName = [
       "Сэтгэл гутрал",
       "Түгшүүр",
@@ -51,14 +56,14 @@ export default function Challenge({ props }) {
       console.log(data);
 
       if (response.ok) {
-        alert("Амжилттай хадгаллаа!");
         goToHomepage();
       } else {
         alert("Алдаа гарлаа: " + data.message);
       }
     } catch (error) {
       console.error("Network error:", error);
-      alert("Сүлжээний алдаа: " + error.message);
+    } finally {
+      setLoading(false); // Ачаалал дууссан гэдгийг заах
     }
 
     setSelectItem(null);
@@ -157,8 +162,9 @@ export default function Challenge({ props }) {
               <button
                 onClick={chooseHandle}
                 className="bg-[#2ecc71] text-white px-4 py-2 rounded-lg hover:bg-[#27ae60] transition"
+                disabled={loading} // Ачаалалтай үед товчийг идэвхгүй болгоно
               >
-                Сонгох
+                {loading ? "Ачааллаж байна..." : "Сонгох"}
               </button>
               <button
                 onClick={closeHandle}
@@ -168,6 +174,13 @@ export default function Challenge({ props }) {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Loading Spinner */}
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="text-white">Ачааллаж байна...</div>
         </div>
       )}
     </div>

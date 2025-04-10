@@ -4,16 +4,12 @@ import { useRouter } from "next/router";
 
 export default function Login() {
   const { user, setUser } = useUser();
-  const [login, setLogin] = useState({
-    username: "",
-    password: "",
-  });
+  const [login, setLogin] = useState({ username: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // Check if user is already logged in
   useEffect(() => {
     if (user) {
-      // If the user exists, redirect to dashboard
       router.push("/dashboard");
     }
   }, [user, router]);
@@ -24,21 +20,28 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("/api/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(login),
-    });
+    setLoading(true);
 
-    const data = await response.json();
-    if (response.ok) {
-      setUser(data.user);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      router.push("/dashboard"); // Use router for smooth navigation
-    } else {
-      alert("Error: " + data.message);
+    try {
+      const response = await fetch("/api/user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(login),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setUser(data.user);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        router.push("/dashboard");
+      } else {
+        alert("Error: " + data.message);
+      }
+    } catch (error) {
+      // console.error("Login error:", error);
+      alert("Системийн алдаа гарлаа.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,9 +76,12 @@ export default function Login() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="w-full bg-[#4CAF50] text-white py-3 rounded-lg text-lg hover:bg-[#45a049] transition duration-300 ease-in-out"
+              className={`w-full bg-[#4CAF50] text-white py-3 rounded-lg text-lg transition duration-300 ease-in-out ${
+                loading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#45a049]"
+              }`}
+              disabled={loading}
             >
-              Нэвтрэх
+              {loading ? "Түр хүлээнэ үү..." : "Нэвтрэх"}
             </button>
           </div>
         </form>
