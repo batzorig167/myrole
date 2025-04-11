@@ -123,6 +123,16 @@ export default function StudentResult() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    allUser.forEach((data) => {
+      data.createdAt = new Date(data.createdAt).toLocaleString("mn-MN", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    });
+
     const filteredData = allUser.filter(
       (item) =>
         Object.values(item).some((value) =>
@@ -134,6 +144,7 @@ export default function StudentResult() {
           .includes(search.toLowerCase())
     );
     // сэтгэл гутгал дундаж
+
     let a = filteredData.filter(
       (data) => data.category == null || data.category == "Сэтгэл гутрал"
     );
@@ -313,7 +324,7 @@ export default function StudentResult() {
   }
 
   return (
-    <div className="w-full flex justify-center p-4">
+    <div className="w-full min-h-[100vh] flex justify-center p-4">
       <div className="w-full max-w-7xl bg-white rounded-2xl shadow-md p-6">
         {/* Header */}
         <div className="flex  sm:flex-col justify-between items-center mb-6 gap-4">
