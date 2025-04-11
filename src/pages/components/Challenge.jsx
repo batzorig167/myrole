@@ -23,7 +23,22 @@ export default function Challenge({ props }) {
   function goToHomepage() {
     router.push("/homepage");
   }
-
+  const getTuvshinColor = (rank) => {
+    switch (rank) {
+      case "Маш хүчтэй":
+        return "text-[#FF3B30]"; // Аюултай
+      case "Хүчтэй":
+        return "text-[#FF9500]"; // Бага зэрэг аюултай
+      case "Дунд зэрэг":
+        return "text-[#FFD60A]"; // Анхаарах
+      case "Хөнгөн":
+        return "text-[#34C759]"; // Харьцангуй аюулгүй
+      case "Хэвийн":
+        return "text-[#5AC8FA]"; // Аюулгүй
+      default:
+        return "text-gray-500"; // Default өнгө
+    }
+  };
   async function handleSubmit() {
     if (loading) return; // Ачаалал явж байвал дахин хүсэлт илгээхгүй
 
@@ -88,7 +103,13 @@ export default function Challenge({ props }) {
     <div className="min-h-screen flex flex-col justify-center items-center gap-4 bg-gradient-to-tr from-[#e3f6f5] to-[#bae8e8] p-4">
       <h1 className="text-2xl md:text-3xl font-semibold text-[#272343] text-center">
         Таны сэтгэл зүйн түвшин:{" "}
-        <span className="text-[#ffd803]">{tuvshinRank}</span>
+        <span className={getTuvshinColor(tuvshinRank)}>
+          {tuvshinRank == "Маш хүчтэй"
+            ? "Яаралтай сэтгэл зүйчид хандах"
+            : tuvshinRank == "Хүчтэй"
+            ? "Сэтгэл зүйчид хандах"
+            : tuvshinRank}
+        </span>
       </h1>
       <h2 className="text-xl md:text-2xl text-[#272343] text-center">
         Танд санал болгох чалленж даалгаврууд
