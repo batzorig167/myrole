@@ -4,8 +4,8 @@ export default function Info() {
       <div className="container mx-auto text-center">
         <div>
           <p className="text-xl">
-            Хөвсгөлд <span className="font-bold text-blue-400">BR Coding</span>{" "}
-            - 2025 он
+            Хөвсгөл аймаг{" "}
+            <span className="font-bold text-blue-400">BR Coding</span> - 2025 он
           </p>
         </div>
       </div>
