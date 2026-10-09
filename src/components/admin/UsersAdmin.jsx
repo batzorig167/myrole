@@ -82,7 +82,7 @@ export default function UsersAdmin() {
     return (
       <div className="space-y-5">
         <div className="flex items-center justify-between">
-          <h2 className="font-serif text-2xl font-semibold">
+          <h2 className="text-3xl font-black">
             {editing._id ? `${editing.username} засах` : "Шинэ хэрэглэгч"}
           </h2>
           <Button variant="ghost" onClick={() => setEditing(null)}>
@@ -181,7 +181,7 @@ export default function UsersAdmin() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="font-serif text-2xl font-semibold">Хэрэглэгч ба эрх</h2>
+        <h2 className="text-3xl font-black">Хэрэглэгч ба эрх</h2>
         <Button
           onClick={() => {
             setError("");

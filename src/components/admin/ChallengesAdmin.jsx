@@ -70,7 +70,7 @@ export default function ChallengesAdmin() {
     return (
       <div className="space-y-5">
         <div className="flex items-center justify-between">
-          <h2 className="font-serif text-2xl font-semibold">
+          <h2 className="text-3xl font-black">
             {editing._id ? "Даалгавар засах" : "Шинэ даалгавар"} · {current.testName}
           </h2>
           <Button variant="ghost" onClick={() => setEditing(null)}>
@@ -143,7 +143,7 @@ export default function ChallengesAdmin() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-serif text-2xl font-semibold">Даалгаврууд</h2>
+        <h2 className="text-3xl font-black">Даалгаврууд</h2>
         <select
           className="rounded-full border border-line bg-cream px-4 py-2"
           value={testIndex}

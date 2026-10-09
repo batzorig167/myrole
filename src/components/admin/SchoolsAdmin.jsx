@@ -120,7 +120,7 @@ export default function SchoolsAdmin() {
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="font-serif text-2xl font-semibold">Сургуулиуд</h2>
+        <h2 className="text-3xl font-black">Сургуулиуд</h2>
         <p className="mt-1 text-sm text-muted">
           Сургууль бүр өөрийн нэвтрэх нэр, нууц үгээр орж зөвхөн өөрийн сурагчдын
           үр дүнг харна.

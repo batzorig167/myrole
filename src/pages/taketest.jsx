@@ -7,6 +7,8 @@ import { useCategory } from "./Context/CategoryContext";
 import { useData } from "./Context/DataContext";
 import { getTheme } from "@/lib/themes";
 import { findLevel } from "@/lib/levels";
+import { Mascot } from "@/components/Mascot";
+import Link from "next/link";
 
 export default function Home() {
   const { challenge, test, loading } = useData();
@@ -30,7 +32,7 @@ export default function Home() {
 
   if (loading || !test[catIndex]) {
     return (
-      <div className="flex h-screen items-center justify-center bg-cream text-muted">
+      <div className="flex h-screen items-center justify-center bg-cream font-bold text-muted">
         Ачааллаж байна...
       </div>
     );
@@ -57,53 +59,73 @@ export default function Home() {
 
   const meta = getTheme(current.theme);
   const progress = Math.round((qIndex / total) * 100);
+  const letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-cream px-4 py-10 text-ink">
-      <div className="w-full max-w-2xl rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-line md:p-10">
+    <div className="min-h-screen bg-cream text-ink">
+      <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
+        {/* Дээд мөр: гарах, сэдэв, ахиц */}
         <div className="flex items-center gap-3">
-          <span
-            className={`flex h-11 w-11 items-center justify-center rounded-2xl ${meta.soft} ${meta.text}`}
+          <Link
+            href="/homepage"
+            aria-label="Гарах"
+            className="pop flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-xl font-black ring-2 ring-line"
           >
-            <meta.Icon className="h-6 w-6" />
-          </span>
-          <div>
-            <p className="text-sm text-muted">Сэдэв</p>
-            <p className="font-serif text-lg font-semibold">{current.testName}</p>
+            ✕
+          </Link>
+          <div className="relative h-5 flex-1 rounded-full bg-sand">
+            <div
+              className={`h-full rounded-full ${meta.card} transition-all duration-500`}
+              style={{ width: `${Math.max(progress, 4)}%` }}
+            />
+            <div
+              className="absolute -top-4 h-12 w-12 -translate-x-1/2 transition-all duration-500"
+              style={{ left: `${Math.max(progress, 4)}%` }}
+            >
+              <Mascot />
+            </div>
           </div>
-          <p className="ml-auto text-sm font-semibold text-muted">
-            {qIndex + 1} / {total}
-          </p>
+          <span className="shrink-0 rounded-full bg-white px-3 py-1.5 text-sm font-black ring-2 ring-line">
+            {qIndex + 1}/{total}
+          </span>
         </div>
 
-        <div className="mt-5 h-2 overflow-hidden rounded-full bg-sand">
-          <div
-            className={`h-full rounded-full ${meta.bg} transition-all duration-500`}
-            style={{ width: `${progress}%` }}
-          />
+        {/* Асуулт */}
+        <div
+          className={`pop mt-10 rounded-[2.5rem] ${meta.card} p-7 text-white md:p-10`}
+          style={{ "--edge": meta.edge }}
+        >
+          <div className="flex items-center gap-2 text-sm font-black text-white/85">
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/25">
+              <meta.Icon className="h-5 w-5" />
+            </span>
+            {current.testName}
+          </div>
+          <h1 className="mt-4 text-2xl font-black leading-snug md:text-3xl">
+            {current.question[qIndex].replace(/^\d+\.\s*/, "")}
+          </h1>
         </div>
 
-        <h1 className="mt-8 font-serif text-xl font-medium leading-relaxed md:text-2xl">
-          {current.question[qIndex].replace(/^\d+\.\s*/, "")}
-        </h1>
-
-        <div className="mt-8 flex flex-col gap-3">
-          {current.result.map((data, index) => {
-            return (
-              <button
-                key={index}
-                onClick={() => handleSubmit(data)}
-                className="flex items-center gap-3 rounded-2xl border border-line bg-cream px-5 py-4 text-left text-base transition hover:border-sage hover:bg-sage-soft md:text-lg"
+        {/* Хариултууд */}
+        <div className="mt-8 grid gap-3 md:grid-cols-2">
+          {current.result.map((data, index) => (
+            <button
+              key={`${qIndex}-${index}`}
+              onClick={() => handleSubmit(data)}
+              className="pop group flex items-center gap-4 rounded-2xl bg-white px-4 py-4 text-left text-base font-bold ring-2 ring-line transition hover:ring-coral md:text-lg"
+            >
+              <span
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${meta.cardSoft} ${meta.cardText} font-black transition group-hover:scale-110`}
               >
-                <span className="h-5 w-5 shrink-0 rounded-full border-2 border-muted/40" />
-                {data.result}
-              </button>
-            );
-          })}
+                {letters[index]}
+              </span>
+              {data.result}
+            </button>
+          ))}
         </div>
 
-        <p className="mt-8 text-center text-xs text-muted">
-          Зөв, буруу хариулт гэж байхгүй. Сүүлийн үеийн мэдрэмждээ тулгуурлаарай.
+        <p className="mt-10 text-center text-sm font-semibold text-muted">
+          💛 Зөв, буруу хариулт гэж байхгүй. Сүүлийн үеийн мэдрэмждээ тулгуурлаарай.
         </p>
       </div>
     </div>

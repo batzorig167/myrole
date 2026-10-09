@@ -3,34 +3,35 @@
   themes: light --default;
 }
 
-/* Сэтгэл судлалын сайтын өнгө, фонт */
+/* Сэтгэлийн найз — хүүхэд, өсвөр насанд ээлтэй тод загвар */
 @theme {
   --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Lora", ui-serif, Georgia, serif;
 
-  --color-cream: #f7f4ee;
-  --color-sand: #efe9df;
-  --color-ink: #2b2a33;
-  --color-muted: #6b6a75;
-  --color-line: #e4ded3;
+  /* Суурь өнгө */
+  --color-cream: #fffaf0;
+  --color-sand: #f6eedd;
+  --color-ink: #1f1b3a;
+  --color-muted: #6b6785;
+  --color-line: #efe6d2;
 
-  --color-sage: #4f7a68;
-  --color-sage-dark: #3c5f50;
-  --color-sage-soft: #e3eee8;
+  /* Утгын өнгө (товч, төлөв, тестийн өнгө) */
+  --color-sage: #1a9168;
+  --color-sage-dark: #12704f;
+  --color-sage-soft: #d9f5ea;
 
-  --color-lavender: #7d6bb3;
-  --color-lavender-soft: #ece8f6;
+  --color-lavender: #7c4ff0;
+  --color-lavender-soft: #ece4ff;
 
-  --color-sky: #4f7fae;
-  --color-sky-soft: #e4edf6;
+  --color-sky: #2a84d6;
+  --color-sky-soft: #dcedfd;
 
-  --color-peach: #d98a5b;
-  --color-peach-soft: #f8e7dc;
+  --color-peach: #e8643f;
+  --color-peach-soft: #ffe6de;
 
-  --color-rose: #c4596a;
-  --color-rose-soft: #f7e1e4;
+  --color-rose: #d63c63;
+  --color-rose-soft: #ffe1ec;
 
-  /* Нүүр хуудсын тод, хөгжилтэй өнгө */
+  /* Тод өнгө (карт, товчны дэвсгэр) */
   --color-sun: #ffc93c;
   --color-sun-soft: #fff4d1;
   --color-coral: #ff7a59;
@@ -51,6 +52,16 @@ body {
   background-color: var(--color-cream);
   color: var(--color-ink);
   font-family: var(--font-sans);
+}
+
+/* Гүдгэр «дарагддаг» товч: --edge өнгөөр доод сүүдэр */
+@utility pop {
+  box-shadow: 0 5px 0 var(--edge, #e8dfcc);
+  transition: transform 0.1s, box-shadow 0.1s;
+  &:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--edge, #e8dfcc);
+  }
 }
 
 @keyframes breathe {

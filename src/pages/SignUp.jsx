@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { useUser } from "./Context/UserContext";
 import { useRouter } from "next/router";
 import { useData } from "./Context/DataContext";
+import Header from "./components/Header";
+import { Mascot } from "@/components/Mascot";
+
+const CLASSES = ["12", "11", "10", "9", "8", "7", "6", "5", "4", "3", "2", "1"];
+const BULEG = ["а", "б", "в", "г", "д", "е", "ж"];
 
 export default function Home() {
   const { testUser, setTestUser } = useUser();
@@ -13,9 +18,8 @@ export default function Home() {
     lastname: "",
     firstname: "",
   });
+  const [error, setError] = useState("");
   const handleChange = (e) => {
-    // console.log(e.target.name)
-    // console.log(e.target.value)
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
@@ -35,133 +39,147 @@ export default function Home() {
       !formData.lastname ||
       !formData.firstname
     ) {
-      alert("Та эхлээд бүртгүүлэх шаардлагатай!");
-    } else {
-      let a = {
-        school: formData.school,
-        class: formData.class,
-        buleg: formData.buleg,
-        lastName: formData.lastname,
-        firstName: formData.firstname,
-      };
-      //   console.log(a);
-      setTestUser({ ...testUser, ...a });
-      router.push("/taketest");
-      //   console.log("ilgeesen data", a);
+      setError("Бүх талбарыг бөглөөрэй 🙂");
+      return;
     }
+    setTestUser({
+      ...testUser,
+      school: formData.school,
+      class: formData.class,
+      buleg: formData.buleg,
+      lastName: formData.lastname,
+      firstName: formData.firstname,
+    });
+    router.push("/taketest");
   };
-  const selectClass =
-    "w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-ink focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30";
-  const inputClass =
-    "w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-ink placeholder:text-muted/70 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30";
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-cream px-4 py-10 text-ink">
-      <form
-        onSubmit={submitHandle}
-        className="w-full max-w-md rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-line md:p-10"
-      >
-        <p className="text-sm font-semibold text-sage">Алхам 1 / 2</p>
-        <h1 className="mt-1 font-serif text-2xl font-semibold md:text-3xl">
-          Өөрийн мэдээллээ бөглөнө үү
-        </h1>
-        <p className="mt-2 text-sm text-muted">
-          Анги, нэрээ кирилл үсгээр бичээрэй. Таны хариулт нууцлагдана.
-        </p>
 
-        <div className="mt-6 space-y-4">
-          <div>
-            <label className="mb-1 block text-sm font-semibold" htmlFor="school">
-              Сургууль
-            </label>
-            <select
-              name="school"
-              id="school"
-              onChange={handleChange}
-              className={selectClass}
-            >
-              <option value="">Сонгоно уу</option>
-              {schools.map((school) => (
-                <option key={school._id} value={school.code}>
-                  {school.name}
-                </option>
-              ))}
-            </select>
+  const fieldClass =
+    "w-full rounded-2xl border-2 border-line bg-cream px-4 py-3 font-semibold text-ink placeholder:font-medium placeholder:text-muted/70 focus:border-coral focus:outline-none";
+
+  // Сонгосон утгыг чип хэлбэрээр харуулах товчнууд
+  const Chips = ({ name, options, label = (v) => v }) => (
+    <div className="flex flex-wrap gap-2">
+      {options.map((value) => {
+        const active = formData[name] === value;
+        return (
+          <button
+            key={value}
+            type="button"
+            onClick={() => setFormData((prev) => ({ ...prev, [name]: value }))}
+            className={`h-11 min-w-11 rounded-xl px-3 font-black transition ${
+              active
+                ? "pop bg-coral text-white [--edge:#e05a38]"
+                : "bg-cream text-ink ring-2 ring-line hover:ring-coral"
+            }`}
+          >
+            {label(value)}
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-cream text-ink">
+      <Header />
+      <main className="mx-auto grid max-w-5xl items-center gap-8 px-4 pb-16 pt-4 md:grid-cols-[1fr_1.3fr]">
+        <div className="hidden text-center md:block">
+          <div className="animate-float mx-auto h-64 w-64">
+            <Mascot />
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="mb-1 block text-sm font-semibold" htmlFor="class">
-                Анги
-              </label>
+          <p className="mt-4 text-2xl font-black">Танилцъя!</p>
+          <p className="mt-1 font-medium text-muted">
+            Хариултыг чинь зөвхөн эрх бүхий сэтгэл зүйч харна.
+          </p>
+        </div>
+
+        <form
+          onSubmit={submitHandle}
+          className="rounded-[2.5rem] bg-white p-6 ring-2 ring-line md:p-9"
+        >
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-sun px-3 py-1 text-xs font-black">
+              Алхам 1 / 2
+            </span>
+            <span className="h-2 flex-1 rounded-full bg-sand">
+              <span className="block h-full w-1/2 rounded-full bg-sun" />
+            </span>
+          </div>
+          <h1 className="mt-4 text-3xl font-black">Чи хэн бэ? 👋</h1>
+          <p className="mt-1 font-medium text-muted">
+            Нэрээ кирилл үсгээр бичээрэй.
+          </p>
+
+          <div className="mt-6 space-y-5">
+            <label className="block">
+              <span className="mb-1.5 block font-black">🏫 Сургууль</span>
               <select
-                name="class"
-                id="class"
+                name="school"
+                value={formData.school}
                 onChange={handleChange}
-                className={selectClass}
+                className={fieldClass}
               >
-                <option value="">-</option>
-                {["12", "11", "10", "9", "8", "7", "6", "5", "4", "3", "2", "1"].map(
-                  (value) => (
-                    <option key={value} value={value}>
-                      {value}
-                    </option>
-                  )
-                )}
-              </select>
-            </div>
-            <div>
-              <label className="mb-1 block text-sm font-semibold" htmlFor="buleg">
-                Бүлэг
-              </label>
-              <select
-                name="buleg"
-                id="buleg"
-                onChange={handleChange}
-                className={selectClass}
-              >
-                <option value="">-</option>
-                {["а", "б", "в", "г", "д", "е", "ж"].map((value) => (
-                  <option key={value} value={value}>
-                    {value.toUpperCase()}
+                <option value="">Сургуулиа сонгоорой</option>
+                {schools.map((school) => (
+                  <option key={school._id} value={school.code}>
+                    {school.name}
                   </option>
                 ))}
               </select>
+            </label>
+
+            <div>
+              <span className="mb-1.5 block font-black">📚 Анги</span>
+              <Chips name="class" options={CLASSES} />
+            </div>
+
+            <div>
+              <span className="mb-1.5 block font-black">🔤 Бүлэг</span>
+              <Chips name="buleg" options={BULEG} label={(v) => v.toUpperCase()} />
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="block">
+                <span className="mb-1.5 block font-black">Овог</span>
+                <input
+                  className={fieldClass}
+                  type="text"
+                  name="lastname"
+                  id="lastname"
+                  value={formData.lastname}
+                  onChange={handleChange}
+                  placeholder="Овгоо бичнэ үү"
+                />
+              </label>
+              <label className="block">
+                <span className="mb-1.5 block font-black">Нэр</span>
+                <input
+                  className={fieldClass}
+                  type="text"
+                  name="firstname"
+                  id="firstname"
+                  value={formData.firstname}
+                  onChange={handleChange}
+                  placeholder="Нэрээ бичнэ үү"
+                />
+              </label>
             </div>
           </div>
-          <div>
-            <label className="mb-1 block text-sm font-semibold" htmlFor="lastname">
-              Овог
-            </label>
-            <input
-              className={inputClass}
-              type="text"
-              name="lastname"
-              id="lastname"
-              onChange={handleChange}
-              placeholder="Овгоо бичнэ үү"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-semibold" htmlFor="firstname">
-              Нэр
-            </label>
-            <input
-              className={inputClass}
-              type="text"
-              name="firstname"
-              id="firstname"
-              onChange={handleChange}
-              placeholder="Нэрээ бичнэ үү"
-            />
-          </div>
-        </div>
 
-        <button
-          type="submit"
-          className="mt-8 w-full rounded-full bg-sage py-3 font-semibold text-white transition hover:bg-sage-dark"
-        >
-          Тест эхлэх
-        </button>
-      </form>
+          {error && (
+            <p className="mt-5 rounded-2xl bg-coral-soft px-4 py-3 font-bold text-peach">
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="pop mt-7 w-full rounded-2xl bg-coral py-4 text-lg font-black text-white [--edge:#e05a38]"
+          >
+            Тест эхлэх 🚀
+          </button>
+        </form>
+      </main>
     </div>
   );
 }
