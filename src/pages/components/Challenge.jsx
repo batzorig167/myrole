@@ -6,6 +6,7 @@ import { useCategory } from "../Context/CategoryContext";
 import { useData } from "../Context/DataContext";
 import { getTheme } from "@/lib/themes";
 import { findLevel } from "@/lib/levels";
+import { Mascot } from "@/components/Mascot";
 
 export default function Challenge({ props }) {
   const [selectItem, setSelectItem] = useState(null);
@@ -15,7 +16,7 @@ export default function Challenge({ props }) {
   const currentTest = test[catIndex];
   const { testUser, setTestUser } = useUser();
   const router = useRouter();
-  const [loading, setLoading] = useState(false); // Loading state нэмсэн
+  const [loading, setLoading] = useState(false);
 
   function handleBtn(item) {
     setSelectItem(item);
@@ -25,13 +26,13 @@ export default function Challenge({ props }) {
     setSelectItem(null);
   }
 
-  function goToHomepage() {
-    router.push("/homepage");
-  }
-  async function handleSubmit() {
-    if (loading) return; // Ачаалал явж байвал дахин хүсэлт илгээхгүй
+  const [done, setDone] = useState(null); // илгээсэн даалгавар
+  const [error, setError] = useState("");
 
-    setLoading(true); // Ачаалал эхэлсэн гэдгийг заах
+  async function handleSubmit() {
+    if (loading) return;
+    setLoading(true);
+    setError("");
 
     // Түвшинг сервер оноогоор дахин тооцно
     const postData = {
@@ -45,30 +46,24 @@ export default function Challenge({ props }) {
       challengeId: selectItem._id,
     };
 
-    // console.log("Илгээж буй дата:", postData);
-
     try {
       const response = await fetch("/api/test-result", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(postData),
       });
-
       const data = await response.json();
-      // console.log(data);
-
       if (response.ok) {
-        goToHomepage();
+        setDone(selectItem);
+        setSelectItem(null);
       } else {
-        alert("Алдаа гарлаа: " + data.message);
+        setError(data.message || "Алдаа гарлаа");
       }
-    } catch (error) {
-      console.error("Network error:", error);
+    } catch (err) {
+      setError("Интернэт холболтоо шалгаад дахин оролдоорой");
     } finally {
-      setLoading(false); // Ачаалал дууссан гэдгийг заах
+      setLoading(false);
     }
-
-    setSelectItem(null);
   }
 
   function chooseHandle() {
@@ -79,7 +74,7 @@ export default function Challenge({ props }) {
   if (!props || !Array.isArray(props) || !currentTest || !testUser) {
     return (
       <div className="flex h-screen items-center justify-center bg-cream">
-        <div className="animate-pulse text-xl text-muted">Ачааллаж байна...</div>
+        <div className="animate-pulse text-xl font-bold text-muted">Ачааллаж байна...</div>
       </div>
     );
   }
@@ -88,115 +83,151 @@ export default function Challenge({ props }) {
   const tone = getTheme(level?.tone);
   const urgent = Boolean(level?.urgent);
 
-  return (
-    <div className="min-h-screen bg-cream px-4 py-10 text-ink">
-      <div className="mx-auto max-w-2xl">
-        <p className="text-sm font-semibold text-muted">{currentTest.testName} · Үр дүн</p>
-        <div className={`mt-3 rounded-[2rem] ${tone.soft} p-7 md:p-9`}>
-          <p className="text-sm text-muted">Таны сэтгэл зүйн түвшин</p>
-          <h1
-            className={`mt-1 font-serif text-3xl font-semibold md:text-4xl ${tone.text}`}
+  // Даалгавар сонгож дууссан дэлгэц
+  if (done) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-cream px-4 py-10 text-ink">
+        <div className="w-full max-w-lg text-center">
+          <div className="animate-float mx-auto h-48 w-48">
+            <Mascot />
+          </div>
+          <h1 className="mt-4 text-4xl font-black">Баяр хүргэе! 🎉</h1>
+          <p className="mt-2 text-lg font-medium text-muted">
+            Чи өөртөө анхаарал тавих том алхам хийлээ.
+          </p>
+          <div className="mt-6 rounded-[2rem] bg-white p-6 text-left ring-2 ring-line">
+            <p className="text-sm font-black uppercase tracking-wide text-coral">
+              Таны даалгавар
+            </p>
+            <p className="mt-1 text-xl font-black">{done.name}</p>
+            <p className="mt-2 font-medium text-ink/80">{done.daalgavar}</p>
+          </div>
+          <button
+            onClick={() => router.push("/homepage")}
+            className="pop mt-8 rounded-2xl bg-coral px-8 py-4 text-lg font-black text-white [--edge:#e05a38]"
           >
-            {tuvshinRank}
-          </h1>
-          <p className="mt-3 leading-relaxed text-ink/80">{level?.note}</p>
+            Нүүр хуудас руу 🏠
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-cream px-4 py-8 text-ink md:py-12">
+      <div className="mx-auto max-w-3xl">
+        {/* Үр дүн */}
+        <div
+          className={`pop relative overflow-hidden rounded-[2.5rem] ${tone.card} p-7 text-white md:p-10`}
+          style={{ "--edge": tone.edge }}
+        >
+          <div className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/15" />
+          <div className="relative grid items-center gap-6 md:grid-cols-[1fr_auto]">
+            <div>
+              <p className="text-sm font-black uppercase tracking-wide text-white/80">
+                {currentTest.testName} · Үр дүн
+              </p>
+              <h1 className="mt-2 text-3xl font-black leading-tight md:text-4xl">
+                {tuvshinRank}
+              </h1>
+              <p className="mt-3 text-lg font-semibold leading-relaxed text-white/90">
+                {level?.note}
+              </p>
+            </div>
+            <div className="mx-auto h-32 w-32 md:h-40 md:w-40">
+              <Mascot mood="calm" />
+            </div>
+          </div>
           {urgent && (
-            <p className="mt-4 rounded-2xl bg-white/70 px-4 py-3 text-sm">
-              Хүүхдийн тусламжийн утас{" "}
-              <span className="font-semibold">108</span> — 24 цаг, үнэ төлбөргүй.
+            <p className="relative mt-5 rounded-2xl bg-white px-5 py-4 font-bold text-ink">
+              📞 Хүүхдийн тусламжийн утас{" "}
+              <span className="text-xl font-black text-coral">108</span> — 24 цаг,
+              үнэ төлбөргүй. Та ганцаараа биш.
             </p>
           )}
         </div>
 
-        <h2 className="mt-10 font-serif text-2xl font-semibold">
-          Танд санал болгох даалгаврууд
-        </h2>
-        <p className="mt-1 text-sm text-muted">
+        {/* Даалгаврууд */}
+        <h2 className="mt-12 text-2xl font-black md:text-3xl">Даалгавраа сонго 🎯</h2>
+        <p className="mt-1 font-medium text-muted">
           Нэгийг нь сонгоод өдөр бүр хэрэгжүүлж үзээрэй.
         </p>
 
-        <div className="mt-5 flex flex-col gap-3">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
           {props.length === 0 && (
-            <p className="rounded-2xl bg-white px-5 py-4 text-muted ring-1 ring-line">
+            <p className="rounded-2xl bg-white px-5 py-4 font-semibold text-muted ring-2 ring-line">
               Энэ түвшинд одоогоор даалгавар нэмэгдээгүй байна.
             </p>
           )}
           {props.map((data, index) => (
             <button
               key={index}
-              className="flex items-center justify-between rounded-2xl bg-white px-5 py-4 text-left text-lg shadow-sm ring-1 ring-line transition hover:-translate-y-0.5 hover:ring-sage"
+              className="pop group flex flex-col rounded-[1.75rem] bg-white p-5 text-left ring-2 ring-line transition hover:-translate-y-0.5 hover:ring-coral"
               onClick={() => handleBtn(data)}
             >
-              {data.name}
-              <span className="text-muted">→</span>
+              <span className="text-lg font-black leading-snug">{data.name}</span>
+              <span className="mt-2 line-clamp-2 flex-1 text-sm font-medium text-muted">
+                {data.daalgavar}
+              </span>
+              <span className="mt-4 text-sm font-black text-coral group-hover:underline">
+                Дэлгэрэнгүй →
+              </span>
             </button>
           ))}
         </div>
       </div>
 
       {selectItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-4 backdrop-blur-sm">
-          <div className="relative w-full max-w-xl space-y-6 rounded-[2rem] bg-white p-7 shadow-xl md:p-8">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/50 p-0 backdrop-blur-sm sm:items-center sm:p-4">
+          <div className="relative max-h-[90vh] w-full max-w-xl space-y-5 overflow-y-auto rounded-t-[2rem] bg-white p-7 sm:rounded-[2rem] md:p-8">
             <button
               onClick={closeHandle}
               aria-label="Хаах"
-              className="absolute right-5 top-5 text-muted transition hover:text-ink"
+              className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-xl bg-cream text-lg font-black text-muted transition hover:text-ink"
             >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              ✕
             </button>
 
-            <h2 className="pr-8 font-serif text-2xl font-semibold">
-              {selectItem.name}
-            </h2>
+            <h2 className="pr-12 text-2xl font-black">{selectItem.name}</h2>
 
             <div className="space-y-4 leading-relaxed">
-              <div>
-                <p className="text-sm font-semibold text-sage">Даалгавар</p>
-                <p>{selectItem.daalgavar}</p>
+              <div className="rounded-2xl bg-bubble-soft p-4">
+                <p className="text-sm font-black text-sky">📝 Даалгавар</p>
+                <p className="mt-1 font-semibold">{selectItem.daalgavar}</p>
               </div>
-
               {selectItem.example.length > 0 && (
-                <div>
-                  <p className="text-sm font-semibold text-sage">Жишээ</p>
-                  <ul className="list-inside list-disc text-sm text-ink/80">
+                <div className="rounded-2xl bg-sun-soft p-4">
+                  <p className="text-sm font-black text-[#b07d00]">💡 Жишээ</p>
+                  <ul className="mt-1 list-inside list-disc text-sm font-semibold text-ink/80">
                     {selectItem.example.map((ex, idx) => (
                       <li key={idx}>{ex}</li>
                     ))}
                   </ul>
                 </div>
               )}
-
-              <div>
-                <p className="text-sm font-semibold text-sage">Зорилго</p>
-                <p>{selectItem.zorilgo}</p>
+              <div className="rounded-2xl bg-mint-soft p-4">
+                <p className="text-sm font-black text-sage">🎯 Зорилго</p>
+                <p className="mt-1 font-semibold">{selectItem.zorilgo}</p>
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 border-t border-line pt-5">
+            {error && (
+              <p className="rounded-2xl bg-rose-soft px-4 py-3 font-bold text-rose">{error}</p>
+            )}
+
+            <div className="flex gap-3">
               <button
                 onClick={closeHandle}
-                className="rounded-full px-5 py-2.5 font-semibold text-muted transition hover:bg-sand"
+                className="flex-1 rounded-2xl bg-cream py-3.5 font-black text-muted ring-2 ring-line"
               >
-                Хаах
+                Буцах
               </button>
               <button
                 onClick={chooseHandle}
-                className="rounded-full bg-sage px-6 py-2.5 font-semibold text-white transition hover:bg-sage-dark disabled:opacity-60"
                 disabled={loading}
+                className="pop flex-[2] rounded-2xl bg-coral py-3.5 font-black text-white [--edge:#e05a38] disabled:opacity-60"
               >
-                {loading ? "Хадгалж байна..." : "Сонгох"}
+                {loading ? "Хадгалж байна..." : "Энийг сонгоё! ✨"}
               </button>
             </div>
           </div>

@@ -2,19 +2,13 @@ import Link from "next/link";
 import { useState } from "react";
 import Info from "./Info";
 import HomeTsesniihesg from "./HomeTsesniihesg";
+import Header, { HeartIcon as Heart } from "./Header";
 import { useRouter } from "next/router";
 import { useCategory } from "../Context/CategoryContext";
 import { useData } from "../Context/DataContext";
 import { getTheme } from "@/lib/themes";
+import { Face, Mascot } from "@/components/Mascot";
 
-// Нүүр хуудсанд тестийн theme бүрийг тод өнгөөр харуулна
-const bright = {
-  sky: { card: "bg-bubble", soft: "bg-bubble-soft", text: "text-bubble", shadow: "shadow-[0_6px_0_#2a7cc7]" },
-  lavender: { card: "bg-grape", soft: "bg-grape-soft", text: "text-grape", shadow: "shadow-[0_6px_0_#6d3fd6]" },
-  peach: { card: "bg-coral", soft: "bg-coral-soft", text: "text-coral", shadow: "shadow-[0_6px_0_#e05a38]" },
-  sage: { card: "bg-mint", soft: "bg-mint-soft", text: "text-mint", shadow: "shadow-[0_6px_0_#1f9a71]" },
-  rose: { card: "bg-pink", soft: "bg-pink-soft", text: "text-pink", shadow: "shadow-[0_6px_0_#cc3a6d]" },
-};
 const tilts = ["-rotate-1", "rotate-1", "-rotate-2", "rotate-2"];
 
 const moods = [
@@ -56,55 +50,10 @@ const moods = [
   },
 ];
 
-function Face({ mood, className = "h-12 w-12" }) {
-  return (
-    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
-      <circle cx="24" cy="24" r="22" fill={mood.color} />
-      <circle cx="17" cy="19" r="3" fill="#1f1b3a" />
-      <circle cx="31" cy="19" r="3" fill="#1f1b3a" />
-      <path d={mood.mouth} stroke="#1f1b3a" strokeWidth="3" fill="none" strokeLinecap="round" />
-      {mood.tear && <path d="M33 23 q2 4 0 6 q-2 -2 0 -6" fill="#dcedfd" />}
-    </svg>
-  );
-}
-
-// Найрсаг маскот — толгой дээрээ нахиатай дугуй дүр
-function Mascot() {
-  return (
-    <svg viewBox="0 0 220 220" className="h-full w-full" aria-hidden="true">
-      <ellipse cx="110" cy="205" rx="62" ry="9" fill="#1f1b3a" opacity="0.08" />
-      <path d="M110 46 C110 30 118 20 134 18 C134 34 126 44 110 46 Z" fill="#2fbf8f" />
-      <path d="M110 50 C108 36 98 28 84 30 C86 44 96 50 110 50 Z" fill="#45d3a3" />
-      <path d="M110 50 L110 62" stroke="#1f9a71" strokeWidth="4" strokeLinecap="round" />
-      <path
-        d="M40 128 C40 84 72 58 110 58 C150 58 180 86 180 128 C180 172 150 196 110 196 C70 196 40 172 40 128 Z"
-        fill="#ffc93c"
-      />
-      <path d="M44 132 C26 120 20 104 26 96" stroke="#ffc93c" strokeWidth="14" strokeLinecap="round" fill="none" />
-      <path d="M176 128 C196 132 204 150 198 160" stroke="#ffc93c" strokeWidth="14" strokeLinecap="round" fill="none" />
-      <circle cx="88" cy="118" r="9" fill="#1f1b3a" />
-      <circle cx="132" cy="118" r="9" fill="#1f1b3a" />
-      <circle cx="91" cy="115" r="3" fill="#fff" />
-      <circle cx="135" cy="115" r="3" fill="#fff" />
-      <circle cx="72" cy="140" r="9" fill="#ff7a59" opacity="0.45" />
-      <circle cx="148" cy="140" r="9" fill="#ff7a59" opacity="0.45" />
-      <path d="M94 144 Q110 160 126 144" stroke="#1f1b3a" strokeWidth="5" fill="none" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 function Sparkle({ className, color }) {
   return (
     <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
       <path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z" fill={color} />
-    </svg>
-  );
-}
-
-function Heart({ className, color }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
-      <path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11Z" fill={color} />
     </svg>
   );
 }
@@ -121,24 +70,15 @@ export default function Homepage() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#fffaf0] text-night">
-      {/* Толгой */}
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-sun shadow-[0_4px_0_#e0a800]">
-            <Heart className="h-6 w-6" color="#ff7a59" />
-          </span>
-          <span className="text-xl font-black tracking-tight">
-            Сэтгэлийн <span className="text-coral">найз</span>
-          </span>
-        </Link>
+    <div className="min-h-screen overflow-x-hidden bg-cream text-ink">
+      <Header>
         <Link
           href="/login"
-          className="rounded-full border-2 border-night/15 bg-white px-5 py-2 text-sm font-bold transition hover:border-night/40"
+          className="pop rounded-full bg-white px-5 py-2 text-sm font-bold ring-2 ring-line"
         >
           Нэвтрэх
         </Link>
-      </header>
+      </Header>
 
       <main>
         {/* Нүүр хэсэг */}
@@ -248,14 +188,14 @@ export default function Homepage() {
           {error && <p className="mt-8 text-center text-rose">{error}</p>}
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {test.map((item, index) => {
-              const { Icon } = getTheme(item.theme);
-              const color = bright[item.theme] || bright.sage;
+              const { Icon, card, cardText, edge } = getTheme(item.theme);
               const minutes = Math.max(1, Math.ceil((item.question.length * 10) / 60));
               return (
                 <button
                   key={item._id}
                   onClick={() => changeTest(index)}
-                  className={`group flex flex-col rounded-[2rem] ${color.card} ${color.shadow} ${tilts[index % tilts.length]} p-6 text-left text-white transition hover:rotate-0 hover:-translate-y-1 active:translate-y-1`}
+                  style={{ "--edge": edge }}
+                  className={`pop group flex flex-col rounded-[2rem] ${card} ${tilts[index % tilts.length]} p-6 text-left text-white transition hover:rotate-0 hover:-translate-y-1`}
                 >
                   <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/25">
                     <Icon className="h-10 w-10" />
@@ -269,7 +209,7 @@ export default function Homepage() {
                       ⏱ {minutes} мин · {item.question.length} асуулт
                     </span>
                     <span
-                      className={`flex h-10 w-10 items-center justify-center rounded-full bg-white text-lg font-black ${color.text} transition group-hover:translate-x-1`}
+                      className={`flex h-10 w-10 items-center justify-center rounded-full bg-white text-lg font-black ${cardText} transition group-hover:translate-x-1`}
                     >
                       →
                     </span>

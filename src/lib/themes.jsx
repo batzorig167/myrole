@@ -65,6 +65,10 @@ export const themes = {
     text: "text-sky",
     bg: "bg-sky",
     soft: "bg-sky-soft",
+    card: "bg-bubble",
+    cardSoft: "bg-bubble-soft",
+    cardText: "text-bubble",
+    edge: "#2a7cc7",
   },
   lavender: {
     label: "Ягаан · долгион",
@@ -72,6 +76,10 @@ export const themes = {
     text: "text-lavender",
     bg: "bg-lavender",
     soft: "bg-lavender-soft",
+    card: "bg-grape",
+    cardSoft: "bg-grape-soft",
+    cardText: "text-grape",
+    edge: "#6d3fd6",
   },
   peach: {
     label: "Тоор · аянга",
@@ -79,6 +87,10 @@ export const themes = {
     text: "text-peach",
     bg: "bg-peach",
     soft: "bg-peach-soft",
+    card: "bg-coral",
+    cardSoft: "bg-coral-soft",
+    cardText: "text-coral",
+    edge: "#e05a38",
   },
   sage: {
     label: "Ногоон · нахиа",
@@ -86,6 +98,10 @@ export const themes = {
     text: "text-sage",
     bg: "bg-sage",
     soft: "bg-sage-soft",
+    card: "bg-mint",
+    cardSoft: "bg-mint-soft",
+    cardText: "text-mint",
+    edge: "#1f9a71",
   },
   rose: {
     label: "Улаан · зүрх",
@@ -93,6 +109,10 @@ export const themes = {
     text: "text-rose",
     bg: "bg-rose",
     soft: "bg-rose-soft",
+    card: "bg-pink",
+    cardSoft: "bg-pink-soft",
+    cardText: "text-pink",
+    edge: "#cc3a6d",
   },
 };
 

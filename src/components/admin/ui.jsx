@@ -12,12 +12,12 @@ export async function api(method, url, body) {
 }
 
 export const inputClass =
-  "w-full rounded-xl border border-line bg-cream px-3 py-2 text-ink focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30";
+  "w-full rounded-xl border-2 border-line bg-cream px-3 py-2 font-semibold text-ink focus:border-sage focus:outline-none";
 
 export function Field({ label, children, className = "" }) {
   return (
     <label className={`block ${className}`}>
-      <span className="mb-1 block text-sm font-semibold">{label}</span>
+      <span className="mb-1 block text-sm font-black">{label}</span>
       {children}
     </label>
   );
@@ -25,15 +25,15 @@ export function Field({ label, children, className = "" }) {
 
 export function Button({ variant = "primary", className = "", ...props }) {
   const styles = {
-    primary: "bg-sage text-white hover:bg-sage-dark",
-    ghost: "text-muted hover:bg-sand",
-    outline: "ring-1 ring-line bg-white hover:ring-sage",
+    primary: "pop bg-sage text-white [--edge:#12704f]",
+    ghost: "text-muted hover:bg-cream hover:text-ink",
+    outline: "pop bg-white ring-2 ring-line hover:ring-sage",
     danger: "text-rose hover:bg-rose-soft",
   };
   return (
     <button
       type="button"
-      className={`rounded-full px-4 py-2 text-sm font-semibold transition disabled:opacity-50 ${styles[variant]} ${className}`}
+      className={`rounded-xl px-4 py-2 text-sm font-black transition disabled:opacity-50 ${styles[variant]} ${className}`}
       {...props}
     />
   );
@@ -41,7 +41,7 @@ export function Button({ variant = "primary", className = "", ...props }) {
 
 export function Card({ children, className = "" }) {
   return (
-    <div className={`rounded-3xl bg-white p-5 ring-1 ring-line ${className}`}>
+    <div className={`rounded-[1.75rem] bg-white p-5 ring-2 ring-line ${className}`}>
       {children}
     </div>
   );
@@ -49,11 +49,11 @@ export function Card({ children, className = "" }) {
 
 export function Notice({ error, success }) {
   if (error) {
-    return <p className="rounded-xl bg-rose-soft px-4 py-3 text-sm text-rose">{error}</p>;
+    return <p className="rounded-2xl bg-rose-soft px-4 py-3 text-sm font-bold text-rose">{error}</p>;
   }
   if (success) {
     return (
-      <p className="rounded-xl bg-sage-soft px-4 py-3 text-sm text-sage-dark">{success}</p>
+      <p className="rounded-2xl bg-sage-soft px-4 py-3 text-sm font-bold text-sage-dark">✓ {success}</p>
     );
   }
   return null;

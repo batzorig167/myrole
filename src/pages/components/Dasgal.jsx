@@ -55,7 +55,7 @@ export default function Dasgal() {
   };
 
   const nextGroundingStep = () => {
-    if (groundingStep < 4) {
+    if (groundingStep < 5) {
       setGroundingStep(groundingStep + 1);
     }
   };
@@ -67,38 +67,41 @@ export default function Dasgal() {
     "2 зүйл үнэрлэж байна:",
     "1 зүйл амтагдаж байна:",
   ];
+  const groundingEmoji = ["👀", "✋", "👂", "👃", "👅"];
 
   const phase = breathePhases[phaseIndex];
+  const groundingDone = showGrounding && groundingStep === 5;
 
   return (
     <div className="min-h-screen bg-cream text-ink">
       <Header>
         <Link
           href="/homepage"
-          className="rounded-full border border-ink/20 px-5 py-2 text-sm font-semibold transition hover:border-sage hover:text-sage"
+          className="pop rounded-full bg-white px-5 py-2 text-sm font-bold ring-2 ring-line"
         >
-          Нүүр хуудас
+          🏠 Нүүр
         </Link>
       </Header>
-      <div className="mx-auto max-w-5xl space-y-6 px-4 py-10">
-        <div>
-          <h1 className="font-serif text-3xl font-semibold md:text-4xl">
-            Тайвшруулах дасгалууд
-          </h1>
-          <p className="mt-2 text-muted">
+      <main className="mx-auto max-w-6xl space-y-6 px-4 pb-16 pt-4">
+        <div className="text-center">
+          <h1 className="text-4xl font-black md:text-5xl">Түр амсхийе 🫧</h1>
+          <p className="mt-2 text-lg font-medium text-muted">
             Хэдхэн минут зарцуулж бие, сэтгэлээ амраагаарай.
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+
+        <div className="grid gap-6 md:grid-cols-2">
           {/* Амьсгал */}
-          <div className="flex flex-col items-center rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-line">
-            <h2 className="self-start font-serif text-2xl font-semibold">
-              Амьсгалын дасгал
-            </h2>
-            <p className="self-start text-sm text-muted">4 – 7 – 8 арга</p>
-            <div className="my-8 flex h-56 w-56 items-center justify-center rounded-full bg-sage-soft">
+          <section className="relative flex flex-col items-center overflow-hidden rounded-[2.5rem] bg-ink p-7 text-white">
+            <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full bg-grape/30" />
+            <h2 className="relative self-start text-2xl font-black">🌬️ Амьсгалын дасгал</h2>
+            <p className="relative self-start font-medium text-white/70">
+              4 тоолж ав · 7 тоолж барь · 8 тоолж гарга
+            </p>
+            <div className="relative my-8 flex h-60 w-60 items-center justify-center">
+              <div className="absolute inset-0 rounded-full bg-mint/15" />
               <div
-                className="flex h-48 w-48 flex-col items-center justify-center rounded-full bg-sage text-white ease-in-out"
+                className="flex h-52 w-52 flex-col items-center justify-center rounded-full bg-mint text-ink ease-in-out"
                 style={{
                   transform: `scale(${breathing ? phase.scale : 0.75})`,
                   transitionProperty: "transform",
@@ -107,101 +110,123 @@ export default function Dasgal() {
               >
                 {breathing ? (
                   <>
-                    <span className="text-sm">{phase.label}</span>
-                    <span className="font-serif text-4xl">{counter}</span>
+                    <span className="font-black">{phase.label}</span>
+                    <span className="text-6xl font-black">{counter}</span>
                   </>
                 ) : (
-                  <span>Бэлэн үү?</span>
+                  <span className="text-lg font-black">Бэлэн үү?</span>
                 )}
               </div>
             </div>
             {!breathing ? (
               <button
-                className="rounded-full bg-sage px-6 py-2.5 font-semibold text-white transition hover:bg-sage-dark"
+                className="pop relative rounded-2xl bg-sun px-7 py-3.5 font-black text-ink [--edge:#e0a800]"
                 onClick={startBreathing}
               >
-                Дасгалыг эхлэх
+                Эхлэх ▶
               </button>
             ) : (
               <button
-                className="rounded-full bg-sand px-6 py-2.5 font-semibold text-ink transition hover:bg-line"
+                className="pop relative rounded-2xl bg-white px-7 py-3.5 font-black text-ink [--edge:#cfc6b4]"
                 onClick={stopBreathing}
               >
-                Дасгалыг зогсоох
+                Зогсоох ■
               </button>
             )}
-          </div>
+          </section>
 
           {/* 5-4-3-2-1 */}
-          <div className="flex flex-col rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-line">
-            <h2 className="font-serif text-2xl font-semibold">Төвлөрөх мөч</h2>
-            <p className="text-sm text-muted">
+          <section className="flex flex-col rounded-[2.5rem] bg-grape-soft p-7">
+            <h2 className="text-2xl font-black">🖐️ Төвлөрөх мөч</h2>
+            <p className="font-medium text-muted">
               5-4-3-2-1 арга — мэдрэхүйгээрээ одоо цагтаа эргэн ирэх
             </p>
             {!showGrounding ? (
-              <div className="flex flex-1 flex-col items-start justify-center gap-4 py-6">
-                <p className="leading-relaxed text-ink/80">
+              <div className="flex flex-1 flex-col items-start justify-center gap-5 py-6">
+                <p className="text-lg font-semibold leading-relaxed">
                   Санаа зовнил ихсэх үед эргэн тойрондоо харж, сонсож, мэдэрч буй
                   зүйлсээ нэрлэх нь сэтгэлийг тайвшруулдаг.
                 </p>
+                <div className="flex gap-2 text-3xl" aria-hidden="true">
+                  {groundingEmoji.map((e) => (
+                    <span key={e}>{e}</span>
+                  ))}
+                </div>
                 <button
-                  className="rounded-full bg-lavender px-6 py-2.5 font-semibold text-white transition hover:opacity-90"
+                  className="pop rounded-2xl bg-grape px-7 py-3.5 font-black text-white [--edge:#6d3fd6]"
                   onClick={handleGroundingStart}
                 >
-                  Эхлэх
+                  Эхлэх ▶
                 </button>
               </div>
             ) : (
-              <div className="mt-6 space-y-4">
-                <div className="flex gap-1.5">
+              <div className="mt-6 flex flex-1 flex-col gap-4">
+                <div className="flex gap-2">
                   {groundingPrompts.map((_, i) => (
                     <span
                       key={i}
-                      className={`h-1.5 flex-1 rounded-full ${
-                        i <= groundingStep ? "bg-lavender" : "bg-sand"
+                      className={`flex h-10 flex-1 items-center justify-center rounded-xl text-lg transition ${
+                        i <= groundingStep ? "bg-grape" : "bg-white"
                       }`}
-                    />
+                    >
+                      {groundingEmoji[i]}
+                    </span>
                   ))}
                 </div>
-                <label className="block font-semibold">
-                  {groundingPrompts[groundingStep]}
-                  <input
-                    type="text"
-                    value={groundingInputs[groundingStep]}
-                    onChange={handleGroundingChange}
-                    className="mt-2 w-full rounded-xl border border-line bg-cream p-3 font-normal focus:border-lavender focus:outline-none focus:ring-2 focus:ring-lavender/30"
-                  />
-                </label>
-                {groundingStep < 4 ? (
-                  <button
-                    className="rounded-full bg-lavender px-5 py-2.5 font-semibold text-white transition hover:opacity-90"
-                    onClick={nextGroundingStep}
-                  >
-                    Дараах
-                  </button>
+                {groundingDone ? (
+                  <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-2xl bg-white p-6 text-center">
+                    <span className="text-5xl">🌟</span>
+                    <p className="text-xl font-black">Гайхалтай!</p>
+                    <p className="font-medium text-muted">
+                      Чи одоо цагтаа эргэн ирлээ. Хэдэн удаа ч давтаж болно.
+                    </p>
+                    <button
+                      onClick={handleGroundingStart}
+                      className="mt-2 font-black text-grape underline"
+                    >
+                      Дахин хийх
+                    </button>
+                  </div>
                 ) : (
-                  <p className="rounded-2xl bg-sage-soft px-4 py-3 font-semibold text-sage-dark">
-                    Та төвлөрөх дасгалаа амжилттай дуусгалаа!
-                  </p>
+                  <>
+                    <label className="block text-lg font-black">
+                      {groundingEmoji[groundingStep]} {groundingPrompts[groundingStep]}
+                      <input
+                        type="text"
+                        value={groundingInputs[groundingStep]}
+                        onChange={handleGroundingChange}
+                        onKeyDown={(e) => e.key === "Enter" && nextGroundingStep()}
+                        placeholder="Энд бичээрэй..."
+                        className="mt-2 w-full rounded-2xl border-2 border-white bg-white p-4 font-semibold focus:border-grape focus:outline-none"
+                      />
+                    </label>
+                    <button
+                      className="pop self-start rounded-2xl bg-grape px-6 py-3 font-black text-white [--edge:#6d3fd6]"
+                      onClick={nextGroundingStep}
+                    >
+                      {groundingStep < 4 ? "Дараах →" : "Дуусгах ✓"}
+                    </button>
+                  </>
                 )}
               </div>
             )}
-          </div>
+          </section>
         </div>
 
         {/* Тэмдэглэл */}
-        <div className="rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-line">
-          <h2 className="font-serif text-2xl font-semibold">Өдрийн тэмдэглэл</h2>
-          <p className="text-sm text-muted">
-            Бодол, мэдрэмжээ үгээр илэрхийлэх нь тэдгээрийг ойлгоход тусалдаг.
+        <section className="rounded-[2.5rem] bg-sun-soft p-7">
+          <h2 className="text-2xl font-black">📔 Өдрийн тэмдэглэл</h2>
+          <p className="font-medium text-muted">
+            Бодол, мэдрэмжээ үгээр илэрхийлэх нь тэдгээрийг ойлгоход тусалдаг. Энд
+            бичсэн зүйл хаана ч хадгалагдахгүй.
           </p>
           <textarea
-            rows={8}
-            className="mt-4 w-full rounded-2xl border border-line bg-cream p-4 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
+            rows={7}
+            className="mt-4 w-full rounded-2xl border-2 border-white bg-white p-5 font-semibold focus:border-sun focus:outline-none"
             placeholder="Өнөөдөр юу болсон, юу мэдэрсэн, юу бодож байна вэ? Энд бичээрэй..."
           />
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }

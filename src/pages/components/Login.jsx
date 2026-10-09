@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import { useRouter } from "next/router";
-import { Logo } from "./Header";
+import Header from "./Header";
+import Link from "next/link";
 
 export default function Login() {
   const { user, setUser } = useUser();
@@ -47,46 +48,72 @@ export default function Login() {
   };
 
   const inputClass =
-    "w-full rounded-xl border border-line bg-cream p-3 text-ink placeholder:text-muted/70 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30";
+    "w-full rounded-2xl border-2 border-line bg-cream px-4 py-3.5 font-semibold text-ink placeholder:font-medium placeholder:text-muted/70 focus:border-sage focus:outline-none";
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-8 bg-cream px-4 text-ink">
-      <Logo />
-      <div className="w-full max-w-md rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-line">
-        <h1 className="font-serif text-3xl font-semibold">Нэвтрэх</h1>
-        <p className="mt-1 text-sm text-muted">
-          Сэтгэл зүйч, багш нарт зориулсан хэсэг
-        </p>
-
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <input
-            type="text"
-            name="username"
-            placeholder="Нэвтрэх нэр"
-            className={inputClass}
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Нууц үг"
-            className={inputClass}
-            onChange={handleChange}
-          />
-          {error && (
-            <p className="rounded-xl bg-rose-soft px-4 py-3 text-sm text-rose">
-              {error}
+    <div className="min-h-screen bg-cream text-ink">
+      <Header>
+        <Link
+          href="/homepage"
+          className="pop rounded-full bg-white px-5 py-2 text-sm font-bold ring-2 ring-line"
+        >
+          🏠 Нүүр
+        </Link>
+      </Header>
+      <main className="flex justify-center px-4 pb-16 pt-6 md:pt-12">
+        <div className="w-full max-w-md">
+          <div className="rounded-[2.5rem] bg-white p-8 ring-2 ring-line">
+            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-mint-soft text-3xl">
+              🔐
+            </span>
+            <h1 className="mt-4 text-3xl font-black">Нэвтрэх</h1>
+            <p className="mt-1 font-medium text-muted">
+              Сургууль, сэтгэл зүйч болон админд зориулсан хэсэг
             </p>
-          )}
-          <button
-            type="submit"
-            className="w-full rounded-full bg-sage py-3 text-lg font-semibold text-white transition hover:bg-sage-dark disabled:cursor-not-allowed disabled:opacity-50"
-            disabled={loading}
-          >
-            {loading ? "Түр хүлээнэ үү..." : "Нэвтрэх"}
-          </button>
-        </form>
-      </div>
+
+            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+              <label className="block">
+                <span className="mb-1.5 block text-sm font-black">Нэвтрэх нэр</span>
+                <input
+                  type="text"
+                  name="username"
+                  autoComplete="username"
+                  className={inputClass}
+                  onChange={handleChange}
+                />
+              </label>
+              <label className="block">
+                <span className="mb-1.5 block text-sm font-black">Нууц үг</span>
+                <input
+                  type="password"
+                  name="password"
+                  autoComplete="current-password"
+                  className={inputClass}
+                  onChange={handleChange}
+                />
+              </label>
+              {error && (
+                <p className="rounded-2xl bg-rose-soft px-4 py-3 text-sm font-bold text-rose">
+                  {error}
+                </p>
+              )}
+              <button
+                type="submit"
+                className="pop w-full rounded-2xl bg-sage py-4 text-lg font-black text-white [--edge:#12704f] disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={loading}
+              >
+                {loading ? "Түр хүлээнэ үү..." : "Нэвтрэх"}
+              </button>
+            </form>
+          </div>
+          <p className="mt-6 text-center text-sm font-semibold text-muted">
+            Сурагч бол нэвтрэх шаардлагагүй —{" "}
+            <Link href="/homepage#tests" className="font-black text-coral underline">
+              шууд тест өгөөрэй
+            </Link>
+          </p>
+        </div>
+      </main>
     </div>
   );
 }

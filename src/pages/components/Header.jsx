@@ -1,40 +1,37 @@
 import Link from "next/link";
 
+export function HeartIcon({ className, color = "#ff7a59" }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path
+        d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11Z"
+        fill={color}
+      />
+    </svg>
+  );
+}
+
 export function Logo({ className = "" }) {
   return (
-    <Link href="/" className={`flex items-center gap-2.5 ${className}`}>
-      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sage text-white">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-6 w-6"
-          aria-hidden="true"
-        >
-          {/* Толгойн дүрс доторх нахиа */}
-          <path d="M15.5 20v-3.2a6.5 6.5 0 1 0-8.6-6.1c0 1-.4 1.6-1.4 2.8l1.4.9V17h2.6v3" />
-          <path d="M12 14v-3.5" />
-          <path d="M12 10.5c0-1.8 1.1-2.9 3-3 0 1.9-1.1 3-3 3Z" />
-          <path d="M12 12c0-1.4-.9-2.3-2.5-2.4 0 1.5.9 2.4 2.5 2.4Z" />
-        </svg>
+    <Link href="/" className={`flex items-center gap-2 ${className}`}>
+      <span className="pop flex h-11 w-11 items-center justify-center rounded-2xl bg-sun [--edge:#e0a800]">
+        <HeartIcon className="h-6 w-6" />
       </span>
-      <span className="leading-tight">
-        <span className="block font-serif text-lg font-semibold text-ink">
-          Сэтгэлийн эрүүл мэнд
-        </span>
-        <span className="block text-xs text-muted">Сэтгэл судлалын төв</span>
+      <span className="text-xl font-black tracking-tight text-ink">
+        Сэтгэлийн <span className="text-coral">найз</span>
       </span>
     </Link>
   );
 }
 
-export default function Header({ children }) {
+export default function Header({ children, wide = false }) {
   return (
-    <header className="border-b border-line bg-cream/90 backdrop-blur">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+    <header className="bg-cream">
+      <div
+        className={`mx-auto flex items-center justify-between gap-3 px-4 py-4 ${
+          wide ? "max-w-7xl" : "max-w-6xl"
+        }`}
+      >
         <Logo />
         {children}
       </div>

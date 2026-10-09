@@ -69,7 +69,7 @@ export default function TestsAdmin() {
     return (
       <div className="space-y-5">
         <div className="flex items-center justify-between">
-          <h2 className="font-serif text-2xl font-semibold">
+          <h2 className="text-3xl font-black">
             {editing._id ? "Тест засах" : "Шинэ тест"}
           </h2>
           <Button variant="ghost" onClick={() => setEditing(null)}>
@@ -257,7 +257,7 @@ export default function TestsAdmin() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="font-serif text-2xl font-semibold">Тестүүд</h2>
+        <h2 className="text-3xl font-black">Тестүүд</h2>
         <Button onClick={() => startEdit(null)}>+ Шинэ тест</Button>
       </div>
       <Notice error={error} success={success} />
@@ -271,7 +271,7 @@ export default function TestsAdmin() {
               <meta.Icon className="h-6 w-6" />
             </span>
             <div className="min-w-0 flex-1">
-              <p className="font-serif text-lg font-semibold">{t.testName}</p>
+              <p className="text-lg font-black">{t.testName}</p>
               <p className="text-sm text-muted">
                 {t.question.length} асуулт · {t.result.length} сонголт ·{" "}
                 {t.levels.length} түвшин · {t.challenges.length} даалгавар
