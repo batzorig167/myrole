@@ -20,7 +20,7 @@ export default function ChallengesAdmin() {
 
   const current = test[testIndex];
   if (!current) {
-    return <p className="text-muted">Эхлээд тест нэмнэ үү.</p>;
+    return <p className="text-slate-500">Эхлээд тест нэмнэ үү.</p>;
   }
 
   // Түвшин бүрийн зэргээр бүлэглэнэ
@@ -70,7 +70,7 @@ export default function ChallengesAdmin() {
     return (
       <div className="space-y-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-black">
+          <h2 className="text-xl font-semibold">
             {editing._id ? "Даалгавар засах" : "Шинэ даалгавар"} · {current.testName}
           </h2>
           <Button variant="ghost" onClick={() => setEditing(null)}>
@@ -143,9 +143,9 @@ export default function ChallengesAdmin() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-3xl font-black">Даалгаврууд</h2>
+        <h2 className="text-xl font-semibold">Даалгаврууд</h2>
         <select
-          className="rounded-full border border-line bg-cream px-4 py-2"
+          className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2"
           value={testIndex}
           onChange={(e) => {
             setTestIndex(Number(e.target.value));
@@ -167,7 +167,7 @@ export default function ChallengesAdmin() {
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
               <div>
                 <p className="font-semibold">Зэрэг {rank}</p>
-                <p className="text-sm text-muted">{levelNames(rank)}</p>
+                <p className="text-sm text-slate-500">{levelNames(rank)}</p>
               </div>
               <Button
                 variant="outline"
@@ -180,9 +180,9 @@ export default function ChallengesAdmin() {
               </Button>
             </div>
             {items.length === 0 && (
-              <p className="text-sm text-muted">Даалгавар алга</p>
+              <p className="text-sm text-slate-500">Даалгавар алга</p>
             )}
-            <ul className="divide-y divide-line">
+            <ul className="divide-y divide-slate-100">
               {items.map((c) => (
                 <li key={c._id} className="flex items-center gap-2 py-2">
                   <span className="min-w-0 flex-1">{c.name}</span>

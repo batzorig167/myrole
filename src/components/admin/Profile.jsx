@@ -55,15 +55,15 @@ export default function Profile() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-black">Профайл</h2>
+      <h2 className="text-xl font-semibold">Профайл</h2>
 
       <Card className="flex flex-wrap items-center gap-5">
-        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-sage text-2xl text-white">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 text-2xl font-semibold text-slate-700">
           {initials}
         </span>
         <div className="min-w-0 flex-1">
-          <p className="text-xl font-black">{user.name || user.username}</p>
-          <p className="text-sm text-muted">
+          <p className="text-xl font-semibold">{user.name || user.username}</p>
+          <p className="text-sm text-slate-500">
             @{user.username} · {ROLES[user.role]} · {schoolName}
           </p>
         </div>

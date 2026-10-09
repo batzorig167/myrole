@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import { useRouter } from "next/router";
-import Header from "./Header";
+import { HeartIcon } from "./Header";
 import Link from "next/link";
 
 export default function Login() {
@@ -48,72 +48,63 @@ export default function Login() {
   };
 
   const inputClass =
-    "w-full rounded-2xl border-2 border-line bg-cream px-4 py-3.5 font-semibold text-ink placeholder:font-medium placeholder:text-muted/70 focus:border-sage focus:outline-none";
+    "w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-200";
 
   return (
-    <div className="min-h-screen bg-cream text-ink">
-      <Header>
-        <Link
-          href="/homepage"
-          className="pop rounded-full bg-white px-5 py-2 text-sm font-bold ring-2 ring-line"
-        >
-          🏠 Нүүр
+    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 px-4 font-ui text-slate-900">
+      <div className="w-full max-w-sm">
+        <Link href="/" className="mb-6 flex items-center justify-center gap-2">
+          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-amber-100">
+            <HeartIcon className="h-5 w-5" />
+          </span>
+          <span className="font-semibold">Сэтгэлийн найз</span>
         </Link>
-      </Header>
-      <main className="flex justify-center px-4 pb-16 pt-6 md:pt-12">
-        <div className="w-full max-w-md">
-          <div className="rounded-[2.5rem] bg-white p-8 ring-2 ring-line">
-            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-mint-soft text-3xl">
-              🔐
-            </span>
-            <h1 className="mt-4 text-3xl font-black">Нэвтрэх</h1>
-            <p className="mt-1 font-medium text-muted">
-              Сургууль, сэтгэл зүйч болон админд зориулсан хэсэг
-            </p>
+        <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+          <h1 className="text-lg font-semibold">Удирдлагын самбарт нэвтрэх</h1>
+          <p className="mt-1 text-sm text-slate-500">Сургууль, сэтгэл зүйч болон админ</p>
 
-            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-              <label className="block">
-                <span className="mb-1.5 block text-sm font-black">Нэвтрэх нэр</span>
-                <input
-                  type="text"
-                  name="username"
-                  autoComplete="username"
-                  className={inputClass}
-                  onChange={handleChange}
-                />
-              </label>
-              <label className="block">
-                <span className="mb-1.5 block text-sm font-black">Нууц үг</span>
-                <input
-                  type="password"
-                  name="password"
-                  autoComplete="current-password"
-                  className={inputClass}
-                  onChange={handleChange}
-                />
-              </label>
-              {error && (
-                <p className="rounded-2xl bg-rose-soft px-4 py-3 text-sm font-bold text-rose">
-                  {error}
-                </p>
-              )}
-              <button
-                type="submit"
-                className="pop w-full rounded-2xl bg-sage py-4 text-lg font-black text-white [--edge:#12704f] disabled:cursor-not-allowed disabled:opacity-50"
-                disabled={loading}
-              >
-                {loading ? "Түр хүлээнэ үү..." : "Нэвтрэх"}
-              </button>
-            </form>
-          </div>
-          <p className="mt-6 text-center text-sm font-semibold text-muted">
-            Сурагч бол нэвтрэх шаардлагагүй —{" "}
-            <Link href="/homepage#tests" className="font-black text-coral underline">
-              шууд тест өгөөрэй
-            </Link>
-          </p>
+          <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+            <label className="block">
+              <span className="mb-1 block text-sm font-medium text-slate-700">Нэвтрэх нэр</span>
+              <input
+                type="text"
+                name="username"
+                autoComplete="username"
+                className={inputClass}
+                onChange={handleChange}
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1 block text-sm font-medium text-slate-700">Нууц үг</span>
+              <input
+                type="password"
+                name="password"
+                autoComplete="current-password"
+                className={inputClass}
+                onChange={handleChange}
+              />
+            </label>
+            {error && (
+              <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                {error}
+              </p>
+            )}
+            <button
+              type="submit"
+              className="w-full rounded-md bg-slate-900 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={loading}
+            >
+              {loading ? "Түр хүлээнэ үү..." : "Нэвтрэх"}
+            </button>
+          </form>
         </div>
-      </main>
+        <p className="mt-6 text-center text-sm text-slate-500">
+          Сурагч бол нэвтрэх шаардлагагүй.{" "}
+          <Link href="/homepage#tests" className="font-medium text-slate-900 underline">
+            Тест өгөх
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

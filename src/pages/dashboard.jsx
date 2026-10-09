@@ -13,7 +13,7 @@ export default function Home() {
   }, [user, loading, router]);
   if (loading || !user) {
     return (
-      <div className="flex h-screen items-center justify-center bg-cream text-muted">
+      <div className="flex h-screen items-center justify-center bg-slate-50 font-ui text-sm text-slate-500">
         Ачааллаж байна...
       </div>
     );

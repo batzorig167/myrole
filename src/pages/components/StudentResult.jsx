@@ -5,7 +5,7 @@ import { getTheme } from "@/lib/themes";
 import { findLevel } from "@/lib/levels";
 import { dayCount, inRange, presetRange } from "@/lib/dateRange";
 import DateFilter from "@/components/results/DateFilter";
-import Stats from "@/components/results/Stats";
+import Overview from "@/components/results/Overview";
 
 // Хуучин үр дүнд category байхгүй бол "Сэтгэл гутрал" гэж үзнэ.
 const categoryOf = (row) => row.category || "Сэтгэл гутрал";
@@ -31,6 +31,7 @@ export default function StudentResult() {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState({ key: "createdAt", dir: -1 });
   const [range, setRange] = useState(presetRange("all"));
+  const [view, setView] = useState("dashboard");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -109,7 +110,7 @@ export default function StudentResult() {
     setSort((prev) => ({ key, dir: prev.key === key ? -prev.dir : 1 }));
 
   const SortButton = ({ field, children }) => (
-    <button onClick={() => sortBy(field)} className="font-black hover:underline">
+    <button onClick={() => sortBy(field)} className="font-medium hover:text-slate-900">
       {children}
       {sort.key === field ? (sort.dir === 1 ? " ↑" : " ↓") : ""}
     </button>
@@ -118,270 +119,185 @@ export default function StudentResult() {
   if (loading) {
     return (
       <div className="flex justify-center py-16">
-        <span className="loading loading-spinner loading-lg text-coral"></span>
+        <span className="loading loading-spinner loading-md text-slate-400"></span>
       </div>
     );
   }
   if (error) {
-    return <p className="rounded-2xl bg-rose-soft p-4 font-bold text-rose">{error}</p>;
-  }
-
-  // ---- Админ: сургууль сонгох ----
-  if (isAdmin && !school) {
-    const stats = schools.map((s) => {
-      const list = dateRows.filter((row) => row.school === s.code);
-      return {
-        ...s,
-        count: list.length,
-        urgent: list.filter((row) => levelOf(row)?.urgent).length,
-        last: list[0]?.createdAt,
-      };
-    });
-    const colors = [
-      "bg-bubble-soft",
-      "bg-grape-soft",
-      "bg-coral-soft",
-      "bg-mint-soft",
-      "bg-sun-soft",
-      "bg-pink-soft",
-    ];
     return (
-      <div>
-        <p className="text-sm font-bold text-muted">Сургуулийн сэтгэл зүйн тойм</p>
-        <h2 className="text-3xl font-black">Сургуулиа сонгоорой 🏫</h2>
-        <div className="mt-5 space-y-4">
-          <DateFilter range={range} onChange={setRange} />
-          <Stats {...summarize(dateRows)} />
-        </div>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {stats.map((s, i) => (
-            <button
-              key={s._id}
-              onClick={() => setSchool(s.code)}
-              className={`pop group flex flex-col rounded-[1.75rem] ${
-                colors[i % colors.length]
-              } p-5 text-left transition hover:-translate-y-0.5`}
-            >
-              <span className="text-lg font-black leading-snug">{s.name}</span>
-              <span className="mt-4 flex items-end gap-2">
-                <span className="text-4xl font-black">{s.count}</span>
-                <span className="pb-1 text-sm font-bold text-muted">сурагч тест өгсөн</span>
-              </span>
-              <span className="mt-3 flex flex-wrap items-center gap-2 text-xs font-black">
-                {s.urgent > 0 ? (
-                  <span className="rounded-full bg-rose px-2.5 py-1 text-white">
-                    ⚠ {s.urgent} анхаарах
-                  </span>
-                ) : (
-                  <span className="rounded-full bg-white px-2.5 py-1 text-sage">
-                    ✓ Анхаарах зүйлгүй
-                  </span>
-                )}
-                {s.last && (
-                  <span className="text-muted">Сүүлд: {formatDate(s.last).split(",")[0]}</span>
-                )}
-              </span>
-              <span className="mt-4 text-sm font-black text-ink/70 group-hover:underline">
-                Үр дүн харах →
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
+      <p className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        {error}
+      </p>
     );
   }
 
-  // ---- Сонгосон сургуулийн үр дүн ----
-  const averages = test.map((t) => {
-    const scores = filtered
-      .filter((row) => categoryOf(row) === t.testName)
-      .map((row) => row.score);
-    const max = t.question.length * Math.max(...t.result.map((r) => r.score));
-    if (scores.length === 0) {
-      return { test: t, label: "Тест бөглөөгүй", count: 0, max };
-    }
-    const avg = scores.reduce((sum, v) => sum + v, 0) / scores.length;
-    return {
-      test: t,
-      label: findLevel(t.levels, avg)?.name,
-      count: scores.length,
-      avg: Math.round(avg * 10) / 10,
-      max,
-    };
-  });
-  const urgentCount = filtered.filter((row) => levelOf(row)?.urgent).length;
-  const summary = summarize(filtered);
+  const summary = summarize(schoolRows);
+
+  const badge = {
+    sage: "bg-emerald-50 text-emerald-700",
+    sky: "bg-sky-50 text-sky-700",
+    peach: "bg-amber-50 text-amber-800",
+    lavender: "bg-violet-50 text-violet-700",
+    rose: "bg-red-50 text-red-700",
+  };
 
   return (
-    <div>
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
+    <div className="space-y-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-xl font-semibold">
+            Үр дүн{isAdmin ? " (Админ)" : ` — ${schoolName(school)}`}
+          </h1>
           {isAdmin && (
-            <button
-              onClick={() => {
-                setSchool("");
-                setQuery("");
-                setSearch("");
-              }}
-              className="mb-2 rounded-full bg-cream px-3 py-1 text-sm font-black text-muted ring-2 ring-line hover:text-ink"
+            <select
+              value={school}
+              onChange={(e) => setSchool(e.target.value)}
+              className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium shadow-sm"
+              aria-label="Сургууль сонгох"
             >
-              ← Бүх сургууль
-            </button>
+              <option value="">Бүх сургууль</option>
+              {schools.map((s) => (
+                <option key={s._id} value={s.code}>
+                  {s.name}
+                </option>
+              ))}
+            </select>
           )}
-          <h2 className="text-3xl font-black">{schoolName(school)}</h2>
-          <p className="font-medium text-muted">
-            {schoolRows.length} үр дүн (сонгосон хугацаанд)
-            {urgentCount > 0 && (
-              <span className="ml-2 rounded-full bg-rose px-2.5 py-0.5 text-xs font-black text-white">
-                ⚠ {urgentCount} анхаарах
-              </span>
-            )}
-          </p>
         </div>
-        {isAdmin && (
-          <select
-            value={school}
-            onChange={(e) => setSchool(e.target.value)}
-            className="rounded-2xl border-2 border-line bg-cream px-4 py-2.5 font-bold"
-          >
-            {schools.map((s) => (
-              <option key={s._id} value={s.code}>
-                {s.name}
-              </option>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="inline-flex rounded-md bg-slate-100 p-0.5">
+            {[
+              ["dashboard", "Dashboard"],
+              ["list", "Жагсаалт"],
+            ].map(([key, label]) => (
+              <button
+                key={key}
+                onClick={() => setView(key)}
+                aria-pressed={view === key}
+                className={`rounded px-3 py-1.5 text-sm font-medium transition ${
+                  view === key ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"
+                }`}
+              >
+                {label}
+              </button>
             ))}
-          </select>
-        )}
+          </div>
+          <DateFilter range={range} onChange={setRange} />
+        </div>
       </div>
 
-      <div className="mt-5 space-y-4">
-        <DateFilter range={range} onChange={setRange} />
-        <Stats {...summary} />
-      </div>
-
-      <h3 className="mt-8 text-lg font-black">Тест тус бүрийн дундаж</h3>
-      <div className="mb-6 mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {averages.map(({ test: t, label, count, avg, max }) => {
-          const meta = getTheme(t.theme);
-          return (
-            <div key={t._id} className={`rounded-[1.75rem] ${meta.card} p-5 text-white`}>
-              <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/25">
-                  <meta.Icon className="h-5 w-5" />
-                </span>
-                <h3 className="text-sm font-black text-white/90">{t.testName}</h3>
-              </div>
-              <p className="mt-3 text-xl font-black leading-tight">{label}</p>
-              {count > 0 && (
-                <div className="mt-3">
-                  <div className="flex items-baseline justify-between text-xs font-bold text-white/85">
-                    <span>Дундаж оноо</span>
-                    <span>
-                      <b className="text-base font-black text-white">{avg}</b> / {max}
-                    </span>
-                  </div>
-                  <div className="mt-1 h-2 rounded-full bg-white/25">
-                    <div
-                      className="h-full rounded-full bg-white"
-                      style={{ width: `${Math.min(100, (avg / max) * 100)}%` }}
-                    />
-                  </div>
-                </div>
-              )}
-              <p className="mt-2 text-xs font-bold text-white/80">{count} удаа өгсөн</p>
-            </div>
-          );
-        })}
-      </div>
-
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setQuery(search);
-        }}
-        className="mb-6 flex flex-wrap gap-3"
-      >
-        <input
-          type="text"
-          name="search"
-          value={search}
-          placeholder="🔍 Нэр, анги, тест, түвшнээр хайх..."
-          className="min-w-0 flex-grow rounded-2xl border-2 border-line bg-cream px-5 py-3 font-semibold text-ink focus:border-sage focus:outline-none"
-          onChange={(e) => setSearch(e.target.value)}
+      {view === "dashboard" ? (
+        <Overview
+          rows={[...schoolRows].sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))}
+          tests={test}
+          schools={schools}
+          summary={summary}
+          levelOf={levelOf}
+          showSchools={isAdmin && !school}
+          onSelectSchool={setSchool}
+          schoolName={schoolName}
         />
-        <button
-          type="submit"
-          className="pop rounded-2xl bg-sage px-6 py-3 font-black text-white [--edge:#12704f]"
+      ) : (
+      <>
+      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setQuery(search);
+          }}
+          className="flex flex-wrap items-center gap-2 border-b border-slate-200 p-3"
         >
-          Хайх
-        </button>
-      </form>
-
-      <div className="overflow-x-auto rounded-2xl ring-2 ring-line">
-        <table className="min-w-full text-sm text-ink">
-          <thead className="bg-cream text-xs uppercase text-muted">
-            <tr>
-              <th className="p-3">№</th>
-              <th className="hidden p-3 md:table-cell">
-                <SortButton field="lastname">Овог</SortButton>
-              </th>
-              <th className="p-3">
-                <SortButton field="firstname">Нэр</SortButton>
-              </th>
-              <th className="p-3">
-                <SortButton field="class">Анги</SortButton>
-              </th>
-              <th className="p-3">
-                <SortButton field="category">Тест</SortButton>
-              </th>
-              <th className="p-3">Сонгосон даалгавар</th>
-              <th className="p-3">
-                <SortButton field="tuvshin">Түвшин</SortButton>
-              </th>
-              <th className="p-3">
-                <SortButton field="createdAt">Огноо</SortButton>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((data, index) => {
-              const level = levelOf(data);
-              const tone = getTheme(level?.tone);
-              return (
-                <tr key={data._id} className="border-t-2 border-line text-center font-semibold">
-                  <td className="p-3 text-muted">{index + 1}</td>
-                  <td className="hidden p-3 md:table-cell">{data.lastname}</td>
-                  <td className="p-3">{data.firstname}</td>
-                  <td className="p-3">{data.class + data.buleg}</td>
-                  <td className="p-3">{categoryOf(data)}</td>
-                  <td className="p-3 text-left">
-                    {data.challenge?.name || <span className="text-muted">Сонгоогүй</span>}
-                  </td>
-                  <td className="p-3">
-                    <span
-                      className={`inline-block rounded-full px-3 py-1 text-xs font-black ${
-                        level ? `${tone.cardSoft} ${tone.cardText}` : "bg-sand text-muted"
-                      }`}
-                    >
-                      {level?.urgent && "⚠ "}
-                      {data.tuvshin}
-                    </span>
-                  </td>
-                  <td className="whitespace-nowrap p-3 text-muted">
-                    {formatDate(data.createdAt)}
+          <input
+            type="text"
+            name="search"
+            value={search}
+            placeholder="Нэр, анги, тест, түвшнээр хайх..."
+            className="min-w-0 flex-grow rounded-md border border-slate-300 px-3 py-1.5 text-sm shadow-sm focus:border-slate-500 focus:outline-none"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="rounded-md bg-slate-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-slate-700"
+          >
+            Хайх
+          </button>
+          <span className="text-sm text-slate-500">{filtered.length} мөр</span>
+        </form>
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm">
+            <thead className="border-b border-slate-200 bg-slate-50 text-left text-xs text-slate-500">
+              <tr>
+                <th className="px-4 py-2.5 font-medium">№</th>
+                <th className="hidden px-4 py-2.5 md:table-cell">
+                  <SortButton field="lastname">Овог</SortButton>
+                </th>
+                <th className="px-4 py-2.5">
+                  <SortButton field="firstname">Нэр</SortButton>
+                </th>
+                {isAdmin && !school && (
+                  <th className="px-4 py-2.5">
+                    <SortButton field="school">Сургууль</SortButton>
+                  </th>
+                )}
+                <th className="px-4 py-2.5">
+                  <SortButton field="class">Анги</SortButton>
+                </th>
+                <th className="px-4 py-2.5">
+                  <SortButton field="category">Тест</SortButton>
+                </th>
+                <th className="px-4 py-2.5 font-medium">Сонгосон даалгавар</th>
+                <th className="px-4 py-2.5">
+                  <SortButton field="tuvshin">Түвшин</SortButton>
+                </th>
+                <th className="px-4 py-2.5">
+                  <SortButton field="createdAt">Огноо</SortButton>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {filtered.map((data, index) => {
+                const level = levelOf(data);
+                return (
+                  <tr key={data._id} className="hover:bg-slate-50">
+                    <td className="px-4 py-2.5 text-slate-400 tabular-nums">{index + 1}</td>
+                    <td className="hidden px-4 py-2.5 md:table-cell">{data.lastname}</td>
+                    <td className="px-4 py-2.5">{data.firstname}</td>
+                    {isAdmin && !school && (
+                      <td className="px-4 py-2.5 text-slate-600">{schoolName(data.school)}</td>
+                    )}
+                    <td className="px-4 py-2.5">{data.class + data.buleg}</td>
+                    <td className="px-4 py-2.5">{categoryOf(data)}</td>
+                    <td className="px-4 py-2.5 text-slate-600">
+                      {data.challenge?.name || <span className="text-slate-400">—</span>}
+                    </td>
+                    <td className="px-4 py-2.5">
+                      <span
+                        className={`inline-block whitespace-nowrap rounded px-2 py-0.5 text-xs font-medium ${
+                          level ? badge[level.tone] || badge.sage : "bg-slate-100 text-slate-600"
+                        }`}
+                      >
+                        {data.tuvshin}
+                      </span>
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-2.5 text-slate-500 tabular-nums">
+                      {formatDate(data.createdAt)}
+                    </td>
+                  </tr>
+                );
+              })}
+              {filtered.length === 0 && (
+                <tr>
+                  <td colSpan={9} className="px-4 py-10 text-center text-slate-500">
+                    Үр дүн олдсонгүй
                   </td>
                 </tr>
-              );
-            })}
-            {filtered.length === 0 && (
-              <tr>
-                <td colSpan={8} className="p-10 text-center font-bold text-muted">
-                  Үр дүн олдсонгүй
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
+      </>
+      )}
     </div>
   );
 }
