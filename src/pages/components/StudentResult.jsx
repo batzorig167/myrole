@@ -3,6 +3,9 @@ import { useUser } from "../Context/UserContext";
 import { useData } from "../Context/DataContext";
 import { getTheme } from "@/lib/themes";
 import { findLevel } from "@/lib/levels";
+import { dayCount, inRange, presetRange } from "@/lib/dateRange";
+import DateFilter from "@/components/results/DateFilter";
+import Stats from "@/components/results/Stats";
 
 // Хуучин үр дүнд category байхгүй бол "Сэтгэл гутрал" гэж үзнэ.
 const categoryOf = (row) => row.category || "Сэтгэл гутрал";
@@ -27,6 +30,7 @@ export default function StudentResult() {
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState({ key: "createdAt", dir: -1 });
+  const [range, setRange] = useState(presetRange("all"));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -50,10 +54,34 @@ export default function StudentResult() {
     return t ? findLevel(t.levels, row.score) : null;
   };
 
-  const schoolRows = useMemo(
-    () => (school ? rows.filter((row) => row.school === school) : rows),
-    [rows, school]
+  // Сонгосон огнооны хүрээнд багтах үр дүн
+  const dateRows = useMemo(
+    () => rows.filter((row) => inRange(row.createdAt, range)),
+    [rows, range]
   );
+
+  const schoolRows = useMemo(
+    () => (school ? dateRows.filter((row) => row.school === school) : dateRows),
+    [dateRows, school]
+  );
+
+  // Нийт тест, давхардаагүй сурагч, анхаарах, өдөрт дунджаар
+  const summarize = (list) => {
+    const students = new Set(
+      list.map((r) =>
+        [r.school, r.lastname, r.firstname, r.class, r.buleg]
+          .map((v) => String(v ?? "").trim().toLowerCase())
+          .join("|")
+      )
+    );
+    const days = dayCount(range, list.map((r) => r.createdAt));
+    return {
+      total: list.length,
+      students: students.size,
+      urgent: list.filter((row) => levelOf(row)?.urgent).length,
+      perDay: list.length ? Math.round((list.length / days) * 10) / 10 : 0,
+    };
+  };
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase();
@@ -101,7 +129,7 @@ export default function StudentResult() {
   // ---- Админ: сургууль сонгох ----
   if (isAdmin && !school) {
     const stats = schools.map((s) => {
-      const list = rows.filter((row) => row.school === s.code);
+      const list = dateRows.filter((row) => row.school === s.code);
       return {
         ...s,
         count: list.length,
@@ -121,9 +149,10 @@ export default function StudentResult() {
       <div>
         <p className="text-sm font-bold text-muted">Сургуулийн сэтгэл зүйн тойм</p>
         <h2 className="text-3xl font-black">Сургуулиа сонгоорой 🏫</h2>
-        <p className="mt-1 font-medium text-muted">
-          Нийт {rows.length} үр дүн · {schools.length} сургууль
-        </p>
+        <div className="mt-5 space-y-4">
+          <DateFilter range={range} onChange={setRange} />
+          <Stats {...summarize(dateRows)} />
+        </div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {stats.map((s, i) => (
             <button
@@ -167,13 +196,21 @@ export default function StudentResult() {
     const scores = filtered
       .filter((row) => categoryOf(row) === t.testName)
       .map((row) => row.score);
+    const max = t.question.length * Math.max(...t.result.map((r) => r.score));
     if (scores.length === 0) {
-      return { test: t, label: "Тест бөглөөгүй", count: 0 };
+      return { test: t, label: "Тест бөглөөгүй", count: 0, max };
     }
     const avg = scores.reduce((sum, v) => sum + v, 0) / scores.length;
-    return { test: t, label: findLevel(t.levels, avg)?.name, count: scores.length };
+    return {
+      test: t,
+      label: findLevel(t.levels, avg)?.name,
+      count: scores.length,
+      avg: Math.round(avg * 10) / 10,
+      max,
+    };
   });
   const urgentCount = filtered.filter((row) => levelOf(row)?.urgent).length;
+  const summary = summarize(filtered);
 
   return (
     <div>
@@ -193,7 +230,7 @@ export default function StudentResult() {
           )}
           <h2 className="text-3xl font-black">{schoolName(school)}</h2>
           <p className="font-medium text-muted">
-            {schoolRows.length} үр дүн
+            {schoolRows.length} үр дүн (сонгосон хугацаанд)
             {urgentCount > 0 && (
               <span className="ml-2 rounded-full bg-rose px-2.5 py-0.5 text-xs font-black text-white">
                 ⚠ {urgentCount} анхаарах
@@ -216,8 +253,14 @@ export default function StudentResult() {
         )}
       </div>
 
-      <div className="my-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {averages.map(({ test: t, label, count }) => {
+      <div className="mt-5 space-y-4">
+        <DateFilter range={range} onChange={setRange} />
+        <Stats {...summary} />
+      </div>
+
+      <h3 className="mt-8 text-lg font-black">Тест тус бүрийн дундаж</h3>
+      <div className="mb-6 mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {averages.map(({ test: t, label, count, avg, max }) => {
           const meta = getTheme(t.theme);
           return (
             <div key={t._id} className={`rounded-[1.75rem] ${meta.card} p-5 text-white`}>
@@ -228,7 +271,23 @@ export default function StudentResult() {
                 <h3 className="text-sm font-black text-white/90">{t.testName}</h3>
               </div>
               <p className="mt-3 text-xl font-black leading-tight">{label}</p>
-              <p className="mt-1 text-xs font-bold text-white/80">дундаж · {count} сурагч</p>
+              {count > 0 && (
+                <div className="mt-3">
+                  <div className="flex items-baseline justify-between text-xs font-bold text-white/85">
+                    <span>Дундаж оноо</span>
+                    <span>
+                      <b className="text-base font-black text-white">{avg}</b> / {max}
+                    </span>
+                  </div>
+                  <div className="mt-1 h-2 rounded-full bg-white/25">
+                    <div
+                      className="h-full rounded-full bg-white"
+                      style={{ width: `${Math.min(100, (avg / max) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+              <p className="mt-2 text-xs font-bold text-white/80">{count} удаа өгсөн</p>
             </div>
           );
         })}
