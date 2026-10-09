@@ -3,11 +3,16 @@ import { useScore } from "../Context/ScoreContext";
 import { useRouter } from "next/router";
 import { useUser } from "../Context/UserContext";
 import { useCategory } from "../Context/CategoryContext";
+import { useData } from "../Context/DataContext";
+import { getTheme } from "@/lib/themes";
+import { findLevel } from "@/lib/levels";
 
 export default function Challenge({ props }) {
   const [selectItem, setSelectItem] = useState(null);
   const { catIndex } = useCategory();
-  const { score, tuvshin, tuvshinRank } = useScore();
+  const { tuvshinRank } = useScore();
+  const { test } = useData();
+  const currentTest = test[catIndex];
   const { testUser, setTestUser } = useUser();
   const router = useRouter();
   const [loading, setLoading] = useState(false); // Loading state нэмсэн
@@ -23,39 +28,21 @@ export default function Challenge({ props }) {
   function goToHomepage() {
     router.push("/homepage");
   }
-  const getTuvshinColor = (rank) => {
-    switch (rank) {
-      case "Маш хүчтэй":
-        return "text-[#FF3B30]"; // Аюултай
-      case "Хүчтэй":
-        return "text-[#FF9500]"; // Бага зэрэг аюултай
-      case "Дунд зэрэг":
-        return "text-[#FFD60A]"; // Анхаарах
-      case "Хөнгөн":
-        return "text-[#34C759]"; // Харьцангуй аюулгүй
-      case "Хэвийн":
-        return "text-[#5AC8FA]"; // Аюулгүй
-      default:
-        return "text-gray-500"; // Default өнгө
-    }
-  };
   async function handleSubmit() {
     if (loading) return; // Ачаалал явж байвал дахин хүсэлт илгээхгүй
 
     setLoading(true); // Ачаалал эхэлсэн гэдгийг заах
 
-    let categoryName = [
-      "Сэтгэл гутрал",
-      "Түгшүүр",
-      "Стресс",
-      "Өөртөө итгэх итгэл",
-    ][catIndex];
-
+    // Түвшинг сервер оноогоор дахин тооцно
     const postData = {
-      ...testUser,
-      tuvshin: tuvshinRank,
-      challenge: selectItem,
-      category: categoryName,
+      school: testUser.school,
+      class: testUser.class,
+      buleg: testUser.buleg,
+      lastName: testUser.lastName,
+      firstName: testUser.firstName,
+      score: testUser.score,
+      testId: currentTest._id,
+      challengeId: selectItem._id,
     };
 
     // console.log("Илгээж буй дата:", postData);
@@ -89,51 +76,71 @@ export default function Challenge({ props }) {
     handleSubmit();
   }
 
-  if (!props || !Array.isArray(props)) {
+  if (!props || !Array.isArray(props) || !currentTest || !testUser) {
     return (
-      <div className="h-screen flex items-center justify-center bg-[#e3f6f5]">
-        <div className="text-center text-[#272343] animate-pulse text-xl">
-          Ачааллаж байна...
-        </div>
+      <div className="flex h-screen items-center justify-center bg-cream">
+        <div className="animate-pulse text-xl text-muted">Ачааллаж байна...</div>
       </div>
     );
   }
 
-  return (
-    <div className="min-h-screen flex flex-col justify-center items-center gap-4 bg-gradient-to-tr from-[#e3f6f5] to-[#bae8e8] p-4">
-      <h1 className="text-2xl md:text-3xl font-semibold text-[#272343] text-center">
-        Таны сэтгэл зүйн түвшин:{" "}
-        <span className={getTuvshinColor(tuvshinRank)}>
-          {tuvshinRank == "Маш хүчтэй"
-            ? "Яаралтай сэтгэл зүйчид хандах"
-            : tuvshinRank == "Хүчтэй"
-            ? "Сэтгэл зүйчид хандах"
-            : tuvshinRank}
-        </span>
-      </h1>
-      <h2 className="text-xl md:text-2xl text-[#272343] text-center">
-        Танд санал болгох чалленж даалгаврууд
-      </h2>
+  const level = findLevel(currentTest.levels, testUser.score);
+  const tone = getTheme(level?.tone);
+  const urgent = Boolean(level?.urgent);
 
-      <div className="flex flex-col gap-4 w-full max-w-md">
-        {props.map((data, index) => (
-          <button
-            key={index}
-            className="bg-white text-[#272343] border border-[#272343] rounded-full py-3 px-6 text-lg hover:bg-[#ffd803] hover:text-[#272343] shadow-md transition-all duration-300"
-            onClick={() => handleBtn(data)}
+  return (
+    <div className="min-h-screen bg-cream px-4 py-10 text-ink">
+      <div className="mx-auto max-w-2xl">
+        <p className="text-sm font-semibold text-muted">{currentTest.testName} · Үр дүн</p>
+        <div className={`mt-3 rounded-[2rem] ${tone.soft} p-7 md:p-9`}>
+          <p className="text-sm text-muted">Таны сэтгэл зүйн түвшин</p>
+          <h1
+            className={`mt-1 font-serif text-3xl font-semibold md:text-4xl ${tone.text}`}
           >
-            {data.name}
-          </button>
-        ))}
+            {tuvshinRank}
+          </h1>
+          <p className="mt-3 leading-relaxed text-ink/80">{level?.note}</p>
+          {urgent && (
+            <p className="mt-4 rounded-2xl bg-white/70 px-4 py-3 text-sm">
+              Хүүхдийн тусламжийн утас{" "}
+              <span className="font-semibold">108</span> — 24 цаг, үнэ төлбөргүй.
+            </p>
+          )}
+        </div>
+
+        <h2 className="mt-10 font-serif text-2xl font-semibold">
+          Танд санал болгох даалгаврууд
+        </h2>
+        <p className="mt-1 text-sm text-muted">
+          Нэгийг нь сонгоод өдөр бүр хэрэгжүүлж үзээрэй.
+        </p>
+
+        <div className="mt-5 flex flex-col gap-3">
+          {props.length === 0 && (
+            <p className="rounded-2xl bg-white px-5 py-4 text-muted ring-1 ring-line">
+              Энэ түвшинд одоогоор даалгавар нэмэгдээгүй байна.
+            </p>
+          )}
+          {props.map((data, index) => (
+            <button
+              key={index}
+              className="flex items-center justify-between rounded-2xl bg-white px-5 py-4 text-left text-lg shadow-sm ring-1 ring-line transition hover:-translate-y-0.5 hover:ring-sage"
+              onClick={() => handleBtn(data)}
+            >
+              {data.name}
+              <span className="text-muted">→</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       {selectItem && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-xl animate-fade-in-down space-y-6 relative">
-            {/* Close button */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-xl space-y-6 rounded-[2rem] bg-white p-7 shadow-xl md:p-8">
             <button
               onClick={closeHandle}
-              className="absolute top-4 right-4 text-[#272343] hover:text-red-500 transition"
+              aria-label="Хаах"
+              className="absolute right-5 top-5 text-muted transition hover:text-ink"
             >
               <svg
                 className="h-6 w-6"
@@ -150,22 +157,20 @@ export default function Challenge({ props }) {
               </svg>
             </button>
 
-            {/* Modal Content */}
-            <h2 className="text-2xl font-bold text-[#272343]">
+            <h2 className="pr-8 font-serif text-2xl font-semibold">
               {selectItem.name}
             </h2>
 
-            <div className="text-[#272343] space-y-3">
-              <p>
-                <strong>Даалгавар:</strong> {selectItem.daalgavar}
-              </p>
+            <div className="space-y-4 leading-relaxed">
+              <div>
+                <p className="text-sm font-semibold text-sage">Даалгавар</p>
+                <p>{selectItem.daalgavar}</p>
+              </div>
 
               {selectItem.example.length > 0 && (
                 <div>
-                  <p>
-                    <strong>Жишээ:</strong>
-                  </p>
-                  <ul className="list-disc list-inside text-sm pl-4">
+                  <p className="text-sm font-semibold text-sage">Жишээ</p>
+                  <ul className="list-inside list-disc text-sm text-ink/80">
                     {selectItem.example.map((ex, idx) => (
                       <li key={idx}>{ex}</li>
                     ))}
@@ -173,35 +178,28 @@ export default function Challenge({ props }) {
                 </div>
               )}
 
-              <p>
-                <strong>Зорилго:</strong> {selectItem.zorilgo}
-              </p>
+              <div>
+                <p className="text-sm font-semibold text-sage">Зорилго</p>
+                <p>{selectItem.zorilgo}</p>
+              </div>
             </div>
 
-            {/* Footer Buttons */}
-            <div className="flex justify-end gap-4 pt-4 border-t">
-              <button
-                onClick={chooseHandle}
-                className="bg-[#2ecc71] text-white px-4 py-2 rounded-lg hover:bg-[#27ae60] transition"
-                disabled={loading} // Ачаалалтай үед товчийг идэвхгүй болгоно
-              >
-                {loading ? "Ачааллаж байна..." : "Сонгох"}
-              </button>
+            <div className="flex justify-end gap-3 border-t border-line pt-5">
               <button
                 onClick={closeHandle}
-                className="bg-[#bae8e8] text-[#272343] px-4 py-2 rounded-lg hover:bg-[#a0d2d2] transition"
+                className="rounded-full px-5 py-2.5 font-semibold text-muted transition hover:bg-sand"
               >
                 Хаах
               </button>
+              <button
+                onClick={chooseHandle}
+                className="rounded-full bg-sage px-6 py-2.5 font-semibold text-white transition hover:bg-sage-dark disabled:opacity-60"
+                disabled={loading}
+              >
+                {loading ? "Хадгалж байна..." : "Сонгох"}
+              </button>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Loading Spinner */}
-      {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="text-white">Ачааллаж байна...</div>
         </div>
       )}
     </div>

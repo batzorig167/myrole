@@ -7,19 +7,24 @@ const UserProvider = ({ children }) => {
   const [testUser, setTestUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Нэвтэрсэн эсэхийг серверийн session cookie-оор шалгана.
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      // Safely access localStorage on the client side
-      const storedUser = JSON.parse(localStorage.getItem("user"));
-      if (storedUser) {
-        setUser(storedUser); // Set the user from localStorage if it exists
-      }
-      setLoading(false);
-    }
+    localStorage.removeItem("user"); // хуучин хувилбарын үлдэгдэл
+    fetch("/api/auth/me")
+      .then((response) => (response.ok ? response.json() : { user: null }))
+      .then((data) => setUser(data.user))
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false));
   }, []);
+
+  const logout = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    setUser(null);
+  };
+
   return (
     <UserContext.Provider
-      value={{ user, setUser, testUser, setTestUser, loading }}
+      value={{ user, setUser, testUser, setTestUser, loading, logout }}
     >
       {children}
     </UserContext.Provider>

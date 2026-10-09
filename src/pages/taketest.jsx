@@ -5,128 +5,106 @@ import { useRouter } from "next/router";
 import { useScore } from "./Context/ScoreContext";
 import { useCategory } from "./Context/CategoryContext";
 import { useData } from "./Context/DataContext";
+import { getTheme } from "@/lib/themes";
+import { findLevel } from "@/lib/levels";
 
 export default function Home() {
-  const { challenge, test } = useData();
+  const { challenge, test, loading } = useData();
   const { testUser, setTestUser } = useUser();
-  // console.log("sign up=",testUser);
-  const { urdun, setUrdun } = useState();
-  const { user } = useUser();
-  // console.log("cha=", challenge);
-  const taketestData = test;
-  // context ees tuvshin ni tuvshin props oor damjuln
-  const { tuvshin, setTuvshin, setTuvshinRank } = useScore();
-  // testShow ni door challengee gargaj irj bsn odo nehh herggu
-  const [testShow, setTestShow] = useState(null);
-  // testIndex ni test iin idex
-  const { category, catIndex } = useCategory();
-  const [testIndex, setTestIndex] = useState(catIndex);
+  const { score, setScore, setTuvshin, setTuvshinRank } = useScore();
+  const { catIndex } = useCategory();
   // ene ni asuultin index
   const [qIndex, setQindex] = useState(0);
-  // context ees onoo tuvshin 2 orulj irn
-  const { score, setScore } = useScore();
-  const [challIndex, setChallIndex] = useState(0);
-  const [result, setResult] = useState([]);
   const router = useRouter();
-  // alert(category)
-  // console.log("tuvshin",challenge[0].tuvshin, tuvshin, challenge[0], "lol");
-  // console.log("үр дүн=",result);
+
   useEffect(() => {
     if (testUser == null) {
       router.push("/SignUp");
     }
   }, [testUser, router]);
 
-  function handleSubmit(props) {
-    setScore(score + props.score);
-    // console.log(score)
-    if (qIndex < test[testIndex].question.length - 1) {
+  // Тест бүр 0 онооноос эхэлнэ
+  useEffect(() => {
+    setScore(0);
+  }, [catIndex, setScore]);
+
+  if (loading || !test[catIndex]) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-cream text-muted">
+        Ачааллаж байна...
+      </div>
+    );
+  }
+
+  const current = test[catIndex];
+  const total = current.question.length;
+
+  function handleSubmit(answer) {
+    const newScore = score + answer.score;
+    setScore(newScore);
+    if (qIndex < total - 1) {
       setQindex(qIndex + 1);
-    } else {
-      setTestShow(7);
-      show();
-      checkTuvshin();
-      setTestShow(2);
-      setTestUser({ ...testUser, score: score });
-      router.push("/challenge");
+      return;
     }
-  }
-  function show() {
-    setTestShow(1);
+    const level = findLevel(current.levels, newScore);
+    setTuvshinRank(level?.name);
+    setTuvshin(
+      challenge[catIndex].challenge.filter((data) => data.rank == level?.rank)
+    );
+    setTestUser({ ...testUser, score: newScore });
+    router.push("/challenge");
   }
 
-  function sg() {}
-
-  function checkTuvshin() {
-    // console.log("check")
-    if (score >= 0 && score < 5) {
-      let filterRank = challenge[catIndex].challenge.filter(
-        (data) => data.rank == 1
-      );
-      // console.log("rank",filterRank)
-      setResult("Хэвийн");
-      setTuvshinRank("Хэвийн");
-      setTuvshin(filterRank);
-    } else if (score >= 5 && score <= 6) {
-      let filterRank = challenge[catIndex].challenge.filter(
-        (data) => data.rank == 2
-      );
-      // console.log("rank",filterRank)
-      setTuvshin(filterRank);
-      setResult("Хөнгөн");
-      setTuvshinRank("Хөнгөн");
-    } else if (score >= 7 && score <= 10) {
-      let filterRank = challenge[catIndex].challenge.filter(
-        (data) => data.rank == 3
-      );
-      setTuvshin(filterRank);
-      setResult("Дунд зэрэг");
-      setTuvshinRank("Дунд зэрэг");
-    } else if (score >= 11 && score <= 13) {
-      let filterRank = challenge[catIndex].challenge.filter(
-        (data) => data.rank == 4
-      );
-      setTuvshin(filterRank);
-      setResult("Хүчтэй");
-      setTuvshinRank("Хүчтэй");
-    } else if (score >= 14) {
-      let filterRank = challenge[catIndex].challenge.filter(
-        (data) => data.rank == 4
-      );
-      setTuvshin(filterRank);
-      setResult("Маш хүчтэй");
-      setTuvshinRank("Маш хүчтэй");
-    }
-  }
+  const meta = getTheme(current.theme);
+  const progress = Math.round((qIndex / total) * 100);
 
   return (
-    <div className="flex justify-center  text-[#333] items-center h-[100vh] bg-[#232946]">
-      <div className="flex justify-center items-center m-auto overflow-hidden rounded-[15px] bg-[#fffffe] max-w-[700px]">
-        <div className="flex flex-col items-center">
-          <h1 className="overflow-hidden w-full flex justify-center items-center p-[15px] text-lg md:text-2xl ">
-            {"Сэдэв: " + test[catIndex].testName}
-          </h1>
-          <div className="flex flex-col">
-            <div className="px-5">
-              <h1 className="bg-[#1447E6] text-[#fff] rounded-[18px] text-lg  md:text-3xl md:px-[25px] font-medium text-center p-[20px] md:p-[40px]">
-                {test[catIndex].question[qIndex]}
-              </h1>
-            </div>
-            <div className="flex flex-col  p-5 md:p-[25px] bg-[##fffffe] gap-[15px]">
-              {test[catIndex].result.map((data, index) => {
-                return (
-                  <button
-                    key={index}
-                    onClick={() => handleSubmit(data)}
-                    className="bg-gray-100 border p-3 text-[18px] text-[#333] md:p-[10px] rounded-[10px] md:text-[22px] flex hover:bg-[#CAD5E0] text-start px-8 md:px-[30px]"
-                  >
-                    {data.result}
-                  </button>
-                );
-              })}
-            </div>
+    <div className="flex min-h-screen items-center justify-center bg-cream px-4 py-10 text-ink">
+      <div className="w-full max-w-2xl rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-line md:p-10">
+        <div className="flex items-center gap-3">
+          <span
+            className={`flex h-11 w-11 items-center justify-center rounded-2xl ${meta.soft} ${meta.text}`}
+          >
+            <meta.Icon className="h-6 w-6" />
+          </span>
+          <div>
+            <p className="text-sm text-muted">Сэдэв</p>
+            <p className="font-serif text-lg font-semibold">{current.testName}</p>
           </div>
+          <p className="ml-auto text-sm font-semibold text-muted">
+            {qIndex + 1} / {total}
+          </p>
         </div>
+
+        <div className="mt-5 h-2 overflow-hidden rounded-full bg-sand">
+          <div
+            className={`h-full rounded-full ${meta.bg} transition-all duration-500`}
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+
+        <h1 className="mt-8 font-serif text-xl font-medium leading-relaxed md:text-2xl">
+          {current.question[qIndex].replace(/^\d+\.\s*/, "")}
+        </h1>
+
+        <div className="mt-8 flex flex-col gap-3">
+          {current.result.map((data, index) => {
+            return (
+              <button
+                key={index}
+                onClick={() => handleSubmit(data)}
+                className="flex items-center gap-3 rounded-2xl border border-line bg-cream px-5 py-4 text-left text-base transition hover:border-sage hover:bg-sage-soft md:text-lg"
+              >
+                <span className="h-5 w-5 shrink-0 rounded-full border-2 border-muted/40" />
+                {data.result}
+              </button>
+            );
+          })}
+        </div>
+
+        <p className="mt-8 text-center text-xs text-muted">
+          Зөв, буруу хариулт гэж байхгүй. Сүүлийн үеийн мэдрэмждээ тулгуурлаарай.
+        </p>
       </div>
     </div>
   );

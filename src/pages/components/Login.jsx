@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import { useRouter } from "next/router";
+import { Logo } from "./Header";
 
 export default function Login() {
   const { user, setUser } = useUser();
   const [login, setLogin] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -21,9 +23,10 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
 
     try {
-      const response = await fetch("/api/user", {
+      const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(login),
@@ -32,58 +35,56 @@ export default function Login() {
       const data = await response.json();
       if (response.ok) {
         setUser(data.user);
-        localStorage.setItem("user", JSON.stringify(data.user));
         router.push("/dashboard");
       } else {
-        alert("Error: " + data.message);
+        setError(data.message);
       }
     } catch (error) {
-      // console.error("Login error:", error);
-      alert("Системийн алдаа гарлаа.");
+      setError("Системийн алдаа гарлаа.");
     } finally {
       setLoading(false);
     }
   };
 
+  const inputClass =
+    "w-full rounded-xl border border-line bg-cream p-3 text-ink placeholder:text-muted/70 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30";
+
   return (
-    <div className="h-[100vh] w-full flex justify-center items-center bg-[#f0f4f8] dark:bg-[#1a202c]">
-      <div className="bg-white p-8 rounded-xl shadow-md max-w-md w-full dark:bg-[#2D3748] dark:text-white">
-        <h1 className="text-3xl font-semibold text-center text-[#333] mb-6 dark:text-white">
-          Нэвтрэх
-        </h1>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-8 bg-cream px-4 text-ink">
+      <Logo />
+      <div className="w-full max-w-md rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-line">
+        <h1 className="font-serif text-3xl font-semibold">Нэвтрэх</h1>
+        <p className="mt-1 text-sm text-muted">
+          Сэтгэл зүйч, багш нарт зориулсан хэсэг
+        </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <input
-              type="text"
-              name="username"
-              placeholder="Нэвтрэх нэрээ оруулна уу"
-              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none transition duration-300 ease-in-out dark:bg-[#2D3748] dark:border-gray-600 dark:text-white"
-              onChange={handleChange}
-            />
-          </div>
-
-          <div>
-            <input
-              type="password"
-              name="password"
-              placeholder="Нууц үгээ оруулна уу"
-              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-400 focus:outline-none transition duration-300 ease-in-out dark:bg-[#2D3748] dark:border-gray-600 dark:text-white"
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="flex justify-center">
-            <button
-              type="submit"
-              className={`w-full bg-[#4CAF50] text-white py-3 rounded-lg text-lg transition duration-300 ease-in-out ${
-                loading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#45a049]"
-              } dark:bg-[#38A169] dark:hover:bg-[#2F855A]`}
-              disabled={loading}
-            >
-              {loading ? "Түр хүлээнэ үү..." : "Нэвтрэх"}
-            </button>
-          </div>
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <input
+            type="text"
+            name="username"
+            placeholder="Нэвтрэх нэр"
+            className={inputClass}
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Нууц үг"
+            className={inputClass}
+            onChange={handleChange}
+          />
+          {error && (
+            <p className="rounded-xl bg-rose-soft px-4 py-3 text-sm text-rose">
+              {error}
+            </p>
+          )}
+          <button
+            type="submit"
+            className="w-full rounded-full bg-sage py-3 text-lg font-semibold text-white transition hover:bg-sage-dark disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={loading}
+          >
+            {loading ? "Түр хүлээнэ үү..." : "Нэвтрэх"}
+          </button>
         </form>
       </div>
     </div>

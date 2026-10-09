@@ -1,69 +1,75 @@
-import { MongoClient } from "mongodb";
 import moment from "moment-timezone";
+import { getDb, sendError, toObjectId } from "@/lib/db";
+import { requireUser } from "@/lib/auth";
+import { findLevel } from "@/lib/levels";
 
-const uri = process.env.DB_HOST;
+const text = (value, max = 100) => String(value ?? "").trim().slice(0, max);
 
 export default async function handler(req, res) {
-  if (req.method === "GET") {
-    try {
-      const client = new MongoClient(uri);
-      await client.connect();
-      const db = client.db("myrole"); // explicitly use the correct DB name
-      const collection = db.collection("test_result"); // your collection is "test_result"
-      const data = await collection.find({}).toArray();
+  try {
+    const db = await getDb();
+    const collection = db.collection("test_result");
 
-      res.status(200).json(data);
-      await client.close();
-    } catch (error) {
-      console.error("MongoDB connection error:", error.message);
-      res.status(500).json({
-        error: "Failed to connect to MongoDB",
-        message: error.message,
-      });
+    // Үр дүнг зөвхөн нэвтэрсэн хүн харна. Сэтгэл зүйч зөвхөн өөрийн сургуулийг.
+    if (req.method === "GET") {
+      const user = await requireUser(req, res);
+      if (!user) return;
+      const filter =
+        user.role === "admin"
+          ? req.query.school
+            ? { school: String(req.query.school) }
+            : {}
+          : { school: user.school };
+      const data = await collection.find(filter).sort({ createdAt: -1 }).toArray();
+      return res.status(200).json(data);
     }
-  } else if (req.method === "POST") {
-    try {
-      const client = new MongoClient(uri);
-      await client.connect();
-      const db = client.db("myrole"); // explicitly use the correct DB name
-      const collection = db.collection("test_result"); // your collection is "test_result"
 
-      // Log the incoming body
-      // console.log("Request body:", req.body);
+    // Сурагч тест бөглөөд илгээнэ — нэвтрэх шаардлагагүй.
+    if (req.method === "POST") {
+      const body = req.body || {};
+      const test = await db
+        .collection("tests")
+        .findOne({ _id: toObjectId(body.testId) });
+      if (!test) {
+        return res.status(400).json({ message: "Тест олдсонгүй" });
+      }
+      const score = Number(body.score);
+      if (!Number.isFinite(score)) {
+        return res.status(400).json({ message: "Оноо буруу байна" });
+      }
+      const challenge = await db
+        .collection("challenges")
+        .findOne({ _id: toObjectId(body.challengeId), testId: test._id });
 
-      let newDate = moment().tz("Asia/Ulaanbaatar").format(); // Fix moment import
-
-      const test_result = {
-        class: req.body.class,
-        school: req.body.school,
-        buleg: req.body.buleg,
-        lastname: req.body.lastName,
-        firstname: req.body.firstName,
-        score: req.body.score,
-        tuvshin: req.body.tuvshin,
-        challenge: req.body.challenge,
-        category: req.body.category,
-        createdAt: newDate, // Use formatted date
+      const testResult = {
+        class: text(body.class, 10),
+        school: text(body.school, 50),
+        buleg: text(body.buleg, 10),
+        lastname: text(body.lastName),
+        firstname: text(body.firstName),
+        score,
+        tuvshin: findLevel(test.levels, score)?.name || "",
+        challenge: challenge
+          ? {
+              name: challenge.name,
+              rank: challenge.rank,
+              daalgavar: challenge.daalgavar,
+              example: challenge.example,
+              zorilgo: challenge.zorilgo,
+            }
+          : null,
+        category: test.testName,
+        createdAt: moment().tz("Asia/Ulaanbaatar").format(),
       };
 
-      // Log the test result before saving
-      // console.log("Test result data:", test_result);
-
-      const result = await db.collection("test_result").insertOne(test_result);
-      // console.log("Successfully inserted test result:", result);
-
-      res
+      const result = await collection.insertOne(testResult);
+      return res
         .status(201)
         .json({ message: "Post successfully added", data: result });
-      await client.close();
-    } catch (error) {
-      console.error("MongoDB connection error:", error.message);
-      res.status(500).json({
-        error: "Failed to connect to MongoDB",
-        message: error.message,
-      });
     }
-  } else {
-    res.status(405).json({ error: "Method Not Allowed" });
+
+    res.status(405).json({ message: "Method Not Allowed" });
+  } catch (error) {
+    sendError(res, error);
   }
 }

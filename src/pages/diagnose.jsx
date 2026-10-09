@@ -7,8 +7,6 @@ export default function Home() {
   const [qIndex, setQindex] = useState(0);
   const [score, setScore] = useState(0);
   let [result, setResult] = useState([]);
-  console.log("оноо", score);
-  console.log("үр дүн=", result);
   function handleSubmit(props) {
     setScore(score + props.score);
     if (qIndex < test[testIndex].question.length - 1) {
@@ -27,6 +25,7 @@ export default function Home() {
       }
     }
   }
+  if (!test[testIndex]) return null;
   return (
     <div>
       <div>

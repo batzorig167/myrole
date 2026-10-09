@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Header from "./Header";
 
 export default function Dasgal() {
   const breathePhases = [
-    { label: "Амьсгалаа ав", count: 4, color: "text-green-400", animation: "animate-pulse" },
-    { label: "Амьсгалаа барь", count: 7, color: "text-yellow-400", animation: "animate-pulse" },
-    { label: "Амьсгалаа гарга", count: 8, color: "text-blue-400", animation: "animate-pulse" },
+    { label: "Амьсгалаа ав", count: 4, scale: 1 },
+    { label: "Амьсгалаа барь", count: 7, scale: 1 },
+    { label: "Амьсгалаа гарга", count: 8, scale: 0.6 },
   ];
 
   const [breathing, setBreathing] = useState(false);
@@ -66,62 +68,138 @@ export default function Dasgal() {
     "1 зүйл амтагдаж байна:",
   ];
 
+  const phase = breathePhases[phaseIndex];
+
   return (
-    <div className="bg-[#232946] min-h-screen py-6 px-4 md:px-10 text-white">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* 1. Breath + Grounding */}
-        <h1 className="text-3xl text-center">Тайвшруулах дасгалууд</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="min-h-screen bg-cream text-ink">
+      <Header>
+        <Link
+          href="/homepage"
+          className="rounded-full border border-ink/20 px-5 py-2 text-sm font-semibold transition hover:border-sage hover:text-sage"
+        >
+          Нүүр хуудас
+        </Link>
+      </Header>
+      <div className="mx-auto max-w-5xl space-y-6 px-4 py-10">
+        <div>
+          <h1 className="font-serif text-3xl font-semibold md:text-4xl">
+            Тайвшруулах дасгалууд
+          </h1>
+          <p className="mt-2 text-muted">
+            Хэдхэн минут зарцуулж бие, сэтгэлээ амраагаарай.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {/* Амьсгал */}
-          <div className="bg-white rounded-2xl p-6 shadow-md text-black flex flex-col items-center">
-            <h1 className="text-2xl font-bold mb-4">Амьсгалын дасгал</h1>
-            <div className="w-48 h-48 rounded-full bg-gradient-to-tr from-purple-800 to-indigo-700 flex flex-col items-center justify-center text-xl font-bold">
-              {breathing ? (
-                <>
-                  <span className="text-sm text-white mb-1">{breathePhases[phaseIndex].label}</span>
-                  <span className="text-3xl">{counter}</span>
-                </>
-              ) : (
-                <span className="text-white">Бэлэн үү?</span>
-              )}
+          <div className="flex flex-col items-center rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-line">
+            <h2 className="self-start font-serif text-2xl font-semibold">
+              Амьсгалын дасгал
+            </h2>
+            <p className="self-start text-sm text-muted">4 – 7 – 8 арга</p>
+            <div className="my-8 flex h-56 w-56 items-center justify-center rounded-full bg-sage-soft">
+              <div
+                className="flex h-48 w-48 flex-col items-center justify-center rounded-full bg-sage text-white ease-in-out"
+                style={{
+                  transform: `scale(${breathing ? phase.scale : 0.75})`,
+                  transitionProperty: "transform",
+                  transitionDuration: breathing ? `${phase.count}s` : "0.6s",
+                }}
+              >
+                {breathing ? (
+                  <>
+                    <span className="text-sm">{phase.label}</span>
+                    <span className="font-serif text-4xl">{counter}</span>
+                  </>
+                ) : (
+                  <span>Бэлэн үү?</span>
+                )}
+              </div>
             </div>
             {!breathing ? (
-              <button className="mt-6 bg-gray-800 px-6 py-2 rounded-xl text-white" onClick={startBreathing}>
+              <button
+                className="rounded-full bg-sage px-6 py-2.5 font-semibold text-white transition hover:bg-sage-dark"
+                onClick={startBreathing}
+              >
                 Дасгалыг эхлэх
               </button>
             ) : (
-              <button className="mt-6 bg-red-700 px-6 py-2 rounded-xl text-white" onClick={stopBreathing}>
+              <button
+                className="rounded-full bg-sand px-6 py-2.5 font-semibold text-ink transition hover:bg-line"
+                onClick={stopBreathing}
+              >
                 Дасгалыг зогсоох
               </button>
             )}
           </div>
-          <div className="bg-white rounded-2xl p-6 shadow-md text-black">
-            <h3 className="text-2xl font-bold mb-4">🧠 Төвлөрөх мөч: 5-4-3-2-1</h3>
+
+          {/* 5-4-3-2-1 */}
+          <div className="flex flex-col rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-line">
+            <h2 className="font-serif text-2xl font-semibold">Төвлөрөх мөч</h2>
+            <p className="text-sm text-muted">
+              5-4-3-2-1 арга — мэдрэхүйгээрээ одоо цагтаа эргэн ирэх
+            </p>
             {!showGrounding ? (
-              <button className="bg-purple-700 py-2 px-6 rounded-xl text-white" onClick={handleGroundingStart}>
-                Дүүргэх
-              </button>
+              <div className="flex flex-1 flex-col items-start justify-center gap-4 py-6">
+                <p className="leading-relaxed text-ink/80">
+                  Санаа зовнил ихсэх үед эргэн тойрондоо харж, сонсож, мэдэрч буй
+                  зүйлсээ нэрлэх нь сэтгэлийг тайвшруулдаг.
+                </p>
+                <button
+                  className="rounded-full bg-lavender px-6 py-2.5 font-semibold text-white transition hover:opacity-90"
+                  onClick={handleGroundingStart}
+                >
+                  Эхлэх
+                </button>
+              </div>
             ) : (
-              <div className="space-y-4">
-                <label className="block text-sm">
-                    {groundingPrompts[groundingStep]}
-                    <input type="text" value={groundingInputs[groundingStep]} onChange={handleGroundingChange} className="w-full mt-1 p-2 rounded bg-gray-800 text-white"/>
+              <div className="mt-6 space-y-4">
+                <div className="flex gap-1.5">
+                  {groundingPrompts.map((_, i) => (
+                    <span
+                      key={i}
+                      className={`h-1.5 flex-1 rounded-full ${
+                        i <= groundingStep ? "bg-lavender" : "bg-sand"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <label className="block font-semibold">
+                  {groundingPrompts[groundingStep]}
+                  <input
+                    type="text"
+                    value={groundingInputs[groundingStep]}
+                    onChange={handleGroundingChange}
+                    className="mt-2 w-full rounded-xl border border-line bg-cream p-3 font-normal focus:border-lavender focus:outline-none focus:ring-2 focus:ring-lavender/30"
+                  />
                 </label>
                 {groundingStep < 4 ? (
-                <button className="bg-purple-600 px-4 py-2 rounded-xl text-white" onClick={nextGroundingStep}> Дараах </button>
+                  <button
+                    className="rounded-full bg-lavender px-5 py-2.5 font-semibold text-white transition hover:opacity-90"
+                    onClick={nextGroundingStep}
+                  >
+                    Дараах
+                  </button>
                 ) : (
-                <p className="text-green-600 font-semibold">Та төвлөрөх дасгалаа амжилттай дуусгалаа! 👏</p>
+                  <p className="rounded-2xl bg-sage-soft px-4 py-3 font-semibold text-sage-dark">
+                    Та төвлөрөх дасгалаа амжилттай дуусгалаа!
+                  </p>
                 )}
               </div>
             )}
           </div>
         </div>
-        <div className="bg-white p-6 rounded-2xl shadow-lg text-black">
-            <h2 className="text-xl font-bold mb-4">📔 Өдрийн тэмдэглэл</h2>
-            <textarea rows={10} className="w-full p-4 rounded-xl bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="Өнөөдөр юу болсон, юу мэдэрсэн, юу бодож байна вэ? Энд бичээрэй..."/>
-        </div>
-        <div className="flex justify-center">
-            <a href="/homepage" className="bg-red-600 text-white py-3 px-10 rounded-[18px] shadow-lg"> Гарах </a>
+
+        {/* Тэмдэглэл */}
+        <div className="rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-line">
+          <h2 className="font-serif text-2xl font-semibold">Өдрийн тэмдэглэл</h2>
+          <p className="text-sm text-muted">
+            Бодол, мэдрэмжээ үгээр илэрхийлэх нь тэдгээрийг ойлгоход тусалдаг.
+          </p>
+          <textarea
+            rows={8}
+            className="mt-4 w-full rounded-2xl border border-line bg-cream p-4 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
+            placeholder="Өнөөдөр юу болсон, юу мэдэрсэн, юу бодож байна вэ? Энд бичээрэй..."
+          />
         </div>
       </div>
     </div>
