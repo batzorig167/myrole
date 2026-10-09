@@ -1,5 +1,107 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+/* Сэтгэл судлалын сайтын өнгө, фонт */
+@theme {
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Lora", ui-serif, Georgia, serif;
+
+  --color-cream: #f7f4ee;
+  --color-sand: #efe9df;
+  --color-ink: #2b2a33;
+  --color-muted: #6b6a75;
+  --color-line: #e4ded3;
+
+  --color-sage: #4f7a68;
+  --color-sage-dark: #3c5f50;
+  --color-sage-soft: #e3eee8;
+
+  --color-lavender: #7d6bb3;
+  --color-lavender-soft: #ece8f6;
+
+  --color-sky: #4f7fae;
+  --color-sky-soft: #e4edf6;
+
+  --color-peach: #d98a5b;
+  --color-peach-soft: #f8e7dc;
+
+  --color-rose: #c4596a;
+  --color-rose-soft: #f7e1e4;
+
+  /* Нүүр хуудсын тод, хөгжилтэй өнгө */
+  --color-sun: #ffc93c;
+  --color-sun-soft: #fff4d1;
+  --color-coral: #ff7a59;
+  --color-coral-soft: #ffe6de;
+  --color-mint: #2fbf8f;
+  --color-mint-soft: #d9f5ea;
+  --color-bubble: #3d9cf0;
+  --color-bubble-soft: #dcedfd;
+  --color-grape: #8b5cf6;
+  --color-grape-soft: #ece4ff;
+  --color-pink: #f2558c;
+  --color-pink-soft: #ffe1ec;
+  --color-night: #1f1b3a;
+}
+
+html,
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(0.85);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-breathe {
+  animation: breathe 8s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  50% {
+    transform: translateY(-12px) rotate(var(--r, 0deg));
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+.hover-wiggle:hover {
+  animation: wiggle 0.4s ease-in-out 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-breathe,
+  .hover-wiggle:hover {
+    animation: none;
+  }
+}
 
 .link-underline {
   border-bottom-width: 0;

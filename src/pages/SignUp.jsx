@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useUser } from "./Context/UserContext";
 import { useRouter } from "next/router";
+import { useData } from "./Context/DataContext";
 
 export default function Home() {
-  const { setUser } = useUser();
   const { testUser, setTestUser } = useUser();
+  const { schools } = useData();
   const [formData, setFormData] = useState({
     school: "",
     class: "",
@@ -43,127 +44,124 @@ export default function Home() {
         lastName: formData.lastname,
         firstName: formData.firstname,
       };
-      setUser(a);
       //   console.log(a);
       setTestUser({ ...testUser, ...a });
       router.push("/taketest");
       //   console.log("ilgeesen data", a);
     }
   };
+  const selectClass =
+    "w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-ink focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30";
+  const inputClass =
+    "w-full rounded-xl border border-line bg-cream px-3 py-2.5 text-ink placeholder:text-muted/70 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30";
   return (
-    <div className="h-[100vh] flex justify-center items-center bg-[#232946] text-black">
-      <div className="flex justify-center max-w-[700px]">
-        <form
-          action=""
-          onSubmit={submitHandle}
-          className="flex flex-col justify-evenly w-[90%] h-100 md:w-120 md:h-110 border rounded-2xl px-5 md:px-10 bg-white"
-        >
-          <div className="flex flex-col gap-2 text-black">
-            <h1 className="text-center text-xl md:text-3xl pb-3 md:pb-8">
-              Анги нэрээ крилл үсгээр бөглөнө үү
-            </h1>
-            <div className="flex gap-1 my-4">
-              <label className=" text-lg md:text-xl" htmlFor="class">
-                Сургууль:
+    <div className="flex min-h-screen items-center justify-center bg-cream px-4 py-10 text-ink">
+      <form
+        onSubmit={submitHandle}
+        className="w-full max-w-md rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-line md:p-10"
+      >
+        <p className="text-sm font-semibold text-sage">Алхам 1 / 2</p>
+        <h1 className="mt-1 font-serif text-2xl font-semibold md:text-3xl">
+          Өөрийн мэдээллээ бөглөнө үү
+        </h1>
+        <p className="mt-2 text-sm text-muted">
+          Анги, нэрээ кирилл үсгээр бичээрэй. Таны хариулт нууцлагдана.
+        </p>
+
+        <div className="mt-6 space-y-4">
+          <div>
+            <label className="mb-1 block text-sm font-semibold" htmlFor="school">
+              Сургууль
+            </label>
+            <select
+              name="school"
+              id="school"
+              onChange={handleChange}
+              className={selectClass}
+            >
+              <option value="">Сонгоно уу</option>
+              {schools.map((school) => (
+                <option key={school._id} value={school.code}>
+                  {school.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="mb-1 block text-sm font-semibold" htmlFor="class">
+                Анги
               </label>
               <select
-                name="school"
-                id="school"
+                name="class"
+                id="class"
                 onChange={handleChange}
-                className="border border-[#333] rounded-md px-1 md:px-2 md:py-1 bg-white text-black"
+                className={selectClass}
               >
                 <option value="">-</option>
-                <option value="olympiad">Олимпиад</option>
-                <option value="aviyas">Авьяас сургууль</option>
-                <option value="dmts">Дэлгэрмөрөн сургууль</option>
-                <option value="galtschool">Галт сум ЕБС</option>
-                <option value="ireedui">Ирээдүй сургууль</option>
-                <option value="edts">Эрдмийн далай сургууль</option>
+                {["12", "11", "10", "9", "8", "7", "6", "5", "4", "3", "2", "1"].map(
+                  (value) => (
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
+                  )
+                )}
               </select>
             </div>
-            <div className="flex justify-between">
-              <div className="flex gap-1">
-                <label className=" text-lg md:text-xl" htmlFor="class">
-                  Анги:
-                </label>
-                <select
-                  name="class"
-                  id="class"
-                  onChange={handleChange}
-                  className="border border-[#333] rounded-md px-1 md:px-2 md:py-1 bg-white text-black"
-                >
-                  <option value="">-</option>
-                  <option value="12">12</option>
-                  <option value="11">11</option>
-                  <option value="10">10</option>
-                  <option value="9">9</option>
-                  <option value="8">8</option>
-                  <option value="7">7</option>
-                  <option value="6">6</option>
-                  <option value="5">5</option>
-                  <option value="4">4</option>
-                  <option value="3">3</option>
-                  <option value="2">2</option>
-                  <option value="1">1</option>
-                </select>
-              </div>
-              <div className="flex gap-1">
-                <label htmlFor="buleg" className="text-lg md:text-xl">
-                  Бүлэг:
-                </label>
-                <select
-                  name="buleg"
-                  id="buleg"
-                  onChange={handleChange}
-                  className="border border-[#333] rounded-md px-2 py-1 bg-white text-black"
-                >
-                  <option value="">-</option>
-                  <option value="а">А</option>
-                  <option value="б">Б</option>
-                  <option value="в">В</option>
-                  <option value="г">Г</option>
-                  <option value="д">Д</option>
-                  <option value="е">Е</option>
-                  <option value="ж">Ж</option>
-                </select>
-              </div>
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="lastname" className="text-xl">
-                Овог:
+            <div>
+              <label className="mb-1 block text-sm font-semibold" htmlFor="buleg">
+                Бүлэг
               </label>
-              <input
-                className="border border-[#333] rounded-md px-2 py-1"
-                type="text"
-                name="lastname"
-                id="lastname"
+              <select
+                name="buleg"
+                id="buleg"
                 onChange={handleChange}
-                placeholder="Овогоо бичнэ үү"
-              />
-            </div>
-            <div className="flex border-[#333] flex-col gap-1">
-              <label htmlFor="firstname" className="text-xl">
-                Нэр:
-              </label>
-              <input
-                className="border rounded-md px-2 py-1"
-                type="text"
-                name="firstname"
-                id="firstname"
-                onChange={handleChange}
-                placeholder="Нэрээ бичнэ үү"
-              />
+                className={selectClass}
+              >
+                <option value="">-</option>
+                {["а", "б", "в", "г", "д", "е", "ж"].map((value) => (
+                  <option key={value} value={value}>
+                    {value.toUpperCase()}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
-          <div className="flex justify-center">
+          <div>
+            <label className="mb-1 block text-sm font-semibold" htmlFor="lastname">
+              Овог
+            </label>
             <input
-              type="submit"
-              value="Цааш"
-              className="border border-[#333] rounded-md px-6 py-2 text-xl text-black bg-white"
+              className={inputClass}
+              type="text"
+              name="lastname"
+              id="lastname"
+              onChange={handleChange}
+              placeholder="Овгоо бичнэ үү"
             />
           </div>
-        </form>
-      </div>
+          <div>
+            <label className="mb-1 block text-sm font-semibold" htmlFor="firstname">
+              Нэр
+            </label>
+            <input
+              className={inputClass}
+              type="text"
+              name="firstname"
+              id="firstname"
+              onChange={handleChange}
+              placeholder="Нэрээ бичнэ үү"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="mt-8 w-full rounded-full bg-sage py-3 font-semibold text-white transition hover:bg-sage-dark"
+        >
+          Тест эхлэх
+        </button>
+      </form>
     </div>
   );
 }

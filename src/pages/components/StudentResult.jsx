@@ -1,446 +1,229 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useUser } from "../Context/UserContext";
+import { useData } from "../Context/DataContext";
+import { getTheme } from "@/lib/themes";
+import { findLevel } from "@/lib/levels";
+
+// Хуучин үр дүнд category байхгүй бол "Сэтгэл гутрал" гэж үзнэ.
+const categoryOf = (row) => row.category || "Сэтгэл гутрал";
+
+const formatDate = (value) =>
+  new Date(value).toLocaleString("mn-MN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
 export default function StudentResult() {
-  const [firstnameSortOrder, setFirstnameSortOrder] = useState("asc");
+  const { user } = useUser();
+  const { test, schools } = useData();
+  const isAdmin = user?.role === "admin";
 
-  const { user, setUser } = useUser();
-  const [userData, setUserData] = useState([]);
-  const [allUser, setAlluser] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [school, setSchool] = useState(isAdmin ? "" : user?.school);
   const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("");
+  const [sort, setSort] = useState({ key: "createdAt", dir: -1 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [uii, setUII] = useState();
-  const [sg, setSG] = useState();
-  const [tug, setTUG] = useState();
-  const [stress, setStress] = useState();
-  // console.log("sg=", sg);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/test-result");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const result = await response.json();
-        const filterSchool = result.filter(
-          (data) => data.school === user.school
-        );
-        setUserData(filterSchool);
-        // сэтгэл гутгал дундаж
-        let a = filterSchool.filter(
-          (data) => data.category == null || data.category == "Сэтгэл гутрал"
-        );
-        let average = 0;
-        for (let i = 0; i < a.length; i++) {
-          average += a[i].score;
-        }
-        if (a.length != 0) {
-          let score = average / a.length;
-          if (score >= 0 && score < 5) {
-            setSG("Хэвийн");
-          } else if (score >= 5 && score < 7) {
-            setSG("Хөнгөн");
-          } else if (score >= 7 && score < 11) {
-            setSG("Дунд зэрэг");
-          } else if (score >= 11 && score < 14) {
-            setSG("Хүчтэй");
-          } else if (score >= 14) {
-            setSG("Маш хүчтэй");
-          }
-        } else setSG("Хоосон");
-        // стресс
+    setLoading(true);
+    const params = isAdmin && school ? `?school=${encodeURIComponent(school)}` : "";
+    fetch(`/api/test-result${params}`)
+      .then(async (response) => {
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message);
+        setRows(data);
+        setError(null);
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, [isAdmin, school]);
 
-        a = filterSchool.filter((data) => data.category == "Стресс");
-        average = 0;
-        for (let i = 0; i < a.length; i++) {
-          average += a[i].score;
-        }
-        if (a.length != 0) {
-          let score = average / a.length;
-          if (score >= 0 && score < 8) {
-            setStress("Хэвийн");
-          } else if (score >= 8 && score < 10) {
-            setStress("Хөнгөн");
-          } else if (score >= 10 && score < 13) {
-            setStress("Дунд зэрэг");
-          } else if (score >= 13 && score < 17) {
-            setStress("Хүчтэй");
-          } else if (score >= 17) {
-            setStress("Маш хүчтэй");
-          }
-        } else setStress("Хоосон");
-        // Түгшүүр
-        a = filterSchool.filter((data) => data.category == "Түгшүүр");
-        average = 0;
-        for (let i = 0; i < a.length; i++) {
-          average += a[i].score;
-        }
-        if (a.length != 0) {
-          let score = average / a.length;
-          if (score >= 0 && score < 3) {
-            setTUG("Хэвийн");
-          } else if (score >= 3 && score < 6) {
-            setTUG("Хөнгөн");
-          } else if (score >= 6 && score < 8) {
-            setTUG("Дунд зэрэг");
-          } else if (score >= 8 && score < 10) {
-            setTUG("Хүчтэй");
-          } else if (score >= 10) {
-            setTUG("Маш хүчтэй");
-          }
-        } else setTUG("Хоосон");
-        // Өөртөө итгэх итгэл
-        a = filterSchool.filter(
-          (data) => data.category == "Өөртөө итгэх итгэл"
-        );
-        average = 0;
-        for (let i = 0; i < a.length; i++) {
-          average += a[i].score;
-        }
-        if (a.length != 0) {
-          let score = average / a.length;
-          if (score >= 0 && score < 30) {
-            setUII("Итгэлгүй, эргэлзээтэй байдал");
-          } else if (score >= 30 && score < 40) {
-            setUII("Итгэлтэй, бие даасан байдал ");
-          } else if (score >= 40 && score < 50) {
-            setUII("Итгэлтэй, бие даасан байдал");
-          } else if (score >= 50) {
-            setUII("Өндөр түвшний өөртөө итгэх итгэл");
-          }
-        } else setUII("Хоосон");
-        setAlluser(filterSchool);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    allUser.forEach((data) => {
-      data.createdAt = new Date(data.createdAt).toLocaleString("mn-MN", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    });
-
-    const filteredData = allUser.filter(
-      (item) =>
-        Object.values(item).some((value) =>
-          value?.toString().toLowerCase().includes(search.toLowerCase())
-        ) ||
-        item.challenge?.name
-          .toString()
-          .toLowerCase()
-          .includes(search.toLowerCase())
+  const filtered = useMemo(() => {
+    const q = query.toLowerCase();
+    const list = rows.filter(
+      (row) =>
+        !q ||
+        [
+          row.lastname,
+          row.firstname,
+          row.class + row.buleg,
+          categoryOf(row),
+          row.challenge?.name,
+          row.tuvshin,
+          formatDate(row.createdAt),
+        ].some((value) => value?.toString().toLowerCase().includes(q))
     );
-    // сэтгэл гутгал дундаж
+    const value = (row) =>
+      sort.key === "category" ? categoryOf(row) : String(row[sort.key] ?? "");
+    return list.sort((a, b) => value(a).localeCompare(value(b)) * sort.dir);
+  }, [rows, query, sort]);
 
-    let a = filteredData.filter(
-      (data) => data.category == null || data.category == "Сэтгэл гутрал"
-    );
-    let average = 0;
-    for (let i = 0; i < a.length; i++) {
-      average += a[i].score;
+  // Тест бүрийн дундаж оноо ба түүнд харгалзах түвшин
+  const averages = test.map((t) => {
+    const scores = filtered
+      .filter((row) => categoryOf(row) === t.testName)
+      .map((row) => row.score);
+    if (scores.length === 0) {
+      return { test: t, label: "Тест бөглөөгүй", count: 0 };
     }
-    if (a.length != 0) {
-      let score = average / a.length;
-      if (score >= 0 && score < 5) {
-        setSG("Хэвийн");
-      } else if (score >= 5 && score < 7) {
-        setSG("Хөнгөн");
-      } else if (score >= 7 && score < 11) {
-        setSG("Дунд зэрэг");
-      } else if (score >= 11 && score < 14) {
-        setSG("Хүчтэй");
-      } else if (score >= 14) {
-        setSG("Маш хүчтэй");
-      }
-    } else setSG("Тест бөглөөгүй");
-    // стресс
+    const avg = scores.reduce((sum, s) => sum + s, 0) / scores.length;
+    return { test: t, label: findLevel(t.levels, avg)?.name, count: scores.length };
+  });
 
-    a = filteredData.filter((data) => data.category == "Стресс");
-    average = 0;
-    for (let i = 0; i < a.length; i++) {
-      average += a[i].score;
-    }
-    if (a.length != 0) {
-      let score = average / a.length;
-      if (score >= 0 && score < 8) {
-        setStress("Хэвийн");
-      } else if (score >= 8 && score < 10) {
-        setStress("Хөнгөн");
-      } else if (score >= 10 && score < 13) {
-        setStress("Дунд зэрэг");
-      } else if (score >= 13 && score < 17) {
-        setStress("Хүчтэй");
-      } else if (score >= 17) {
-        setStress("Маш хүчтэй");
-      }
-    } else setStress("Тест бөглөөгүй");
-    // Түгшүүр
-    a = filteredData.filter((data) => data.category == "Түгшүүр");
-    average = 0;
-    for (let i = 0; i < a.length; i++) {
-      average += a[i].score;
-    }
-    if (a.length != 0) {
-      let score = average / a.length;
-      if (score >= 0 && score < 3) {
-        setTUG("Хэвийн");
-      } else if (score >= 3 && score < 6) {
-        setTUG("Хөнгөн");
-      } else if (score >= 6 && score < 8) {
-        setTUG("Дунд зэрэг");
-      } else if (score >= 8 && score < 10) {
-        setTUG("Хүчтэй");
-      } else if (score >= 10) {
-        setTUG("Маш хүчтэй");
-      }
-    } else setTUG("Тест бөглөөгүй");
-    // Өөртөө итгэх итгэл
-    a = filteredData.filter((data) => data.category == "Өөртөө итгэх итгэл");
-    average = 0;
-    for (let i = 0; i < a.length; i++) {
-      average += a[i].score;
-    }
-    if (a.length != 0) {
-      let score = average / a.length;
-      if (score >= 0 && score < 30) {
-        setUII("Итгэлгүй, эргэлзээтэй байдал");
-      } else if (score >= 30 && score < 40) {
-        setUII("Итгэлтэй, бие даасан байдал ");
-      } else if (score >= 40 && score < 50) {
-        setUII("Итгэлтэй, бие даасан байдал");
-      } else if (score >= 50) {
-        setUII("Өндөр түвшний өөртөө итгэх итгэл");
-      }
-    } else setUII("Тест бөглөөгүй");
-    setUserData(filteredData);
-  };
+  const sortBy = (key) =>
+    setSort((prev) => ({ key, dir: prev.key === key ? -prev.dir : 1 }));
 
-  const sortOvog = () => {
-    const sortedData = [...userData].sort((a, b) => {
-      if (firstnameSortOrder === "asc") {
-        return a.lastname.localeCompare(b.lastname);
-      } else {
-        return b.lastname.localeCompare(a.lastname);
-      }
-    });
-    setUserData(sortedData);
-    setFirstnameSortOrder((prevOrder) =>
-      prevOrder === "asc" ? "desc" : "asc"
-    );
-  };
+  const schoolName = (code) => schools.find((s) => s.code === code)?.name || code;
 
-  const sortFirstname = () => {
-    const sortedData = [...userData].sort((a, b) => {
-      if (firstnameSortOrder === "asc") {
-        return a.firstname.localeCompare(b.firstname);
-      } else {
-        return b.firstname.localeCompare(a.firstname);
-      }
-    });
-
-    setUserData(sortedData);
-
-    // Sort order-оо ээлжлэн өөрчилнө
-    setFirstnameSortOrder((prevOrder) =>
-      prevOrder === "asc" ? "desc" : "asc"
-    );
-  };
-  const classSort = () => {
-    const sortedData = [...userData].sort((a, b) => {
-      if (firstnameSortOrder === "asc") {
-        return a.class.localeCompare(b.class);
-      } else {
-        return b.class.localeCompare(a.class);
-      }
-    });
-
-    setUserData(sortedData);
-
-    // Sort order-оо ээлжлэн өөрчилнө
-    setFirstnameSortOrder((prevOrder) =>
-      prevOrder === "asc" ? "desc" : "asc"
-    );
-  };
-  const testSort = () => {
-    const sortedData = [...userData].sort((a, b) => {
-      if (firstnameSortOrder === "asc") {
-        return a?.category.localeCompare(b?.category);
-      } else {
-        return b?.category.localeCompare(a?.category);
-      }
-    });
-
-    setUserData(sortedData);
-
-    // Sort order-оо ээлжлэн өөрчилнө
-    setFirstnameSortOrder((prevOrder) =>
-      prevOrder === "asc" ? "desc" : "asc"
-    );
-  };
-  const sortDate = () => {
-    const sortedData = [...userData].sort((a, b) => {
-      if (firstnameSortOrder === "asc") {
-        return a?.createdAt.localeCompare(b?.createdAt);
-      } else {
-        return b?.createdAt.localeCompare(a?.createdAt);
-      }
-    });
-
-    setUserData(sortedData);
-
-    // Sort order-оо ээлжлэн өөрчилнө
-    setFirstnameSortOrder((prevOrder) =>
-      prevOrder === "asc" ? "desc" : "asc"
-    );
-  };
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-  };
-
-  if (loading) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <span className="loading loading-spinner text-primary"></span>
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div className="text-red-500 text-center mt-4">Error: {error}</div>;
-  }
+  const SortButton = ({ field, children }) => (
+    <button onClick={() => sortBy(field)} className="hover:underline">
+      {children}
+      {sort.key === field ? (sort.dir === 1 ? " ↑" : " ↓") : ""}
+    </button>
+  );
 
   return (
-    <div className="w-full min-h-[100vh] flex justify-center p-4">
-      <div className="w-full max-w-7xl bg-white rounded-2xl shadow-md p-6">
-        {/* Header */}
-        <div className="flex  sm:flex-col justify-between items-center mb-6 gap-4">
-          <h1 className="text-2xl font-semibold text-gray-800">{user?.name}</h1>
-          <button
-            onClick={handleLogout}
-            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md shadow transition duration-300"
+    <div>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="text-sm text-muted">Сургуулийн сэтгэл зүйн тойм</p>
+          <h2 className="font-serif text-2xl font-semibold">
+            {isAdmin
+              ? school
+                ? schoolName(school)
+                : "Бүх сургууль"
+              : schoolName(user?.school)}
+          </h2>
+        </div>
+        {isAdmin && (
+          <select
+            value={school}
+            onChange={(e) => setSchool(e.target.value)}
+            className="rounded-full border border-line bg-cream px-4 py-2.5"
           >
-            Гарах
-          </button>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
-          <div className="bg-white shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-[#ecf0f1]">
-            <h3 className="text-[black] text-sm mb-2">Сэтгэл гутрал дундаж</h3>
-            <p className="text-2xl font-semibold text-[#FF6B6B]">{sg}</p>
-          </div>
+            <option value="">Бүх сургууль</option>
+            {schools.map((s) => (
+              <option key={s._id} value={s.code}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
 
-          <div className="bg-white  shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-[#ecf0f1]">
-            <h3 className="text-[black] text-sm mb-2">Түгшүүр</h3>
-            <p className="text-2xl font-semibold text-[#FFA500]">{tug}</p>
-          </div>
+      <div className="my-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {averages.map(({ test: t, label, count }) => {
+          const meta = getTheme(t.theme);
+          return (
+            <div key={t._id} className={`rounded-3xl ${meta.soft} p-5`}>
+              <div className="flex items-center gap-2">
+                <meta.Icon className={`h-5 w-5 ${meta.text}`} />
+                <h3 className="text-sm font-semibold text-ink/80">
+                  {t.testName} · дундаж
+                </h3>
+              </div>
+              <p className={`mt-3 font-serif text-xl font-semibold ${meta.text}`}>
+                {label}
+              </p>
+              <p className="mt-1 text-xs text-muted">{count} сурагч</p>
+            </div>
+          );
+        })}
+      </div>
 
-          <div className="bg-white shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-[#ecf0f1]">
-            <h3 className="text-[black] text-sm mb-2">Стресс</h3>
-            <p className="text-2xl font-semibold text-[#4A90E2]">{stress}</p>
-          </div>
-
-          <div className="bg-white shadow-md rounded-xl p-4 flex flex-col items-center justify-center hover:shadow-lg transition duration-300 border border-[#ecf0f1]">
-            <h3 className="text-[black] text-sm mb-2">Өөртөө итгэх итгэл</h3>
-            <p className="text-2xl font-semibold text-[#34D399]">{uii}</p>
-          </div>
-        </div>
-
-        {/* Search */}
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-row sm:flex-col gap-4 mb-6"
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setQuery(search);
+        }}
+        className="mb-6 flex flex-wrap gap-3"
+      >
+        <input
+          type="text"
+          name="search"
+          placeholder="Нэр, анги, тест, түвшнээр хайх..."
+          className="min-w-0 flex-grow rounded-full border border-line bg-cream px-5 py-2.5 text-ink focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button
+          type="submit"
+          className="rounded-full bg-sage px-6 py-2.5 font-semibold text-white transition hover:bg-sage-dark"
         >
-          <input
-            type="text"
-            name="search"
-            placeholder="Хайх..."
-            className="flex-grow border border-[#ecf0f1]  bg-white  text-[black] rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-700 transition duration-300"
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md shadow transition duration-300 dark:bg-blue-700 dark:hover:bg-blue-600"
-          >
-            Хайх
-          </button>
-        </form>
+          Хайх
+        </button>
+      </form>
 
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm text-gray-700">
-            <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+      {loading ? (
+        <div className="flex justify-center py-16">
+          <span className="loading loading-spinner text-sage"></span>
+        </div>
+      ) : error ? (
+        <p className="rounded-2xl bg-rose-soft p-4 text-rose">{error}</p>
+      ) : (
+        <div className="overflow-x-auto rounded-2xl ring-1 ring-line">
+          <table className="min-w-full text-sm text-ink">
+            <thead className="bg-sage-soft text-xs uppercase text-sage-dark">
               <tr>
                 <th className="p-2">№</th>
-                <th className="p-2 hidden md:table-cell">
-                  <button onClick={sortOvog} className="hover:underline">
-                    Овог
-                  </button>
+                <th className="hidden p-2 md:table-cell">
+                  <SortButton field="lastname">Овог</SortButton>
                 </th>
                 <th className="p-2">
-                  <button onClick={sortFirstname} className="hover:underline">
-                    Нэр
-                  </button>
+                  <SortButton field="firstname">Нэр</SortButton>
+                </th>
+                {isAdmin && !school && <th className="p-2">Сургууль</th>}
+                <th className="p-2">
+                  <SortButton field="class">Анги</SortButton>
                 </th>
                 <th className="p-2">
-                  <button onClick={classSort} className="hover:underline">
-                    Анги
-                  </button>
-                </th>
-                <th className="p-2">
-                  <button className="hover:underline">Тест</button>
+                  <SortButton field="category">Тест</SortButton>
                 </th>
                 <th className="p-2">Тест даалгавар</th>
-                {/* <th className="p-2">Оноо</th> */}
-                <th className="p-2">Түвшин</th>
                 <th className="p-2">
-                  <button onClick={sortDate}>Огноо</button>
+                  <SortButton field="tuvshin">Түвшин</SortButton>
+                </th>
+                <th className="p-2">
+                  <SortButton field="createdAt">Огноо</SortButton>
                 </th>
               </tr>
             </thead>
             <tbody>
-              {userData.map((data, index) => (
+              {filtered.map((data, index) => (
                 <tr
-                  key={index}
-                  className="odd:bg-gray-50 even:bg-white text-center"
+                  key={data._id}
+                  className="border-t border-line text-center odd:bg-white even:bg-cream"
                 >
                   <td className="p-2">{index + 1}</td>
-                  <td className="p-2 hidden md:table-cell">{data.lastname}</td>
+                  <td className="hidden p-2 md:table-cell">{data.lastname}</td>
                   <td className="p-2">{data.firstname}</td>
+                  {isAdmin && !school && (
+                    <td className="p-2">{schoolName(data.school)}</td>
+                  )}
                   <td className="p-2">{data.class + data.buleg}</td>
-                  <td className="p-2">{data?.category || "Сэтгэл гутрал"}</td>
+                  <td className="p-2">{categoryOf(data)}</td>
                   <td className="p-2">
                     {data.challenge?.name || "Чалленж сонгоогүй"}
                   </td>
-                  {/* <td className="p-2">{data.score}</td> */}
                   <td className="p-2">{data.tuvshin}</td>
-                  <td className="p-2">
-                    {new Date(data.createdAt).toLocaleString("mn-MN", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </td>
+                  <td className="p-2">{formatDate(data.createdAt)}</td>
                 </tr>
               ))}
+              {filtered.length === 0 && (
+                <tr>
+                  <td colSpan={9} className="p-8 text-center text-muted">
+                    Үр дүн олдсонгүй
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
-      </div>
+      )}
     </div>
   );
 }
