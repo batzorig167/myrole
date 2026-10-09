@@ -2,7 +2,7 @@ import { presetRange } from "@/lib/dateRange";
 
 const PRESETS = [
   { key: "today", label: "Өнөөдөр" },
-  { key: "week", label: "Сүүлийн 7 хоног" },
+  { key: "week", label: "7 хоног" },
   { key: "month", label: "Энэ сар" },
   { key: "all", label: "Бүгд" },
 ];
@@ -15,29 +15,28 @@ export default function DateFilter({ range, onChange }) {
   })?.key;
 
   const dateClass =
-    "rounded-xl border-2 border-line bg-white px-3 py-2 text-sm font-bold text-ink focus:border-sage focus:outline-none";
+    "rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-sm text-slate-900 shadow-sm focus:border-slate-500 focus:outline-none";
 
   return (
-    <div className="flex flex-wrap items-center gap-2 rounded-[1.5rem] bg-cream p-2 ring-2 ring-line">
-      <span className="px-2 text-sm font-black" aria-hidden="true">
-        📅
-      </span>
-      {PRESETS.map((p) => (
-        <button
-          key={p.key}
-          type="button"
-          onClick={() => onChange(presetRange(p.key))}
-          aria-pressed={activePreset === p.key}
-          className={`rounded-xl px-3 py-2 text-sm font-black transition ${
-            activePreset === p.key
-              ? "pop bg-ink text-white [--edge:#000]"
-              : "bg-white text-muted ring-2 ring-line hover:text-ink"
-          }`}
-        >
-          {p.label}
-        </button>
-      ))}
-      <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
+    <div className="flex flex-wrap items-center gap-3">
+      <div className="inline-flex rounded-md border border-slate-300 bg-white p-0.5 shadow-sm">
+        {PRESETS.map((p) => (
+          <button
+            key={p.key}
+            type="button"
+            onClick={() => onChange(presetRange(p.key))}
+            aria-pressed={activePreset === p.key}
+            className={`rounded px-3 py-1.5 text-sm font-medium transition ${
+              activePreset === p.key
+                ? "bg-slate-900 text-white"
+                : "text-slate-600 hover:bg-slate-100"
+            }`}
+          >
+            {p.label}
+          </button>
+        ))}
+      </div>
+      <div className="flex items-center gap-2 text-sm text-slate-500">
         <input
           type="date"
           aria-label="Эхлэх өдөр"
@@ -46,7 +45,7 @@ export default function DateFilter({ range, onChange }) {
           onChange={(e) => onChange({ ...range, from: e.target.value })}
           className={dateClass}
         />
-        <span className="font-black text-muted">—</span>
+        <span>—</span>
         <input
           type="date"
           aria-label="Дуусах өдөр"

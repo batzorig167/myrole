@@ -2,24 +2,25 @@
 export default function Stats({ total, students, urgent, perDay }) {
   const urgentPct = total ? Math.round((urgent / total) * 100) : 0;
   const tiles = [
-    { label: "Нийт өгсөн тест", value: total, note: "үр дүн", bg: "bg-bubble-soft", text: "text-sky" },
-    { label: "Сурагч", value: students, note: "давхардаагүй", bg: "bg-grape-soft", text: "text-lavender" },
+    { label: "Нийт өгсөн тест", value: total, note: "үр дүн" },
+    { label: "Сурагч", value: students, note: "давхардаагүй" },
     {
       label: "Анхаарах",
       value: urgent,
       note: total ? `нийтийн ${urgentPct}%` : "—",
-      bg: urgent ? "bg-pink-soft" : "bg-mint-soft",
-      text: urgent ? "text-rose" : "text-sage",
+      alert: urgent > 0,
     },
-    { label: "Өдөрт дунджаар", value: perDay, note: "тест", bg: "bg-sun-soft", text: "text-[#b07d00]" },
+    { label: "Өдөрт дунджаар", value: perDay, note: "тест" },
   ];
   return (
-    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-slate-200 bg-slate-200 lg:grid-cols-4">
       {tiles.map((t) => (
-        <div key={t.label} className={`rounded-[1.5rem] ${t.bg} px-5 py-4`}>
-          <p className="text-xs font-black uppercase tracking-wide text-muted">{t.label}</p>
-          <p className={`mt-1 text-4xl font-black ${t.text}`}>{t.value}</p>
-          <p className="text-xs font-bold text-muted">{t.note}</p>
+        <div key={t.label} className="bg-white px-5 py-4">
+          <p className="text-sm text-slate-500">{t.label}</p>
+          <p className={`mt-1 text-3xl font-semibold tabular-nums ${t.alert ? "text-red-600" : "text-slate-900"}`}>
+            {t.value}
+          </p>
+          <p className="text-xs text-slate-400">{t.note}</p>
         </div>
       ))}
     </div>

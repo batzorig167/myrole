@@ -69,7 +69,7 @@ export default function TestsAdmin() {
     return (
       <div className="space-y-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-black">
+          <h2 className="text-xl font-semibold">
             {editing._id ? "Тест засах" : "Шинэ тест"}
           </h2>
           <Button variant="ghost" onClick={() => setEditing(null)}>
@@ -135,7 +135,7 @@ export default function TestsAdmin() {
 
         <Card>
           <h3 className="font-semibold">Хариултын сонголтууд</h3>
-          <p className="mb-3 text-sm text-muted">
+          <p className="mb-3 text-sm text-slate-500">
             Асуулт бүрт ижил сонголтууд гарна. Оноо нь нийлбэр оноонд нэмэгдэнэ.
           </p>
           <ListEditor
@@ -165,7 +165,7 @@ export default function TestsAdmin() {
 
         <Card>
           <h3 className="font-semibold">Түвшний босго</h3>
-          <p className="mb-3 text-sm text-muted">
+          <p className="mb-3 text-sm text-slate-500">
             Нийт оноо «Доод оноо»-с их буюу тэнцүү бол тухайн түвшин. «Даалгаврын
             зэрэг» нь тухайн түвшинд санал болгох даалгаврын зэрэг. Боломжит оноо:{" "}
             {minMax(editing)}.
@@ -183,7 +183,7 @@ export default function TestsAdmin() {
             })}
             addLabel="Түвшин нэмэх"
             renderItem={(l, update) => (
-              <div className="grid gap-2 rounded-2xl bg-cream p-3 md:grid-cols-4">
+              <div className="grid gap-2 rounded-md border border-slate-200 bg-slate-50 p-3 md:grid-cols-4">
                 <Field label="Нэр" className="md:col-span-2">
                   <input
                     className={inputClass}
@@ -257,7 +257,7 @@ export default function TestsAdmin() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-black">Тестүүд</h2>
+        <h2 className="text-xl font-semibold">Тестүүд</h2>
         <Button onClick={() => startEdit(null)}>+ Шинэ тест</Button>
       </div>
       <Notice error={error} success={success} />
@@ -266,13 +266,13 @@ export default function TestsAdmin() {
         return (
           <Card key={t._id} className="flex flex-wrap items-center gap-4">
             <span
-              className={`flex h-12 w-12 items-center justify-center rounded-2xl ${meta.soft} ${meta.text}`}
+              className={`flex h-12 w-12 items-center justify-center rounded-lg ${meta.soft} ${meta.text}`}
             >
               <meta.Icon className="h-6 w-6" />
             </span>
             <div className="min-w-0 flex-1">
-              <p className="text-lg font-black">{t.testName}</p>
-              <p className="text-sm text-muted">
+              <p className="text-lg font-semibold">{t.testName}</p>
+              <p className="text-sm text-slate-500">
                 {t.question.length} асуулт · {t.result.length} сонголт ·{" "}
                 {t.levels.length} түвшин · {t.challenges.length} даалгавар
               </p>

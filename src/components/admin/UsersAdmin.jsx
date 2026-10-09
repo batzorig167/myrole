@@ -82,7 +82,7 @@ export default function UsersAdmin() {
     return (
       <div className="space-y-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-black">
+          <h2 className="text-xl font-semibold">
             {editing._id ? `${editing.username} засах` : "Шинэ хэрэглэгч"}
           </h2>
           <Button variant="ghost" onClick={() => setEditing(null)}>
@@ -159,7 +159,7 @@ export default function UsersAdmin() {
             />
             Нэвтрэх эрх идэвхтэй
           </label>
-          <p className="text-sm text-muted md:col-span-2">
+          <p className="text-sm text-slate-500 md:col-span-2">
             <b>Админ</b> — тест, даалгавар, сургууль, хэрэглэгчийг удирдаж, бүх
             сургуулийн үр дүнг харна. <b>Сэтгэл зүйч</b> — зөвхөн өөрийн
             сургуулийн үр дүнг харна.
@@ -181,7 +181,7 @@ export default function UsersAdmin() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-black">Хэрэглэгч ба эрх</h2>
+        <h2 className="text-xl font-semibold">Хэрэглэгч ба эрх</h2>
         <Button
           onClick={() => {
             setError("");
@@ -194,7 +194,7 @@ export default function UsersAdmin() {
       <Notice error={error} success={success} />
       <Card className="overflow-x-auto p-0">
         <table className="min-w-full text-sm">
-          <thead className="bg-sage-soft text-left text-xs uppercase text-sage-dark">
+          <thead className="bg-slate-50 text-left text-xs text-slate-500">
             <tr>
               <th className="p-3">Нэвтрэх нэр</th>
               <th className="p-3">Нэр</th>
@@ -208,18 +208,18 @@ export default function UsersAdmin() {
             {users.map((u) => {
               const isSelf = u._id === me?._id;
               return (
-                <tr key={u._id} className="border-t border-line">
+                <tr key={u._id} className="border-t border-slate-200">
                   <td className="p-3 font-semibold">
                     {u.username}
-                    {isSelf && <span className="ml-1 text-xs text-muted">(та)</span>}
+                    {isSelf && <span className="ml-1 text-xs text-slate-500">(та)</span>}
                   </td>
                   <td className="p-3">{u.name}</td>
                   <td className="p-3">
                     <span
                       className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
                         u.role === "admin"
-                          ? "bg-lavender-soft text-lavender"
-                          : "bg-sky-soft text-sky"
+                          ? "bg-violet-50 text-violet-700"
+                          : "bg-sky-50 text-sky-700"
                       }`}
                     >
                       {ROLES[u.role]}
@@ -234,7 +234,7 @@ export default function UsersAdmin() {
                       onClick={() => toggleActive(u)}
                       title={isSelf ? "" : "Дарж төлөв солих"}
                       className={`rounded-full px-2.5 py-1 text-xs font-semibold disabled:cursor-default ${
-                        u.active ? "bg-sage-soft text-sage-dark" : "bg-rose-soft text-rose"
+                        u.active ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-700"
                       }`}
                     >
                       {u.active ? "Идэвхтэй" : "Хаалттай"}

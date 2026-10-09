@@ -6,6 +6,8 @@
 /* Сэтгэлийн найз — хүүхэд, өсвөр насанд ээлтэй тод загвар */
 @theme {
   --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  /* Удирдлагын самбарын энгийн фонт */
+  --font-ui: "Inter", ui-sans-serif, system-ui, sans-serif;
 
   /* Суурь өнгө */
   --color-cream: #fffaf0;

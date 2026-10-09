@@ -120,8 +120,8 @@ export default function SchoolsAdmin() {
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-3xl font-black">Сургуулиуд</h2>
-        <p className="mt-1 text-sm text-muted">
+        <h2 className="text-xl font-semibold">Сургуулиуд</h2>
+        <p className="mt-1 text-sm text-slate-500">
           Сургууль бүр өөрийн нэвтрэх нэр, нууц үгээр орж зөвхөн өөрийн сурагчдын
           үр дүнг харна.
         </p>
@@ -164,7 +164,7 @@ export default function SchoolsAdmin() {
             />
           </Field>
           <div className="flex items-center justify-between gap-3 md:col-span-2">
-            <p className="text-xs text-muted">
+            <p className="text-xs text-slate-500">
               Код нь үр дүнтэй холбогддог тул дараа нь өөрчлөх боломжгүй.
             </p>
             <Button type="submit">+ Сургууль нэмэх</Button>
@@ -175,7 +175,7 @@ export default function SchoolsAdmin() {
       <Notice error={error} success={success} />
 
       <Card className="p-0">
-        <ul className="divide-y divide-line">
+        <ul className="divide-y divide-slate-100">
           {schools.map((s) => {
             const account = accountOf(s.code);
             return (
@@ -192,17 +192,17 @@ export default function SchoolsAdmin() {
                     ) : (
                       <p className="font-semibold">{s.name}</p>
                     )}
-                    <p className="mt-0.5 text-sm text-muted">
+                    <p className="mt-0.5 text-sm text-slate-500">
                       <code>{s.code}</code> ·{" "}
                       {account ? (
                         <>
                           Нэвтрэх нэр:{" "}
-                          <span className="font-semibold text-ink">
+                          <span className="font-semibold text-slate-900">
                             {account.username}
                           </span>
                         </>
                       ) : (
-                        <span className="text-peach">Нэвтрэх эрх үүсгээгүй</span>
+                        <span className="text-amber-700">Нэвтрэх эрх үүсгээгүй</span>
                       )}
                     </p>
                   </div>
@@ -213,8 +213,8 @@ export default function SchoolsAdmin() {
                       title="Дарж төлөв солих"
                       className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
                         account.active
-                          ? "bg-sage-soft text-sage-dark"
-                          : "bg-rose-soft text-rose"
+                          ? "bg-emerald-50 text-emerald-700"
+                          : "bg-red-50 text-red-700"
                       }`}
                     >
                       {account.active ? "Идэвхтэй" : "Хаалттай"}
@@ -250,7 +250,7 @@ export default function SchoolsAdmin() {
                 </div>
 
                 {loginFor === s.code && (
-                  <div className="mt-4 grid gap-3 rounded-2xl bg-cream p-4 md:grid-cols-[1fr_1fr_auto]">
+                  <div className="mt-4 grid gap-3 rounded-md border border-slate-200 bg-slate-50 p-4 md:grid-cols-[1fr_1fr_auto]">
                     <Field label="Нэвтрэх нэр">
                       <input
                         className={inputClass}
